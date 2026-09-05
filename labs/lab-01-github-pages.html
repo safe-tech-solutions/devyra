@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 01: Deploy com GitHub Pages e SSH - Devyra Labs</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="container">
+            <a href="../index.html" class="logo"><strong>DEVYRA</strong> <span class="tag">LABS</span></a>
+            <nav class="nav">
+                <ul>
+                    <li><a href="../index.html">← Voltar para os Labs</a></li>
+                    <li><a href="https://instagram.com/celsosre" target="_blank" class="btn-insta">@celsosre ↗</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container article-container">
+        <span class="card-tag">CI/CD & Linux</span>
+        <h1>Lab 01: Pipeline Git + SSH Key + GitHub Pages no Ubuntu</h1>
+        <p class="meta">Documentado por <strong>Celso Lima (@celsosre)</strong></p>
+
+        <hr class="divider">
+
+        <h2>1. Objetivo</h2>
+        <p>Configurar um ambiente Ubuntu (Multipass) para clonar um repositório GitHub de forma segura via SSH e implantar automaticamente alterações web no domínio customizado <code>devyra.com.br</code>.</p>
+
+        <h2>2. Passos Executados</h2>
+        
+        <h3>Passo 1: Instalação e Identidade Git</h3>
+        <pre><code>sudo apt update && sudo apt install git -y
+git config --global user.name "safe-tech-solutions"
+git config --global user.email "safehousetechnologia@gmail.com"</code></pre>
+
+        <h3>Passo 2: Geração de Chave SSH Ed25519</h3>
+        <pre><code>ssh-keygen -t ed25519 -C "safehousetechnologia@gmail.com"
+cat ~/.ssh/id_ed25519.pub</code></pre>
+        <p>A chave pública foi vinculada no menu <em>Settings -> SSH Keys</em> do GitHub.</p>
+
+        <h3>Passo 3: Validação da Conexão e Clone</h3>
+        <pre><code>ssh -T git@github.com
+git clone git@github.com:safe-tech-solutions/devyra.git
+cd devyra</code></pre>
+
+        <h3>Passo 4: Alteração e Pipeline de Deploy</h3>
+        <pre><code>git add .
+git commit -m "feat: atualiza layout da aplicação"
+git push origin main</code></pre>
+
+        <h2>3. Resultado Validado</h2>
+        <p>A alteração refletiu automaticamente no domínio <strong>devyra.com.br</strong> via GitHub Pages com certificado de segurança ativo.</p>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Celso SRE — Acompanhe mais no Instagram <a href="https://instagram.com/celsosre" target="_blank">@celsosre</a></p>
+        </div>
+    </footer>
+
+</body>
+</html>
