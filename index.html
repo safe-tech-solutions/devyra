@@ -3,475 +3,1249 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Devyra — Educação Tecnológica Gratuita</title>
+<title>Linux Manual de Produção — Devyra</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Permanent+Marker&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  :root {
-    --bg:      #080F1E;
-    --surface: #0F1C2E;
-    --border:  #1E3050;
-    --accent:  #00C9FF;
-    --text:    #EBF0FF;
-    --muted:   #7A90B0;
-    --green:   #00E5A0;
-    --orange:  #FF8C42;
-    --purple:  #9B7FFF;
-  }
+/* ════════════════════════════════
+   RESET & BASE
+════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  html { scroll-behavior: smooth; }
+:root {
+  --black:   #111;
+  --green:   #2e8b1a;
+  --green2:  #3aaf22;
+  --blue:    #1a5fad;
+  --blue2:   #2979d4;
+  --yellow:  #ffd600;
+  --paper:   #fafaf7;
+  --code-bg: #1a1f2e;
+  --border:  #d0d0c8;
+  --sans:    'Inter', system-ui, sans-serif;
+  --mono:    'JetBrains Mono', monospace;
+  --hand:    'Permanent Marker', cursive;
+  --caveat:  'Caveat', cursive;
+  --shadow:  0 4px 16px rgba(0,0,0,0.10);
+}
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
-    min-height: 100vh;
-  }
+html { scroll-behavior: smooth; }
 
-  /* NAV */
-  nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(8,15,30,0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-    padding: 0 2rem;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+body {
+  background: #e8e8e4;
+  font-family: var(--sans);
+  color: var(--black);
+}
 
-  .nav-logo {
-    font-family: 'Space Mono', monospace;
-    font-weight: 700;
-    font-size: 1.25rem;
-    color: var(--accent);
-    letter-spacing: -0.02em;
-    text-decoration: none;
-  }
-  .nav-logo span { color: var(--text); }
+/* ════════════════════════════════
+   NOTEBOOK WRAPPER
+════════════════════════════════ */
+.notebook {
+  max-width: 860px;
+  margin: 0 auto;
+  background: var(--paper);
+  position: relative;
+}
 
-  .nav-links {
-    display: flex;
-    gap: 2rem;
-    list-style: none;
-  }
-  .nav-links a {
-    font-size: 0.875rem;
-    color: var(--muted);
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--text); }
-  .nav-cta {
-    background: var(--accent);
-    color: var(--bg) !important;
-    padding: 0.4rem 1rem;
-    border-radius: 4px;
-    font-weight: 600 !important;
-  }
-  .nav-cta:hover { opacity: 0.88; }
+/* Espiral lateral */
+.spiral {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 44px;
+  background: #c8c8c4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 0;
+  gap: 28px;
+  z-index: 10;
+}
+.spiral-ring {
+  width: 28px;
+  height: 28px;
+  background: #888;
+  border-radius: 50%;
+  border: 4px solid #555;
+  flex-shrink: 0;
+}
 
-  /* HERO */
-  .hero {
-    padding: 6rem 2rem 4rem;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-  .hero h1 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(2.4rem, 6vw, 4.5rem);
-    font-weight: 700;
-    line-height: 1.08;
-    letter-spacing: -0.03em;
-    margin-bottom: 1.5rem;
-    max-width: 14ch;
-  }
-  .hero h1 em { font-style: normal; color: var(--accent); }
-  .hero-desc {
-    font-size: 1.125rem;
-    color: var(--muted);
-    max-width: 52ch;
-    line-height: 1.7;
-    margin-bottom: 2.5rem;
-  }
-  .btn-ghost {
-    border: 1px solid var(--border);
-    color: var(--text);
-    padding: 0.75rem 1.75rem;
-    border-radius: 4px;
-    font-weight: 500;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.95rem;
-    text-decoration: none;
-    display: inline-block;
-    transition: border-color 0.2s;
-  }
-  .btn-ghost:hover { border-color: var(--muted); }
+/* ════════════════════════════════
+   CAPA
+════════════════════════════════ */
+.cover {
+  padding: 32px 40px 40px 64px;
+  background: #fff;
+  position: relative;
+  min-height: 600px;
+  border-bottom: 3px solid var(--border);
+  overflow: hidden;
+}
 
-  /* TERMINAL STRIP */
-  .terminal-strip {
-    background: var(--surface);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    padding: 0.75rem 2rem;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--muted);
-    overflow-x: auto;
-    white-space: nowrap;
-  }
-  .terminal-strip .prompt { color: var(--green); }
-  .terminal-strip .cmd-text { color: var(--muted); margin-right: 1rem; }
+/* Linha vermelha de margem */
+.cover::before {
+  content: '';
+  position: absolute;
+  left: 90px; top: 0; bottom: 0;
+  width: 2px;
+  background: rgba(220, 50, 50, 0.35);
+}
 
-  /* CATEGORIAS */
-  .cat-list {
-    display: inline-flex;
-    flex-wrap: nowrap;
-    gap: 0;
-    align-items: center;
-  }
-  .cat-sep { color: var(--border); margin: 0 0.5rem; }
+/* Linhas horizontais do caderno */
+.cover-lines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.cover-lines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 31px,
+    #e0e0d8 31px,
+    #e0e0d8 32px
+  );
+}
 
-  .cat-link {
-    color: var(--accent);
-    text-decoration: none;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.75rem;
-    font-weight: 700;
-    padding: 0.15rem 0.4rem;
-    border-radius: 3px;
-    transition: background 0.15s, color 0.15s;
-    white-space: nowrap;
-  }
-  .cat-link:hover {
-    background: rgba(0,201,255,0.12);
-    color: var(--text);
-  }
-  .cat-link.active {
-    color: var(--green);
-  }
-  .cat-plain {
-    color: var(--muted);
-    white-space: nowrap;
-  }
+.cover-inner { position: relative; z-index: 1; }
 
-  /* CARDS GRID */
-  .cards-section {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 4rem 2rem;
-  }
-  .cards-section h2 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 2rem;
-  }
-  .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-  }
-  .card {
-    background: var(--surface);
-    padding: 2rem;
-    text-decoration: none;
-    color: inherit;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    transition: background 0.2s;
-    position: relative;
-    overflow: hidden;
-  }
-  .card:hover { background: #131f35; }
-  .card::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: var(--accent);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.25s ease;
-  }
-  .card:hover::after { transform: scaleX(1); }
+/* Header da capa */
+.cover-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
 
-  .card-tag {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--accent);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-  .card-title {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--text);
-    line-height: 1.3;
-  }
-  .card-desc {
-    font-size: 0.85rem;
-    color: var(--muted);
-    line-height: 1.6;
-    flex: 1;
-  }
-  .card-meta {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--border);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-top: 0.25rem;
-  }
-  .card-meta span { color: var(--green); }
+/* Post-it checklist */
+.postit {
+  background: #fff9a0;
+  border: 1px solid #e8e080;
+  padding: 12px 16px;
+  transform: rotate(-2deg);
+  box-shadow: 3px 3px 8px rgba(0,0,0,0.15);
+  font-family: var(--caveat);
+  font-size: 1rem;
+  line-height: 1.7;
+  min-width: 130px;
+}
+.postit-pin {
+  width: 16px; height: 16px;
+  background: #e53935;
+  border-radius: 50%;
+  margin: 0 auto 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+.postit li { list-style: none; padding-left: 4px; }
+.postit li::before { content: '☑ '; color: var(--green); }
 
-  /* ABOUT */
-  .about-strip {
-    padding: 5rem 2rem;
-    max-width: 1100px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: start;
-  }
-  .about-text h2 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.75rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    margin-bottom: 1rem;
-  }
-  .about-text p {
-    color: var(--muted);
-    line-height: 1.75;
-    margin-bottom: 1rem;
-    font-size: 0.95rem;
-    max-width: 48ch;
-  }
-  .about-link {
-    color: var(--accent);
-    font-weight: 600;
-    text-decoration: none;
-    font-size: 0.9rem;
-  }
-  .about-link:hover { text-decoration: underline; }
-  .about-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 2rem;
-  }
-  .about-card-title {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--accent);
-    letter-spacing: 0.1em;
-    margin-bottom: 1.25rem;
-  }
-  .pillar {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1.25rem;
-    align-items: flex-start;
-  }
-  .pillar-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    margin-top: 0.55rem;
-  }
-  .pillar-text { font-size: 0.9rem; color: var(--muted); line-height: 1.5; }
-  .pillar-text strong { color: var(--text); }
+/* Logo Devyra */
+.cover-brand {
+  text-align: center;
+  flex: 1;
+  padding: 0 12px;
+}
+.brand-name {
+  font-family: var(--hand);
+  font-size: 2.2rem;
+  color: var(--black);
+  letter-spacing: 0.04em;
+}
+.brand-name span { color: var(--green); }
+.brand-url { font-size: 0.8rem; color: #555; margin-top: 4px; }
 
-  /* FOOTER */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 3rem 2rem;
-  }
-  .footer-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 2rem;
-    flex-wrap: wrap;
-  }
-  .footer-brand {
-    font-family: 'Space Mono', monospace;
-    font-weight: 700;
-    font-size: 1.1rem;
-    color: var(--accent);
-  }
-  .footer-brand span {
-    color: var(--muted);
-    font-weight: 400;
-    font-size: 0.8rem;
-    display: block;
-    margin-top: 0.35rem;
-  }
-  .footer-links { display: flex; gap: 1.5rem; list-style: none; }
-  .footer-links a { color: var(--muted); font-size: 0.85rem; text-decoration: none; }
-  .footer-links a:hover { color: var(--text); }
+/* Balão "Do Básico à Produção" */
+.bubble {
+  background: #fff;
+  border: 2.5px solid var(--green);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-family: var(--caveat);
+  font-size: 0.95rem;
+  text-align: center;
+  color: var(--black);
+  position: relative;
+  transform: rotate(1.5deg);
+}
+.bubble strong { color: var(--green); font-size: 1.1rem; display: block; }
+.bubble::before {
+  content: '';
+  position: absolute;
+  bottom: -12px; left: 30px;
+  border: 6px solid transparent;
+  border-top-color: var(--green);
+}
 
-  @media (max-width: 700px) {
-    .hero h1 { font-size: 2.2rem; }
-    .about-strip { grid-template-columns: 1fr; gap: 2rem; }
-    .nav-links { display: none; }
-    .cards-grid { grid-template-columns: 1fr; }
-  }
+/* Título principal */
+.cover-title {
+  text-align: center;
+  margin: 16px 0 8px;
+  line-height: 1;
+}
+.title-linux {
+  font-family: var(--hand);
+  font-size: clamp(3.5rem, 8vw, 5.5rem);
+  color: var(--black);
+  display: block;
+  text-shadow: 3px 3px 0 rgba(0,0,0,0.08);
+  letter-spacing: 0.04em;
+}
+.title-manual {
+  font-family: var(--hand);
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  color: var(--green);
+  display: block;
+  letter-spacing: 0.02em;
+}
+.title-producao {
+  font-family: var(--hand);
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  color: var(--black);
+  display: block;
+  letter-spacing: 0.02em;
+}
+
+/* Subtítulo */
+.cover-subtitle {
+  text-align: center;
+  font-size: 0.88rem;
+  color: var(--blue2);
+  font-weight: 600;
+  margin-bottom: 20px;
+  letter-spacing: 0.01em;
+}
+
+/* Grid central */
+.cover-grid {
+  display: grid;
+  grid-template-columns: 1fr 180px 1fr;
+  gap: 16px;
+  align-items: start;
+  margin-bottom: 24px;
+}
+
+/* Lista de tópicos */
+.topics-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.topic-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+.topic-icon {
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  background: #111;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+.topic-line {
+  flex: 1;
+  height: 2px;
+  background: var(--black);
+  margin-left: 4px;
+}
+
+/* Tux + server */
+.cover-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.tux { font-size: 5rem; line-height: 1; text-align: center; }
+.server-rack {
+  background: #111;
+  border-radius: 6px;
+  padding: 8px 12px;
+  width: 100%;
+}
+.rack-unit {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 4px;
+  align-items: center;
+}
+.rack-unit:last-child { margin-bottom: 0; }
+.rack-led {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green2);
+  animation: blink 2s infinite;
+}
+.rack-led:nth-child(2) { animation-delay: 0.3s; background: #ffd600; }
+.rack-bar {
+  flex: 1;
+  height: 6px;
+  background: #333;
+  border-radius: 2px;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+/* Terminal */
+.terminal {
+  background: var(--code-bg);
+  border-radius: 8px;
+  overflow: hidden;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+}
+.terminal-bar {
+  background: #2d2d2d;
+  padding: 6px 10px;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.t-dot { width: 10px; height: 10px; border-radius: 50%; }
+.t-dot:nth-child(1) { background: #ff5f57; }
+.t-dot:nth-child(2) { background: #ffc12f; }
+.t-dot:nth-child(3) { background: #29c840; }
+.terminal-body { padding: 10px 12px; }
+.terminal-body .cmd { color: #7ec8e3; }
+.terminal-body .cmd::before { content: '$ '; color: var(--green2); font-weight: 700; }
+.terminal-body .cmd { display: block; line-height: 2; }
+
+/* Post-it de recursos */
+.postit-blue {
+  background: #fff9a0;
+  border: 1px solid #e8e080;
+  padding: 12px 16px;
+  font-family: var(--caveat);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  transform: rotate(1deg);
+  box-shadow: 3px 3px 8px rgba(0,0,0,0.12);
+}
+.postit-blue li { list-style: none; }
+.postit-blue li::before { content: '☑ '; color: var(--blue2); }
+
+/* Pipeline bottom */
+.pipeline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin: 16px 0 20px;
+  flex-wrap: wrap;
+}
+.pipe-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.pipe-icon {
+  width: 48px; height: 48px;
+  border: 2.5px dashed var(--blue2);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+  background: #fff;
+}
+.pipe-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.06em; text-align: center; }
+.pipe-arrow {
+  color: var(--blue2);
+  font-size: 1.2rem;
+  padding: 0 4px;
+  margin-bottom: 20px;
+}
+
+/* Tagline */
+.tagline {
+  background: var(--yellow);
+  padding: 10px 20px;
+  text-align: center;
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-top: 2px solid #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.tagline em { color: var(--green); font-style: normal; }
+
+/* ════════════════════════════════
+   CONTENT PAGES
+════════════════════════════════ */
+.content {
+  padding: 0 40px 60px 64px;
+  position: relative;
+}
+
+/* Linha de margem vermelha no conteúdo */
+.content::before {
+  content: '';
+  position: absolute;
+  left: 90px; top: 0; bottom: 0;
+  width: 2px;
+  background: rgba(220, 50, 50, 0.25);
+  pointer-events: none;
+}
+
+/* Linhas horizontais */
+.content-page {
+  position: relative;
+  padding: 32px 0 16px;
+  border-bottom: 1px solid var(--border);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 31px,
+    #ebebE3 31px,
+    #ebebE3 32px
+  );
+}
+
+/* Chapter heading */
+.ch {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 20px;
+  background: var(--paper);
+}
+.ch-num {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--blue2);
+  background: #e8f0fd;
+  border: 1.5px solid var(--blue2);
+  border-radius: 4px;
+  padding: 2px 7px;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+.ch h2 {
+  font-family: var(--sans);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--blue);
+  border-bottom: 2.5px solid var(--blue);
+  padding-bottom: 4px;
+  flex: 1;
+}
+
+/* Sub-heading */
+.sh {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin: 16px 0 8px;
+  background: var(--paper);
+  display: inline-block;
+  padding: 0 4px;
+}
+
+/* Body text */
+.body-text {
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: #333;
+  margin-bottom: 12px;
+  background: var(--paper);
+  padding: 2px 4px;
+}
+
+/* Bullet list */
+.blist {
+  list-style: none;
+  margin: 8px 0 16px;
+}
+.blist li {
+  font-size: 0.875rem;
+  color: #333;
+  padding: 4px 0 4px 20px;
+  position: relative;
+  line-height: 1.6;
+  background: var(--paper);
+}
+.blist li::before {
+  content: '›';
+  position: absolute;
+  left: 4px;
+  color: var(--blue2);
+  font-weight: 700;
+  font-size: 1rem;
+}
+.blist li strong { color: var(--black); }
+.blist li code {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  background: #eef2ff;
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: var(--blue);
+}
+
+/* Ordered list */
+.olist {
+  list-style: none;
+  counter-reset: step;
+  margin: 8px 0 16px;
+}
+.olist li {
+  counter-increment: step;
+  font-size: 0.875rem;
+  color: #333;
+  padding: 5px 0 5px 28px;
+  position: relative;
+  line-height: 1.6;
+  background: var(--paper);
+}
+.olist li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  width: 20px; height: 20px;
+  background: var(--blue2);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  top: 6px;
+}
+.olist li strong { color: var(--black); }
+
+/* Code block */
+.code {
+  background: var(--code-bg);
+  border-radius: 6px;
+  margin: 12px 0;
+  overflow: hidden;
+  page-break-inside: avoid;
+}
+.code-header {
+  background: #252b3b;
+  padding: 6px 14px;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: #7a8aaa;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.code-header::before { content: '●●●'; letter-spacing: 3px; color: #444; }
+.code pre {
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: #e0e8f0;
+  line-height: 1.85;
+  overflow-x: auto;
+  white-space: pre;
+}
+.code pre .cm { color: #556b7a; font-style: italic; }
+.code pre .kw { color: #7ec8e3; }
+.code pre .str { color: #a8d8a8; }
+.code pre .prompt { color: var(--green2); font-weight: 700; }
+
+/* Table */
+.tbl-wrap {
+  overflow-x: auto;
+  margin: 12px 0;
+  border-radius: 6px;
+  border: 1.5px solid var(--border);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+thead th {
+  background: var(--blue);
+  color: #fff;
+  padding: 9px 12px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+}
+tbody td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  color: #333;
+  vertical-align: top;
+  line-height: 1.5;
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:nth-child(even) td { background: #f4f4f0; }
+td code, th code {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  background: #e8eef8;
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: var(--blue);
+}
+
+/* Alert */
+.alert {
+  border-left: 4px solid var(--green);
+  background: #f0faf4;
+  padding: 10px 14px;
+  margin: 12px 0;
+  font-size: 0.85rem;
+  color: #333;
+  border-radius: 0 6px 6px 0;
+}
+.alert strong { color: var(--green); }
+.alert-warn {
+  border-left-color: #e65100;
+  background: #fff8f0;
+}
+.alert-warn strong { color: #e65100; }
+
+/* Footer */
+.doc-footer {
+  padding: 24px 40px 24px 64px;
+  border-top: 2px solid var(--border);
+  text-align: center;
+  font-size: 0.78rem;
+  color: #777;
+  background: #f5f5f0;
+}
+.doc-footer a { color: var(--blue2); text-decoration: none; }
+
+/* ════════════════════════════════
+   RESPONSIVE
+════════════════════════════════ */
+@media (max-width: 640px) {
+  .cover { padding: 24px 20px 32px 52px; }
+  .cover::before { left: 72px; }
+  .content { padding: 0 20px 40px 52px; }
+  .content::before { left: 72px; }
+  .cover-grid { grid-template-columns: 1fr; }
+  .cover-center { display: none; }
+  .spiral { width: 32px; }
+  .spiral-ring { width: 22px; height: 22px; }
+  .pipeline { gap: 4px; }
+  .pipe-arrow { font-size: 0.9rem; }
+}
 </style>
 </head>
 <body>
-
-<nav>
-  <a class="nav-logo" href="#">Devyra<span>.com.br</span></a>
-  <ul class="nav-links">
-    <li><a href="#sobre">Sobre</a></li>
-    <li><a href="https://www.instagram.com/celsosre/" target="_blank" rel="noopener" class="nav-cta">Instagram</a></li>
-  </ul>
+<!-- ══ NAVBAR DEVYRA ══ -->
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+<style>
+.devyra-nav {
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(8,15,30,0.96);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #1E3050;
+  padding: 0 2rem; height: 52px;
+  display: flex; align-items: center; justify-content: space-between;
+  font-family: "Inter", sans-serif;
+}
+.devyra-nav-logo {
+  font-family: "Space Mono", monospace;
+  font-weight: 700; font-size: 1.05rem;
+  color: #00C9FF; text-decoration: none; letter-spacing: -0.02em;
+}
+.devyra-nav-logo span { color: #EBF0FF; }
+.devyra-nav-right { display: flex; align-items: center; gap: 1.25rem; }
+.devyra-nav-back {
+  font-size: 0.78rem; color: #7A90B0;
+  text-decoration: none; font-weight: 500;
+  display: flex; align-items: center; gap: 0.4rem; transition: color 0.2s;
+}
+.devyra-nav-back:hover { color: #EBF0FF; }
+.devyra-nav-ig {
+  font-size: 0.75rem; font-weight: 600;
+  background: #00C9FF; color: #080F1E;
+  padding: 0.35rem 0.875rem; border-radius: 4px;
+  text-decoration: none; transition: opacity 0.2s;
+}
+.devyra-nav-ig:hover { opacity: 0.85; }
+@media (max-width: 600px) {
+  .devyra-nav { padding: 0 1rem; }
+  .devyra-nav-back span { display: none; }
+}
+</style>
+<nav class="devyra-nav">
+  <a class="devyra-nav-logo" href="index.html">Devyra<span>.com.br</span></a>
+  <div class="devyra-nav-right">
+    <a class="devyra-nav-back" href="index.html">← <span>Voltar ao início</span></a>
+    <a class="devyra-nav-ig" href="https://www.instagram.com/celsosre/" target="_blank" rel="noopener">@celsosre</a>
+  </div>
 </nav>
 
-<section class="hero">
-  <h1>Aprenda tecnologia<br><em>sem barreiras.</em></h1>
-  <p class="hero-desc">
-    Materiais técnicos de DevOps, Cloud, Linux e mais — traduzidos para o português, organizados e gratuitos para sempre.
-  </p>
-  <a href="https://www.instagram.com/celsosre/" target="_blank" rel="noopener" class="btn-ghost">Seguir no Instagram</a>
-</section>
 
-<!-- TERMINAL STRIP com categorias clicáveis -->
-<div class="terminal-strip">
-  <span class="prompt">$</span>
-  <span class="cmd-text"> ls categorias/ &nbsp;|&nbsp;</span>
-  <span class="cat-list">
-    <a href="linux.html" target="_blank" class="cat-link active">Linux</a>
-    <span class="cat-sep">·</span>
-    <span class="cat-plain">DevOps</span>
-    <span class="cat-sep">·</span>
-    <span class="cat-plain">Docker</span>
-    <span class="cat-sep">·</span>
-    <span class="cat-plain">Kubernetes</span>
-    <span class="cat-sep">·</span>
-    <span class="cat-plain">AWS</span>
-    <span class="cat-sep">·</span>
-    <span class="cat-plain">Azure</span>
-    <span class="cat-sep">·</span>
-    <span class="cat-plain">Terraform</span>
-    <span class="cat-sep">·</span>
-    <span class="cat-plain">Jenkins</span>
-    <span class="cat-sep">·</span>
-    <span class="cat-plain">Shell Scripting</span>
-    <span class="cat-sep">·</span>
-    <span class="cat-plain">IA</span>
-    <span class="cat-sep">·</span>
-    <span class="cat-plain">Incidentes</span>
-    <span class="cat-sep">·</span>
-    <span class="cat-plain">Outros</span>
-    <span class="cat-sep">·</span>
-    <span class="cat-plain">...</span>
-  </span>
-</div>
-
-<!-- CARDS de conteúdo -->
-<section class="cards-section">
-  <h2>Conteúdo disponível</h2>
-  <div class="cards-grid">
-
-    <a class="card" href="linux.html" target="_blank" rel="noopener">
-      <div class="card-tag">Linux</div>
-      <div class="card-title">Manual de Produção</div>
-      <div class="card-desc">Do básico à produção. Comandos, administração, monitoramento, troubleshooting e boas práticas — 21 capítulos em português.</div>
-      <div class="card-meta">
-        <span>21 capítulos</span> · Nível iniciante ao avançado
-      </div>
-    </a>
-
-    <!-- Placeholder cards — em breve -->
-    <div class="card" style="opacity:0.4;cursor:default;">
-      <div class="card-tag">DevOps</div>
-      <div class="card-title">Em breve</div>
-      <div class="card-desc">Conteúdo em preparação. Acompanhe o Instagram para ser avisado.</div>
-      <div class="card-meta"><span>—</span> · Em breve</div>
-    </div>
-
-    <div class="card" style="opacity:0.4;cursor:default;">
-      <div class="card-tag">Docker</div>
-      <div class="card-title">Em breve</div>
-      <div class="card-desc">Conteúdo em preparação. Acompanhe o Instagram para ser avisado.</div>
-      <div class="card-meta"><span>—</span> · Em breve</div>
-    </div>
-
+<div class="notebook">
+  <!-- Espiral -->
+  <div class="spiral">
+    <div class="spiral-ring"></div>
+    <div class="spiral-ring"></div>
+    <div class="spiral-ring"></div>
+    <div class="spiral-ring"></div>
+    <div class="spiral-ring"></div>
+    <div class="spiral-ring"></div>
+    <div class="spiral-ring"></div>
+    <div class="spiral-ring"></div>
+    <div class="spiral-ring"></div>
+    <div class="spiral-ring"></div>
+    <div class="spiral-ring"></div>
+    <div class="spiral-ring"></div>
+    <div class="spiral-ring"></div>
+    <div class="spiral-ring"></div>
+    <div class="spiral-ring"></div>
+    <div class="spiral-ring"></div>
+    <div class="spiral-ring"></div>
+    <div class="spiral-ring"></div>
   </div>
-</section>
 
-<section id="sobre">
-  <div class="about-strip">
-    <div class="about-text">
-      <h2>Por que a Devyra existe</h2>
-      <p>
-        O maior obstáculo para quem quer aprender tecnologia no Brasil não é falta de vontade — é o idioma. A maior parte do conhecimento técnico de qualidade existe só em inglês.
-      </p>
-      <p>
-        A Devyra nasceu para mudar isso. Reunimos os melhores materiais técnicos e os tornamos acessíveis: traduzidos, organizados e gratuitos.
-      </p>
-      <a href="https://www.instagram.com/celsosre/" target="_blank" rel="noopener" class="about-link">
-        Acompanhe as novidades no Instagram →
-      </a>
-    </div>
+  <!-- ══ CAPA ══ -->
+  <div class="cover">
+    <div class="cover-lines"></div>
+    <div class="cover-inner">
 
-    <div class="about-card">
-      <div class="about-card-title">PILARES DA PLATAFORMA</div>
-      <div class="pillar">
-        <div class="pillar-dot" style="background: var(--green)"></div>
-        <div class="pillar-text"><strong>Gratuito para sempre.</strong> Nenhum paywall, nenhuma assinatura. Educação não deve ter preço.</div>
+      <!-- Header -->
+      <div class="cover-header">
+        <div class="postit">
+          <ul>
+            <li>Aprender</li>
+            <li>Praticar</li>
+            <li>Solucionar Problemas</li>
+            <li>⭐ Dominar</li>
+          </ul>
+        </div>
+
+        <div class="cover-brand">
+          <div class="brand-name">DEVY<span>RA</span></div>
+          <div class="brand-url">https://devyra.com.br/ · @celsosre</div>
+        </div>
+
+        <div class="bubble">
+          Do Básico à<br><strong>Produção</strong>
+        </div>
       </div>
-      <div class="pillar">
-        <div class="pillar-dot" style="background: var(--accent)"></div>
-        <div class="pillar-text"><strong>Em português.</strong> Tradução cuidadosa dos melhores materiais técnicos disponíveis.</div>
+
+      <!-- Título -->
+      <div class="cover-title">
+        <span class="title-linux">LINUX</span>
+        <span class="title-manual">MANUAL DE</span>
+        <span class="title-producao">PRODUÇÃO</span>
       </div>
-      <div class="pillar">
-        <div class="pillar-dot" style="background: var(--purple)"></div>
-        <div class="pillar-text"><strong>Conteúdo atualizado.</strong> Tecnologias reais usadas no mercado hoje.</div>
+
+      <div class="cover-subtitle">
+        Comandos &bull; Administração &bull; Monitoramento &bull; Solução de Problemas<br>
+        Melhores Práticas &bull; Habilidades do Mundo Real
       </div>
-      <div class="pillar">
-        <div class="pillar-dot" style="background: var(--orange)"></div>
-        <div class="pillar-text"><strong>Comunidade aberta.</strong> Compartilhe, colabore, aprenda junto.</div>
+
+      <!-- Grid central -->
+      <div class="cover-grid">
+        <!-- Tópicos esquerda -->
+        <ul class="topics-list">
+          <li class="topic-item">
+            <div class="topic-icon">⌨</div>
+            COMANDOS
+            <div class="topic-line"></div>
+          </li>
+          <li class="topic-item">
+            <div class="topic-icon">⚙</div>
+            ADMIN DE SISTEMA
+            <div class="topic-line"></div>
+          </li>
+          <li class="topic-item">
+            <div class="topic-icon">🛡</div>
+            SEGURANÇA
+            <div class="topic-line"></div>
+          </li>
+          <li class="topic-item">
+            <div class="topic-icon">📊</div>
+            MONITORAMENTO
+            <div class="topic-line"></div>
+          </li>
+          <li class="topic-item">
+            <div class="topic-icon">🔧</div>
+            SOLUÇÃO DE PROBLEMAS
+            <div class="topic-line"></div>
+          </li>
+          <li class="topic-item">
+            <div class="topic-icon">☁</div>
+            MELHORES PRÁTICAS DE PRODUÇÃO
+            <div class="topic-line"></div>
+          </li>
+        </ul>
+
+        <!-- Centro: Tux + server -->
+        <div class="cover-center">
+          <div class="tux">🐧</div>
+          <div class="server-rack">
+            <div class="rack-unit"><div class="rack-led"></div><div class="rack-led"></div><div class="rack-bar"></div></div>
+            <div class="rack-unit"><div class="rack-led"></div><div class="rack-led"></div><div class="rack-bar"></div></div>
+            <div class="rack-unit"><div class="rack-led"></div><div class="rack-led"></div><div class="rack-bar"></div></div>
+            <div class="rack-unit"><div class="rack-led"></div><div class="rack-led"></div><div class="rack-bar"></div></div>
+          </div>
+        </div>
+
+        <!-- Terminal + checklist direita -->
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="terminal">
+            <div class="terminal-bar">
+              <div class="t-dot"></div><div class="t-dot"></div><div class="t-dot"></div>
+            </div>
+            <div class="terminal-body">
+              <span class="cmd">ls -l</span>
+              <span class="cmd">top</span>
+              <span class="cmd">systemctl status</span>
+              <span class="cmd">df -h</span>
+              <span class="cmd">journalctl -xe</span>
+            </div>
+          </div>
+          <div class="postit-blue">
+            <ul>
+              <li>Exemplos Reais</li>
+              <li>Guias Passo a Passo</li>
+              <li>Pronto para Produção</li>
+              <li>Perguntas de Entrevista</li>
+            </ul>
+          </div>
+        </div>
       </div>
+
+      <!-- Pipeline -->
+      <div class="pipeline">
+        <div class="pipe-step">
+          <div class="pipe-icon">⌨</div>
+          <div class="pipe-label">APRENDER</div>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step">
+          <div class="pipe-icon">⚙</div>
+          <div class="pipe-label">CONFIGURAR</div>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step">
+          <div class="pipe-icon">🔍</div>
+          <div class="pipe-label">SOLUCIONAR</div>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step">
+          <div class="pipe-icon">📈</div>
+          <div class="pipe-label">MONITORAR</div>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step">
+          <div class="pipe-icon">🛡</div>
+          <div class="pipe-label">PROTEGER</div>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step">
+          <div class="pipe-icon">☁</div>
+          <div class="pipe-label">IMPLANTAR</div>
+        </div>
+      </div>
+
+      <div class="tagline">
+        💡 Construa. Proteja. Monitore. Escale. Isso é <em>Linux.</em>
+      </div>
+
     </div>
   </div>
-</section>
 
-<footer>
-  <div class="footer-inner">
-    <div>
-      <div class="footer-brand">
-        Devyra
-        <span>Educação tecnológica gratuita em português</span>
+  <!-- ══ CONTEÚDO ══ -->
+  <div class="content">
+
+    <div class="content-page">
+      <div class="ch"><span class="ch-num">01</span><h2>Introdução ao Linux</h2></div>
+      <p class="sh">O que é o Linux?</p>
+      <p class="body-text">O Linux é um kernel de sistema operacional de código aberto, semelhante ao Unix, criado por <strong>Linus Torvalds em 1991</strong>. Ele gerencia hardware e recursos. Combinado com ferramentas, bibliotecas e aplicativos, torna-se um Sistema Operacional completo.</p>
+
+      <p class="sh">Por que o Linux domina Servidores e Nuvem?</p>
+      <ul class="blist">
+        <li><strong>Código Aberto e Gratuito:</strong> Sem custos de licença, impulsionado pela comunidade.</li>
+        <li><strong>Estável e Confiável:</strong> Construído para manter alta disponibilidade em sistemas de longa execução.</li>
+        <li><strong>Seguro por Design:</strong> Forte modelo de permissões e comunidade de segurança ativa.</li>
+        <li><strong>Alto Desempenho:</strong> Uso de recursos leve e eficiente.</li>
+        <li><strong>Nativo em Nuvem:</strong> Impulsiona contêineres, Kubernetes, DevOps e microsserviços.</li>
+        <li><strong>Padrão da Indústria:</strong> Utilizado pelos principais provedores de nuvem e data centers do mundo.</li>
+      </ul>
+
+      <p class="sh">Principais Distribuições Linux</p>
+      <ul class="blist">
+        <li><strong>Ubuntu:</strong> Amigável, excelente suporte da comunidade. Popular para servidores e desktops.</li>
+        <li><strong>Rocky / AlmaLinux:</strong> Nível empresarial, estáveis e prontas para produção.</li>
+        <li><strong>Red Hat Enterprise Linux (RHEL):</strong> Suporte empresarial e alta confiabilidade.</li>
+        <li><strong>Debian:</strong> Muito estável, seguro e amplamente utilizado.</li>
+        <li><strong>Arch Linux:</strong> Leve, rolling release para usuários avançados.</li>
+      </ul>
+    </div>
+
+    <div class="content-page">
+      <div class="ch"><span class="ch-num">02</span><h2>Sistema de Arquivos Linux</h2></div>
+      <p class="body-text">Tudo no Linux é um arquivo, inclusive dispositivos, processos e conexões de rede. O sistema organiza tudo em uma única árvore hierárquica, começando a partir da raiz <code style="font-family:var(--mono);background:#eef2ff;padding:1px 5px;border-radius:3px;color:var(--blue)">/</code>.</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Diretório</th><th>Propósito</th><th>Exemplos de Produção</th></tr></thead>
+          <tbody>
+            <tr><td><code>/etc</code></td><td>Arquivos de configuração do sistema e softwares instalados.</td><td><code>/etc/nginx/nginx.conf</code>, <code>/etc/ssh/sshd_config</code></td></tr>
+            <tr><td><code>/var</code></td><td>Dados variáveis que mudam durante a operação (logs, caches, bancos de dados).</td><td><code>/var/log/syslog</code>, <code>/var/lib/mysql</code></td></tr>
+            <tr><td><code>/home</code></td><td>Diretórios locais para usuários comuns.</td><td><code>/home/ubuntu/</code>, <code>/home/deploy/app/</code></td></tr>
+            <tr><td><code>/usr</code></td><td>Programas, utilitários e bibliotecas do sistema.</td><td><code>/usr/bin</code>, <code>/usr/lib</code></td></tr>
+            <tr><td><code>/opt</code></td><td>Softwares de terceiros instalados por administradores.</td><td><code>/opt/docker/</code>, <code>/opt/jdk/</code></td></tr>
+            <tr><td><code>/tmp</code></td><td>Arquivos temporários — limpos na reinicialização.</td><td><code>/tmp/app.sock</code>, <code>/tmp/upload/</code></td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
-    <ul class="footer-links">
-      <li><a href="https://www.instagram.com/celsosre/" target="_blank" rel="noopener">Instagram</a></li>
-    </ul>
-  </div>
-</footer>
 
+    <div class="content-page">
+      <div class="ch"><span class="ch-num">03</span><h2>Navegando no Linux</h2></div>
+      <ul class="blist">
+        <li><code>pwd</code> — Mostra o diretório de trabalho atual.</li>
+        <li><code>cd /var/log</code> — Altera entre diretórios.</li>
+        <li><code>ls -lah</code> — Lista com detalhes completos e arquivos ocultos.</li>
+        <li><code>tree -L 2</code> — Exibe estrutura em formato de árvore.</li>
+        <li><code>find /var/log -name "*.log"</code> — Pesquisa por nome, tipo e data.</li>
+        <li><code>locate nginx.conf</code> — Consulta rápida via banco de dados indexado.</li>
+      </ul>
+      <div class="code">
+        <div class="code-header">bash</div>
+        <pre><span class="prompt">$</span> pwd
+/home/devops
+<span class="prompt">$</span> ls -lah /var/log
+<span class="prompt">$</span> find /etc -name "*.conf" -type f
+<span class="prompt">$</span> cd - <span class="cm">   # retorna ao diretório anterior</span></pre>
+      </div>
+    </div>
+
+    <div class="content-page">
+      <div class="ch"><span class="ch-num">04</span><h2>Trabalhando com Arquivos e Diretórios</h2></div>
+      <ul class="blist">
+        <li><code>touch file.txt</code> — Cria um arquivo vazio ou atualiza o timestamp.</li>
+        <li><code>mkdir -p /opt/app/logs</code> — Cria diretórios com caminhos aninhados.</li>
+        <li><code>cp -r /etc/nginx /backup/</code> — Copia arquivos e diretórios recursivamente.</li>
+        <li><code>mv oldname.txt newname.txt</code> — Move ou renomeia.</li>
+        <li><code>rm -r olddir/</code> — Remove diretório e seu conteúdo.</li>
+        <li><code>ln -s /var/log/app.log app.log</code> — Cria link simbólico.</li>
+      </ul>
+      <div class="alert alert-warn">
+        <strong>Atenção:</strong> Sempre confira o caminho antes de executar <code>rm</code> ou <code>mv</code> em produção. Um <code>rm -rf /</code> acidental pode destruir o sistema.
+      </div>
+    </div>
+
+    <div class="content-page">
+      <div class="ch"><span class="ch-num">05</span><h2>Visualizando e Editando Arquivos</h2></div>
+      <ul class="blist">
+        <li><code>cat /etc/hosts</code> — Exibe o conteúdo completo (ideal para arquivos pequenos).</li>
+        <li><code>less /var/log/syslog</code> — Rola para cima e para baixo em arquivos grandes.</li>
+        <li><code>head -n 20 app.log</code> / <code>tail -n 50 app.log</code> — Primeiras ou últimas linhas.</li>
+        <li><code>tail -f /var/log/nginx/access.log</code> — Monitora logs em tempo real.</li>
+        <li><code>nano</code> / <code>vim</code> — Editores de texto para configurações e scripts.</li>
+      </ul>
+      <div class="code">
+        <div class="code-header">vim — atalhos essenciais</div>
+        <pre>i        → modo de inserção
+Esc      → modo normal
+:w       → salvar
+:q       → sair
+:wq      → salvar e sair
+:q!      → sair sem salvar</pre>
+      </div>
+    </div>
+
+    <div class="content-page">
+      <div class="ch"><span class="ch-num">06</span><h2>Permissões no Linux</h2></div>
+      <p class="body-text">Permissões protegem o sistema através de três entidades: <strong>Usuário (owner)</strong>, <strong>Grupo</strong> e <strong>Outros</strong>, usando <code style="font-family:var(--mono);background:#eef2ff;padding:1px 5px;border-radius:3px;">r</code> (leitura), <code style="font-family:var(--mono);background:#eef2ff;padding:1px 5px;border-radius:3px;">w</code> (escrita) e <code style="font-family:var(--mono);background:#eef2ff;padding:1px 5px;border-radius:3px;">x</code> (execução).</p>
+      <div class="code">
+        <div class="code-header">bash</div>
+        <pre><span class="prompt">$</span> chmod 755 script.sh    <span class="cm"># rwxr-xr-x</span>
+<span class="prompt">$</span> chmod u+x script.sh   <span class="cm"># adiciona execução ao owner</span>
+<span class="prompt">$</span> chown -R user:group /opt/app
+<span class="prompt">$</span> chgrp -R webteam /var/www</pre>
+      </div>
+      <div class="alert alert-warn">
+        <strong>Segurança:</strong> Evite <code>chmod 777</code>. Use menor privilégio. Prefira grupos para compartilhar acesso entre serviços.
+      </div>
+    </div>
+
+    <div class="content-page">
+      <div class="ch"><span class="ch-num">07</span><h2>Usuários e Grupos</h2></div>
+      <p class="body-text">O Linux é um sistema multiusuário. O gerenciamento adequado garante o <strong>Princípio do Menor Privilégio (PoLP)</strong> — cada processo recebe somente o acesso que precisa.</p>
+      <div class="code">
+        <div class="code-header">bash</div>
+        <pre><span class="prompt">$</span> sudo useradd -m alice         <span class="cm"># cria usuário com home</span>
+<span class="prompt">$</span> sudo passwd alice             <span class="cm"># define senha</span>
+<span class="prompt">$</span> sudo usermod -aG devops alice <span class="cm"># adiciona ao grupo</span>
+<span class="prompt">$</span> sudo groupadd devops
+<span class="prompt">$</span> groups alice                  <span class="cm"># lista grupos do usuário</span></pre>
+      </div>
+      <div class="alert">
+        <strong>Boas práticas:</strong> Edite <code>/etc/sudoers</code> sempre com <code>visudo</code>, nunca com editor comum. Erros nesse arquivo podem bloquear o acesso root.
+      </div>
+    </div>
+
+    <div class="content-page">
+      <div class="ch"><span class="ch-num">08</span><h2>Processos</h2></div>
+      <p class="body-text">Um processo é a instância de um programa em execução, identificado por um <strong>PID</strong> (Process ID).</p>
+      <div class="code">
+        <div class="code-header">bash</div>
+        <pre><span class="prompt">$</span> ps aux                <span class="cm"># fotografia de todos os processos</span>
+<span class="prompt">$</span> top / htop            <span class="cm"># monitoramento em tempo real</span>
+<span class="prompt">$</span> pgrep -l nginx        <span class="cm"># localiza por nome</span>
+<span class="prompt">$</span> kill 1234             <span class="cm"># SIGTERM — finalização suave</span>
+<span class="prompt">$</span> kill -9 1234          <span class="cm"># SIGKILL — força bruta</span>
+<span class="prompt">$</span> killall nginx</pre>
+      </div>
+      <div class="alert alert-warn">
+        <strong>Boas práticas:</strong> Sempre tente SIGTERM antes de SIGKILL. Confirme o PID e entenda o que o processo faz antes de encerrar.
+      </div>
+    </div>
+
+    <div class="content-page">
+      <div class="ch"><span class="ch-num">09</span><h2>Serviços do Sistema (systemd)</h2></div>
+      <p class="body-text">O <strong>systemd</strong> gerencia o ciclo de vida dos serviços no Linux moderno.</p>
+      <div class="code">
+        <div class="code-header">bash</div>
+        <pre><span class="prompt">$</span> sudo systemctl start nginx    <span class="cm"># inicia o serviço</span>
+<span class="prompt">$</span> sudo systemctl stop nginx     <span class="cm"># para o serviço</span>
+<span class="prompt">$</span> sudo systemctl restart nginx  <span class="cm"># reinicia</span>
+<span class="prompt">$</span> sudo systemctl reload nginx   <span class="cm"># recarrega config sem derrubar</span>
+<span class="prompt">$</span> sudo systemctl enable nginx   <span class="cm"># habilita no boot</span>
+<span class="prompt">$</span> systemctl status nginx        <span class="cm"># status atual</span>
+<span class="prompt">$</span> sudo journalctl -u nginx -f   <span class="cm"># logs em tempo real</span></pre>
+      </div>
+    </div>
+
+    <div class="content-page">
+      <div class="ch"><span class="ch-num">10</span><h2>Logs</h2></div>
+      <p class="body-text">Os logs contam a história do seu sistema. Saber lê-los é a habilidade mais importante de um sysadmin.</p>
+      <div class="code">
+        <div class="code-header">bash</div>
+        <pre><span class="prompt">$</span> journalctl -xe              <span class="cm"># logs recentes com contexto</span>
+<span class="prompt">$</span> journalctl -u nginx -f      <span class="cm"># logs de serviço em tempo real</span>
+<span class="prompt">$</span> tail -f /var/log/auth.log   <span class="cm"># autenticações</span>
+<span class="prompt">$</span> dmesg -T | less             <span class="cm"># mensagens do kernel</span>
+<span class="prompt">$</span> grep -i error /var/log/syslog | tail -50</pre>
+      </div>
+      <div class="alert">
+        <strong>Fluxo:</strong> Identifique → encontre o log certo → leia o período → filtre → analise → aja → valide. Use <strong>logrotate</strong> para rotação e retenção.
+      </div>
+    </div>
+
+    <div class="content-page">
+      <div class="ch"><span class="ch-num">11</span><h2>Gerenciamento de Pacotes</h2></div>
+      <div class="code">
+        <div class="code-header">Debian / Ubuntu (apt)</div>
+        <pre><span class="prompt">$</span> sudo apt update
+<span class="prompt">$</span> sudo apt install nginx
+<span class="prompt">$</span> sudo apt upgrade
+<span class="prompt">$</span> dpkg -l | grep nginx</pre>
+      </div>
+      <div class="code">
+        <div class="code-header">RHEL / AlmaLinux / Rocky (dnf)</div>
+        <pre><span class="prompt">$</span> sudo dnf update
+<span class="prompt">$</span> sudo dnf install nginx
+<span class="prompt">$</span> rpm -q nginx</pre>
+      </div>
+    </div>
+
+    <div class="content-page">
+      <div class="ch"><span class="ch-num">12</span><h2>Gerenciamento de Disco</h2></div>
+      <div class="code">
+        <div class="code-header">bash</div>
+        <pre><span class="prompt">$</span> df -h                          <span class="cm"># espaço nos filesystems</span>
+<span class="prompt">$</span> df -i                          <span class="cm"># uso de inodes</span>
+<span class="prompt">$</span> du -sh /var/log                <span class="cm"># tamanho do diretório</span>
+<span class="prompt">$</span> du -ah /var | sort -hr | head -10
+<span class="prompt">$</span> lsblk                         <span class="cm"># dispositivos de bloco</span>
+<span class="prompt">$</span> sudo blkid                    <span class="cm"># UUIDs dos dispositivos</span></pre>
+      </div>
+      <div class="alert alert-warn">
+        <strong>Atenção:</strong> Disco cheio pode parar serviços. Configure alertas quando uso atingir 80%.
+      </div>
+    </div>
+
+    <div class="content-page">
+      <div class="ch"><span class="ch-num">13</span><h2>Gerenciamento de Memória</h2></div>
+      <div class="code">
+        <div class="code-header">bash</div>
+        <pre><span class="prompt">$</span> free -h
+<span class="prompt">$</span> vmstat 1 5
+<span class="prompt">$</span> cat /proc/sys/vm/swappiness
+<span class="prompt">$</span> sudo sysctl -w vm.swappiness=10</pre>
+      </div>
+      <p class="body-text"><strong>available</strong> é a métrica que importa — memória real disponível para novas aplicações. Se chegar a zero, o kernel ativa o <strong>OOM Killer</strong> e encerra processos automaticamente.</p>
+    </div>
+
+    <div class="content-page">
+      <div class="ch"><span class="ch-num">14</span><h2>Monitoramento de CPU</h2></div>
+      <div class="code">
+        <div class="code-header">bash</div>
+        <pre><span class="prompt">$</span> uptime               <span class="cm"># load average 1, 5 e 15 min</span>
+<span class="prompt">$</span> mpstat -P ALL 1 3    <span class="cm"># uso por núcleo</span>
+<span class="prompt">$</span> sar -u 1 3           <span class="cm"># histórico de atividade</span>
+<span class="prompt">$</span> top / htop
+<span class="prompt">$</span> nice -n 10 ./backup.sh    <span class="cm"># prioridade reduzida</span>
+<span class="prompt">$</span> renice -n 15 -p 12345    <span class="cm"># altera em execução</span></pre>
+      </div>
+    </div>
+
+    <div class="content-page">
+      <div class="ch"><span class="ch-num">15</span><h2>Noções Básicas de Redes</h2></div>
+      <div class="code">
+        <div class="code-header">bash</div>
+        <pre><span class="prompt">$</span> ip addr                    <span class="cm"># interfaces e endereços</span>
+<span class="prompt">$</span> ip route                   <span class="cm"># tabela de roteamento</span>
+<span class="prompt">$</span> ping -c 4 8.8.8.8
+<span class="prompt">$</span> ss -tulpn                  <span class="cm"># portas abertas e processos</span>
+<span class="prompt">$</span> traceroute 1.1.1.1
+<span class="prompt">$</span> curl -I https://example.com
+<span class="prompt">$</span> dig google.com</pre>
+      </div>
+    </div>
+
+    <div class="content-page">
+      <div class="ch"><span class="ch-num">16</span><h2>SSH (Secure Shell)</h2></div>
+      <p class="body-text">Acesso remoto seguro e criptografado. Em produção, use sempre <strong>autenticação por chave</strong> — nunca senha.</p>
+      <div class="code">
+        <div class="code-header">bash</div>
+        <pre><span class="prompt">$</span> ssh-keygen -t ed25519              <span class="cm"># gera par de chaves</span>
+<span class="prompt">$</span> ssh-copy-id usuario@servidor       <span class="cm"># copia chave pública</span>
+<span class="prompt">$</span> ssh -p 2222 usuario@servidor       <span class="cm"># porta customizada</span>
+<span class="prompt">$</span> scp arquivo.tar.gz user@host:/tmp</pre>
+      </div>
+      <div class="alert">
+        <strong>Hardening:</strong> Desative <code>PasswordAuthentication yes</code> no <code>/etc/ssh/sshd_config</code>, use ed25519 e restrinja IPs com <code>AllowUsers</code>.
+      </div>
+    </div>
+
+    <div class="content-page">
+      <div class="ch"><span class="ch-num">17</span><h2>Fundamentos de Bash Scripting</h2></div>
+      <div class="code">
+        <div class="code-header">bash — script de exemplo</div>
+        <pre><span class="kw">#!/bin/bash</span>
+<span class="cm"># Script de Exemplo Devyra</span>
+set -euo pipefail  <span class="cm"># sai imediatamente em caso de erro</span>
+
+SERVICO="nginx"
+
+if systemctl is-active --quiet "$SERVICO"; then
+    echo "✓ $SERVICO está rodando."
+else
+    echo "⚠ ALERTA: $SERVICO inativo. Reiniciando..."
+    sudo systemctl restart "$SERVICO"
+fi</pre>
+      </div>
+    </div>
+
+    <div class="content-page">
+      <div class="ch"><span class="ch-num">18</span><h2>Tuning do Kernel com sysctl.d</h2></div>
+      <p class="body-text"><strong>sysctl</strong> ajusta parâmetros do kernel em tempo de execução, sem reinicialização. Persista as mudanças em <code style="font-family:var(--mono);background:#eef2ff;padding:1px 5px;border-radius:3px;">/etc/sysctl.d/99-producao.conf</code>.</p>
+      <div class="code">
+        <div class="code-header">/etc/sysctl.d/99-producao.conf</div>
+        <pre><span class="cm">## Memória</span>
+vm.swappiness = 10
+vm.dirty_ratio = 15
+
+<span class="cm">## Rede — TCP/IP</span>
+net.core.somaxconn = 65535
+net.ipv4.tcp_tw_reuse = 1
+net.ipv4.tcp_fin_timeout = 15
+net.ipv4.tcp_syncookies = 1    <span class="cm"># proteção SYN flood</span>
+
+<span class="cm">## Filesystem</span>
+fs.file-max = 2097152</pre>
+      </div>
+      <div class="code">
+        <div class="code-header">bash — aplicar</div>
+        <pre><span class="prompt">$</span> sudo sysctl -w vm.swappiness=10  <span class="cm"># temporário</span>
+<span class="prompt">$</span> sudo sysctl --system             <span class="cm"># aplica todos os *.conf</span></pre>
+      </div>
+    </div>
+
+    <div class="content-page">
+      <div class="ch"><span class="ch-num">19</span><h2>Troubleshooting no Linux</h2></div>
+      <p class="body-text">Abordagem sistemática para identificar, isolar e resolver incidentes de produção:</p>
+      <ol class="olist">
+        <li><strong>Observar / Identificar:</strong> Qual é o sintoma exato e quem está sendo afetado?</li>
+        <li><strong>Coletar Informações:</strong> Métricas, status de serviços e logs (<code>journalctl</code>, <code>/var/log/</code>).</li>
+        <li><strong>Analisar e Hipotetizar:</strong> Encontre padrões e isole o escopo do problema.</li>
+        <li><strong>Testar e Resolver:</strong> Aplique a correção e valide a integridade do ambiente.</li>
+      </ol>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Área</th><th>Ferramentas</th></tr></thead>
+          <tbody>
+            <tr><td>CPU</td><td><code>top</code>, <code>htop</code>, <code>mpstat</code>, <code>sar</code></td></tr>
+            <tr><td>Memória</td><td><code>free</code>, <code>vmstat</code>, <code>dmesg | grep oom</code></td></tr>
+            <tr><td>Disco</td><td><code>df</code>, <code>du</code>, <code>iostat</code></td></tr>
+            <tr><td>Serviços</td><td><code>systemctl</code>, <code>journalctl</code></td></tr>
+            <tr><td>Rede</td><td><code>ping</code>, <code>ss</code>, <code>traceroute</code>, <code>dig</code></td></tr>
+            <tr><td>Kernel</td><td><code>dmesg</code>, <code>sysctl</code>, <code>/proc/</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="content-page">
+      <div class="ch"><span class="ch-num">20</span><h2>Erros Comuns em Produção</h2></div>
+      <ul class="blist">
+        <li><strong>Executar tarefas como Root:</strong> Aumenta drasticamente o raio de impacto de falhas acidentais. Use <code>sudo</code> com contas específicas.</li>
+        <li><strong>Permissões incorretas:</strong> Podem derrubar aplicações ou expor dados sensíveis.</li>
+        <li><strong>Ignorar logs:</strong> Oculta avisos preventivos até que uma indisponibilidade grave ocorra.</li>
+        <li><strong>Backups não testados:</strong> Um backup nunca validado para restauração é um backup inútil.</li>
+        <li><strong>Falta de plano de rollback:</strong> Nunca faça alterações em produção sem uma via segura de reversão.</li>
+      </ul>
+    </div>
+
+    <div class="content-page" style="border-bottom:none;">
+      <div class="ch"><span class="ch-num">21</span><h2>Mini Projeto — Servidor NGINX Seguro</h2></div>
+      <div class="code">
+        <div class="code-header">bash — setup completo</div>
+        <pre><span class="prompt">$</span> ssh ubuntu@server_ip
+<span class="prompt">$</span> sudo adduser devops
+<span class="prompt">$</span> sudo usermod -aG sudo devops
+<span class="prompt">$</span> sudo apt update && sudo apt install -y nginx
+
+<span class="cm"># Tuning de produção</span>
+<span class="prompt">$</span> sudo tee /etc/sysctl.d/99-nginx.conf &lt;&lt;'EOF'
+net.core.somaxconn = 65535
+net.ipv4.tcp_tw_reuse = 1
+fs.file-max = 2097152
+EOF
+<span class="prompt">$</span> sudo sysctl --system
+
+<span class="prompt">$</span> sudo systemctl enable --now nginx
+<span class="prompt">$</span> sudo ufw allow 80/tcp
+<span class="prompt">$</span> sudo ufw allow 443/tcp
+<span class="prompt">$</span> tail -f /var/log/nginx/access.log</pre>
+      </div>
+      <div class="alert">
+        <strong>Próximos passos:</strong> configure firewall (ufw/nftables), implemente logrotate, ative fail2ban e automatize backups com scripts Bash versionados no Git.
+      </div>
+    </div>
+
+  </div><!-- /content -->
+
+  <!-- Footer -->
+  <div class="doc-footer">
+    <p style="font-weight:700;font-size:0.85rem;color:#333;margin-bottom:4px;">Linux Production Handbook</p>
+    <p>Instagram: <a href="https://www.instagram.com/celsosre/" target="_blank">@celsosre</a> &nbsp;·&nbsp; Site: <a href="https://devyra.com.br/" target="_blank">devyra.com.br</a></p>
+  </div>
+
+</div><!-- /notebook -->
 </body>
 </html>
 
