@@ -4,474 +4,196 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Devyra — Educação Tecnológica Gratuita</title>
+<meta name="description" content="Trilhas de Linux, DevOps, Cloud e mais — em português, gratuitas para sempre.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --bg:      #080F1E;
-    --surface: #0F1C2E;
-    --border:  #1E3050;
-    --accent:  #00C9FF;
-    --text:    #EBF0FF;
-    --muted:   #7A90B0;
-    --green:   #00E5A0;
-    --orange:  #FF8C42;
-    --purple:  #9B7FFF;
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
-    min-height: 100vh;
-  }
-
-  /* NAV */
-  nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(8,15,30,0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-    padding: 0 2rem;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .nav-logo {
-    font-family: 'Space Mono', monospace;
-    font-weight: 700;
-    font-size: 1.25rem;
-    color: var(--accent);
-    letter-spacing: -0.02em;
-    text-decoration: none;
-  }
-  .nav-logo span { color: var(--text); }
-
-  .nav-links {
-    display: flex;
-    gap: 2rem;
-    list-style: none;
-  }
-  .nav-links a {
-    font-size: 0.875rem;
-    color: var(--muted);
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--text); }
-  .nav-cta {
-    background: var(--accent);
-    color: var(--bg) !important;
-    padding: 0.4rem 1rem;
-    border-radius: 4px;
-    font-weight: 600 !important;
-  }
-  .nav-cta:hover { opacity: 0.88; }
-
-  /* HERO */
-  .hero {
-    padding: 6rem 2rem 4rem;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-  .hero h1 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(2.4rem, 6vw, 4.5rem);
-    font-weight: 700;
-    line-height: 1.08;
-    letter-spacing: -0.03em;
-    margin-bottom: 1.5rem;
-    max-width: 14ch;
-  }
-  .hero h1 em { font-style: normal; color: var(--accent); }
-  .hero-desc {
-    font-size: 1.125rem;
-    color: var(--muted);
-    max-width: 52ch;
-    line-height: 1.7;
-    margin-bottom: 2.5rem;
-  }
-  .btn-ghost {
-    border: 1px solid var(--border);
-    color: var(--text);
-    padding: 0.75rem 1.75rem;
-    border-radius: 4px;
-    font-weight: 500;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.95rem;
-    text-decoration: none;
-    display: inline-block;
-    transition: border-color 0.2s;
-  }
-  .btn-ghost:hover { border-color: var(--muted); }
-
-  /* TERMINAL STRIP */
-  .terminal-strip {
-    background: var(--surface);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    padding: 0.75rem 2rem;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--muted);
-    overflow-x: auto;
-    white-space: nowrap;
-  }
-  .terminal-strip .prompt { color: var(--green); }
-  .terminal-strip .cmd-text { color: var(--muted); margin-right: 1rem; }
-
-  /* CATEGORIAS */
-  .cat-list {
-    display: inline-flex;
-    flex-wrap: nowrap;
-    gap: 0;
-    align-items: center;
-  }
-  .cat-sep { color: var(--border); margin: 0 0.5rem; }
-
-  .cat-link {
-    color: var(--accent);
-    text-decoration: none;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.75rem;
-    font-weight: 700;
-    padding: 0.15rem 0.4rem;
-    border-radius: 3px;
-    transition: background 0.15s, color 0.15s;
-    white-space: nowrap;
-  }
-  .cat-link:hover {
-    background: rgba(0,201,255,0.12);
-    color: var(--text);
-  }
-  .cat-link.active {
-    color: var(--green);
-  }
-  .cat-plain {
-    color: var(--muted);
-    white-space: nowrap;
-  }
-
-  /* CARDS GRID */
-  .cards-section {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 4rem 2rem;
-  }
-  .cards-section h2 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 2rem;
-  }
-  .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-  }
-  .card {
-    background: var(--surface);
-    padding: 2rem;
-    text-decoration: none;
-    color: inherit;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    transition: background 0.2s;
-    position: relative;
-    overflow: hidden;
-  }
-  .card:hover { background: #131f35; }
-  .card::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: var(--accent);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.25s ease;
-  }
-  .card:hover::after { transform: scaleX(1); }
-
-  .card-tag {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--accent);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-  .card-title {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--text);
-    line-height: 1.3;
-  }
-  .card-desc {
-    font-size: 0.85rem;
-    color: var(--muted);
-    line-height: 1.6;
-    flex: 1;
-  }
-  .card-meta {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--border);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-top: 0.25rem;
-  }
-  .card-meta span { color: var(--green); }
-
-  /* ABOUT */
-  .about-strip {
-    padding: 5rem 2rem;
-    max-width: 1100px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: start;
-  }
-  .about-text h2 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.75rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    margin-bottom: 1rem;
-  }
-  .about-text p {
-    color: var(--muted);
-    line-height: 1.75;
-    margin-bottom: 1rem;
-    font-size: 0.95rem;
-    max-width: 48ch;
-  }
-  .about-link {
-    color: var(--accent);
-    font-weight: 600;
-    text-decoration: none;
-    font-size: 0.9rem;
-  }
-  .about-link:hover { text-decoration: underline; }
-  .about-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 2rem;
-  }
-  .about-card-title {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--accent);
-    letter-spacing: 0.1em;
-    margin-bottom: 1.25rem;
-  }
-  .pillar {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1.25rem;
-    align-items: flex-start;
-  }
-  .pillar-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    margin-top: 0.55rem;
-  }
-  .pillar-text { font-size: 0.9rem; color: var(--muted); line-height: 1.5; }
-  .pillar-text strong { color: var(--text); }
-
-  /* FOOTER */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 3rem 2rem;
-  }
-  .footer-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 2rem;
-    flex-wrap: wrap;
-  }
-  .footer-brand {
-    font-family: 'Space Mono', monospace;
-    font-weight: 700;
-    font-size: 1.1rem;
-    color: var(--accent);
-  }
-  .footer-brand span {
-    color: var(--muted);
-    font-weight: 400;
-    font-size: 0.8rem;
-    display: block;
-    margin-top: 0.35rem;
-  }
-  .footer-links { display: flex; gap: 1.5rem; list-style: none; }
-  .footer-links a { color: var(--muted); font-size: 0.85rem; text-decoration: none; }
-  .footer-links a:hover { color: var(--text); }
-
-  @media (max-width: 700px) {
-    .hero h1 { font-size: 2.2rem; }
-    .about-strip { grid-template-columns: 1fr; gap: 2rem; }
-    .nav-links { display: none; }
-    .cards-grid { grid-template-columns: 1fr; }
-  }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0A0C10;--bg2:#0D1017;--surface:#12161F;--surface2:#171C27;--border:#222A38;--border2:#2E3850;--text:#F5F7FA;--muted:#98A2B3;--faint:#5E6A80;--gold:#E9B949;--gold2:#F6D47C;--gold-dim:rgba(233,185,73,.14);--green:#3DD68C;--cyan:#4CC9F0;--violet:#8B7CF6;--orange:#FF9A3D;--grad:linear-gradient(92deg,#F6D47C 0%,#E9B949 45%,#C98F1B 100%);--radius:14px}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font:16px/1.6 'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(700px 340px at 82% -60px,rgba(233,185,73,.09),transparent 65%),radial-gradient(600px 380px at -120px 38%,rgba(76,201,240,.05),transparent 60%),radial-gradient(500px 320px at 105% 78%,rgba(139,124,246,.05),transparent 60%)}
+::selection{background:rgba(233,185,73,.3)}
+nav{position:sticky;top:0;z-index:100;height:64px;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;padding:0 clamp(1rem,4vw,2.5rem);background:rgba(10,12,16,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.logo{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:var(--text);font-family:'Space Grotesk';font-weight:700;font-size:1.15rem}
+.logo-mark{width:28px;height:28px;border-radius:8px;background:var(--grad);color:#141005;display:grid;place-items:center;font-size:.85rem;font-weight:700;box-shadow:0 4px 14px rgba(233,185,73,.35)}
+.logo span{color:var(--faint);font-weight:500;font-size:.85rem}
+.nav-right{display:flex;align-items:center;gap:1.4rem}
+.nav-links{display:flex;gap:1.6rem;list-style:none}
+.nav-links a{font-size:.9rem;font-weight:500;color:var(--muted);text-decoration:none}
+.nav-links a:hover{color:var(--text)}
+.m-only{display:none}
+.btn{display:inline-flex;align-items:center;gap:.5rem;font-family:'Space Grotesk';font-weight:600;font-size:.9rem;text-decoration:none;border-radius:10px;padding:.62rem 1.15rem;transition:.2s;cursor:pointer;border:1px solid transparent}
+.btn-gold{background:var(--grad);color:#141005;box-shadow:0 6px 20px rgba(233,185,73,.25)}
+.btn-gold:hover{transform:translateY(-1px)}
+.btn-ghost{border-color:var(--border2);color:var(--text)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold2)}
+.btn-sm{padding:.42rem .85rem;font-size:.82rem;border-radius:8px}
+.burger{display:none;background:none;border:1px solid var(--border2);border-radius:8px;color:var(--text);width:38px;height:38px;font-size:1.05rem;cursor:pointer}
+.hero{max-width:1150px;margin:0 auto;padding:4.5rem 1.5rem 3.5rem;display:grid;grid-template-columns:1.12fr .88fr;gap:3.5rem;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-family:'JetBrains Mono';font-size:.7rem;letter-spacing:.06em;color:var(--gold2);background:var(--gold-dim);border:1px solid rgba(233,185,73,.35);padding:.35rem .8rem;border-radius:999px;margin-bottom:1.4rem}
+.eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green)}
+.hero h1{font-family:'Space Grotesk';font-size:clamp(2.5rem,5.4vw,3.9rem);line-height:1.06;letter-spacing:-.03em;font-weight:700}
+.grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-sub{color:var(--muted);font-size:1.05rem;max-width:52ch;margin:1.3rem 0 2rem}
+.hero-cta{display:flex;gap:.9rem;flex-wrap:wrap}
+.stats{display:flex;gap:2.4rem;margin-top:2.6rem;flex-wrap:wrap}
+.stat b{display:block;font-family:'Space Grotesk';font-size:1.45rem;color:var(--gold2)}
+.stat span{font-size:.76rem;color:var(--faint)}
+.term{background:#0B0E14;border:1px solid var(--border2);border-radius:14px;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.55);font-family:'JetBrains Mono',monospace;font-size:.8rem}
+.term-bar{display:flex;align-items:center;gap:.45rem;padding:.7rem 1rem;background:#10141D;border-bottom:1px solid var(--border)}
+.term-bar b{width:11px;height:11px;border-radius:50%}
+.term-bar b:nth-child(1){background:#FF5F57}.term-bar b:nth-child(2){background:#FEBC2E}.term-bar b:nth-child(3){background:#28C840}
+.term-title{margin:0 auto;font-size:.68rem;color:var(--faint)}
+.term pre{padding:1.15rem 1.3rem;line-height:1.9;overflow-x:auto;color:var(--muted);white-space:pre-wrap}
+.tp{color:var(--green)}.tc{color:var(--text)}.tg{color:var(--gold2)}
+.caret{display:inline-block;width:9px;height:1.05em;background:var(--gold);vertical-align:text-bottom;animation:blink 1.1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.catalog{max-width:1150px;margin:0 auto;padding:1.5rem 1.5rem 4rem;scroll-margin-top:80px}
+.kicker{font-family:'JetBrains Mono';font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:.4rem}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:1.25rem;flex-wrap:wrap;margin-bottom:1.4rem}
+.sec-head h2{font-family:'Space Grotesk';font-size:1.7rem;letter-spacing:-.02em}
+.search{display:flex;align-items:center;gap:.55rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.6rem .95rem;width:min(340px,100%);color:var(--muted)}
+.search:focus-within{border-color:rgba(233,185,73,.5)}
+.search input{background:none;border:0;outline:0;color:var(--text);font:inherit;font-size:.9rem;width:100%}
+.search input::placeholder{color:var(--faint)}
+.pills{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.9rem}
+.pill{border:1px solid var(--border);background:var(--surface);color:var(--muted);padding:.48rem 1rem;border-radius:999px;font:500 .85rem 'Inter',sans-serif;cursor:pointer}
+.pill:hover{color:var(--text);border-color:var(--border2)}
+.pill.on{background:var(--gold-dim);border-color:rgba(233,185,73,.55);color:var(--gold2)}
+.pill .n{font-family:'JetBrains Mono';font-size:.68rem;color:var(--faint);margin-left:.3rem}
+.pill.on .n{color:var(--gold)}
+.subbar{display:none;align-items:center;gap:.7rem;margin:.4rem 0 1.2rem}
+.sublab{font-size:.72rem;color:var(--faint);text-transform:uppercase;letter-spacing:.08em}
+.subbar select{background:var(--surface);border:1px solid var(--border2);color:var(--text);border-radius:8px;padding:.42rem .7rem;font:500 .85rem 'Inter',sans-serif;cursor:pointer;outline:none}
+.group-head{display:flex;align-items:center;gap:.8rem;margin:1.9rem 0 1rem}
+.group:first-child .group-head{margin-top:0}
+.group-head h3{font-family:'Space Grotesk';font-size:1rem;letter-spacing:.1em;text-transform:uppercase}
+.group-head .cnt{font-family:'JetBrains Mono';font-size:.68rem;color:var(--faint)}
+.group-head .ln{flex:1;height:1px;background:var(--border)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.15rem}
+.card{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;text-decoration:none;color:inherit;transition:transform .22s,border-color .22s,box-shadow .22s}
+.card:hover{transform:translateY(-4px);border-color:rgba(233,185,73,.5);box-shadow:0 18px 44px rgba(0,0,0,.45)}
+.thumb{height:132px;position:relative;display:grid;place-items:center;background-color:#10141D}
+.thumb::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1px);background-size:16px 16px}
+.thumb-ico{font-size:2.7rem;filter:drop-shadow(0 6px 14px rgba(0,0,0,.5));transition:transform .25s;position:relative}
+.card:hover .thumb-ico{transform:scale(1.12) rotate(-4deg)}
+.thumb-cat{position:absolute;top:.7rem;left:.7rem;font-family:'JetBrains Mono';font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text);background:rgba(8,10,14,.55);padding:.25rem .55rem;border-radius:6px;border:1px solid rgba(255,255,255,.08)}
+.thumb-soon{position:absolute;top:.7rem;right:.7rem;font-family:'JetBrains Mono';font-size:.6rem;letter-spacing:.1em;color:var(--violet);background:rgba(139,124,246,.12);border:1px solid rgba(139,124,246,.4);padding:.25rem .5rem;border-radius:6px}
+.card-body{padding:1.15rem 1.15rem .9rem;display:flex;flex-direction:column;gap:.5rem;flex:1}
+.card-tags{font-family:'JetBrains Mono';font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.card-title{font-family:'Space Grotesk';font-size:1.08rem;font-weight:700;line-height:1.3}
+.card-desc{font-size:.87rem;color:var(--muted);line-height:1.6;flex:1}
+.card-meta{font-size:.76rem;color:var(--faint);display:flex;gap:.45rem;flex-wrap:wrap;align-items:center}
+.card-meta b{color:var(--gold2);font-weight:600}
+.card-foot{display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.15rem 1.1rem;border-top:1px dashed var(--border)}
+.price-free{font-family:'Space Grotesk';font-weight:700;font-size:1.02rem;color:var(--gold2)}
+.price-soon{font-family:'Space Grotesk';font-weight:600;font-size:.95rem;color:var(--faint)}
+.go{font-size:.82rem;color:var(--muted);font-weight:500}
+.card:hover .go{color:var(--gold2)}
+.card.soon{border-style:dashed}
+.card.soon .thumb-ico{filter:grayscale(.9);opacity:.75}
+.empty{padding:3.5rem 1rem;text-align:center;color:var(--muted);border:1px dashed var(--border2);border-radius:var(--radius)}
+.about{max-width:1150px;margin:0 auto;padding:3rem 1.5rem 4.5rem;scroll-margin-top:80px}
+.about-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:3rem;align-items:start}
+.about h2{font-family:'Space Grotesk';font-size:1.7rem;margin:.4rem 0 1.1rem}
+.about p{color:var(--muted);font-size:.95rem;line-height:1.75;margin-bottom:1rem;max-width:52ch}
+.about .lnk{color:var(--gold2);font-weight:600;font-size:.9rem;text-decoration:none}
+.pillars{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.6rem}
+.pillars h4{font-family:'JetBrains Mono';font-size:.68rem;letter-spacing:.14em;color:var(--gold);margin-bottom:1.2rem}
+.pillar{display:flex;gap:.9rem;padding:.75rem 0;border-bottom:1px solid var(--border)}
+.pillar:last-child{border-bottom:0}
+.pillar i{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:.45rem}
+.pillar div{font-size:.88rem;color:var(--muted);line-height:1.6}
+.pillar strong{color:var(--text)}
+.band{max-width:1150px;margin:0 auto 4.5rem;padding:0 1.5rem}
+.band-in{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;background:linear-gradient(120deg,rgba(233,185,73,.12),rgba(233,185,73,.03) 55%),var(--surface);border:1px solid rgba(233,185,73,.35);border-radius:var(--radius);padding:1.7rem 2rem}
+.band-in h3{font-family:'Space Grotesk';font-size:1.25rem}
+.band-in p{color:var(--muted);font-size:.9rem;margin-top:.25rem}
+footer{border-top:1px solid var(--border);background:var(--bg2)}
+.foot{max-width:1150px;margin:0 auto;padding:3rem 1.5rem;display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:2.5rem}
+.foot h5{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:1rem}
+.fbrand{font-family:'Space Grotesk';font-weight:700;font-size:1.15rem}
+.fbrand em{font-style:normal;color:var(--gold2)}
+.foot p{color:var(--muted);font-size:.85rem;margin-top:.6rem;max-width:34ch}
+.foot ul{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+.foot a{color:var(--muted);font-size:.88rem;text-decoration:none}
+.foot a:hover{color:var(--gold2)}
+.foot-bottom{border-top:1px solid var(--border);padding:1.2rem 1.5rem;text-align:center;font-size:.78rem;color:var(--faint)}
+.foot-bottom b{color:var(--gold)}
+@media(max-width:960px){.hero{grid-template-columns:1fr;gap:2.5rem;padding-top:3.5rem}.term{max-width:540px}.about-grid{grid-template-columns:1fr;gap:2rem}.foot{grid-template-columns:1fr 1fr}}
+@media(max-width:760px){.nav-links{position:fixed;top:64px;left:0;right:0;flex-direction:column;gap:0;background:var(--bg2);border-bottom:1px solid var(--border);display:none;padding:.5rem 0}.nav-links.open{display:flex}.nav-links a{display:block;padding:.9rem 1.5rem}.m-only{display:block}.burger{display:grid;place-items:center}.grid{grid-template-columns:1fr}.foot{grid-template-columns:1fr}}
+@media(max-width:560px){.nav-right>.btn-gold{display:none}}
 </style>
 </head>
 <body>
-
 <nav>
-  <a class="nav-logo" href="#">Devyra<span>.com.br</span></a>
-  <ul class="nav-links">
-    <li><a href="#sobre">Sobre</a></li>
-    <li><a href="https://www.instagram.com/celsosre/" target="_blank" rel="noopener" class="nav-cta">Instagram</a></li>
-  </ul>
-</nav>
-
-<section class="hero">
-  <h1>Aprenda tecnologia<br><em>sem barreiras.</em></h1>
-  <p class="hero-desc">
-    Materiais técnicos de DevOps, Cloud, Linux e mais — traduzidos para o português, organizados e gratuitos para sempre.
-  </p>
-  <a href="https://www.instagram.com/celsosre/" target="_blank" rel="noopener" class="btn-ghost">Seguir no Instagram</a>
-</section>
-
-<!-- TERMINAL STRIP com categorias clicáveis -->
-<div class="terminal-strip">
-  <span class="prompt">$</span>
-  <span class="cmd-text"> ls categorias/ &nbsp;|&nbsp;</span>
-  <span class="cat-list">
-    <a href="linux.html" target="_blank" class="cat-link active">Linux</a>
-    <span class="cat-sep">·</span>
-    <span class="cat-plain">DevOps</span>
-    <span class="cat-sep">·</span>
-    <span class="cat-plain">Docker</span>
-    <span class="cat-sep">·</span>
-    <span class="cat-plain">Kubernetes</span>
-    <span class="cat-sep">·</span>
-    <span class="cat-plain">AWS</span>
-    <span class="cat-sep">·</span>
-    <span class="cat-plain">Azure</span>
-    <span class="cat-sep">·</span>
-    <span class="cat-plain">Terraform</span>
-    <span class="cat-sep">·</span>
-    <span class="cat-plain">Jenkins</span>
-    <span class="cat-sep">·</span>
-    <span class="cat-plain">Shell Scripting</span>
-    <span class="cat-sep">·</span>
-    <span class="cat-plain">IA</span>
-    <span class="cat-sep">·</span>
-    <span class="cat-plain">Incidentes</span>
-    <span class="cat-sep">·</span>
-    <span class="cat-plain">Outros</span>
-    <span class="cat-sep">·</span>
-    <span class="cat-plain">...</span>
-  </span>
+<a class="logo" href="index.html"><span class="logo-mark">D</span>devyra<span>.com.br</span></a>
+<div class="nav-right">
+<ul class="nav-links" id="navlinks"><li><a href="#trilhas">Trilhas</a></li><li><a href="#sobre">Sobre</a></li><li class="m-only"><a href="https://www.instagram.com/celsosre/" target="_blank" rel="noopener">Instagram @celsosre</a></li></ul>
+<a class="btn btn-gold btn-sm" href="https://www.instagram.com/celsosre/" target="_blank" rel="noopener">Seguir no Instagram</a>
+<button class="burger" id="burger" aria-label="Abrir menu">☰</button>
 </div>
-
-<!-- CARDS de conteúdo -->
-<section class="cards-section">
-  <h2>Conteúdo disponível</h2>
-  <div class="cards-grid">
-
-    <a class="card" href="linux.html" target="_blank" rel="noopener">
-      <div class="card-tag">Linux</div>
-      <div class="card-title">Manual de Produção</div>
-      <div class="card-desc">Do básico à produção. Comandos, administração, monitoramento, troubleshooting e boas práticas — 21 capítulos em português.</div>
-      <div class="card-meta">
-        <span>21 capítulos</span> · Nível iniciante ao avançado
-      </div>
-    </a>
-
-    <!-- Placeholder cards — em breve -->
-    <div class="card" style="opacity:0.4;cursor:default;">
-      <div class="card-tag">DevOps</div>
-      <div class="card-title">Em breve</div>
-      <div class="card-desc">Conteúdo em preparação. Acompanhe o Instagram para ser avisado.</div>
-      <div class="card-meta"><span>—</span> · Em breve</div>
-    </div>
-
-    <div class="card" style="opacity:0.4;cursor:default;">
-      <div class="card-tag">Docker</div>
-      <div class="card-title">Em breve</div>
-      <div class="card-desc">Conteúdo em preparação. Acompanhe o Instagram para ser avisado.</div>
-      <div class="card-meta"><span>—</span> · Em breve</div>
-    </div>
-
-  </div>
+</nav>
+<header class="hero">
+<div>
+<span class="eyebrow"><i></i>100% GRATUITO · EM PORTUGUÊS · SEM PAYWALL</span>
+<h1>Aprenda tecnologia<br><span class="grad">sem barreiras.</span></h1>
+<p class="hero-sub">Trilhas de Linux, DevOps, Cloud e IA — traduzidas, organizadas e atualizadas. O conhecimento técnico que o mercado usa, acessível para todo mundo.</p>
+<div class="hero-cta"><a class="btn btn-gold" href="#trilhas">Explorar trilhas</a><a class="btn btn-ghost" href="https://www.instagram.com/celsosre/" target="_blank" rel="noopener">@celsosre no Instagram</a></div>
+<div class="stats"><div class="stat"><b id="st-live">—</b><span>conteúdos publicados</span></div><div class="stat"><b id="st-caps">—</b><span>capítulos em PT-BR</span></div><div class="stat"><b>R$ 0</b><span>para sempre</span></div></div>
+</div>
+<div class="term"><div class="term-bar"><b></b><b></b><b></b><span class="term-title">devyra@cloud: ~/trilhas</span></div><pre><span class="tp">$</span> <span class="tc">whoami</span>
+educação tech gratuita · pt-BR
+<span class="tp">$</span> <span class="tc">ls trilhas/</span>
+<span id="term-ls"></span>
+<span class="tp">$</span> <span class="tc">cat manifesto.txt</span>
+<span class="tg">gratuito</span> · <span class="tg">em português</span> · <span class="tg">para sempre</span>
+<span class="tp">$</span> <span class="caret"></span></pre></div>
+</header>
+<section class="catalog" id="trilhas">
+<div class="sec-head"><div><span class="kicker">// catálogo</span><h2>Explore as trilhas</h2></div>
+<label class="search"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input id="q" type="search" placeholder="Buscar trilha… ex.: linux"></label></div>
+<div class="pills" id="pills"></div>
+<div class="subbar" id="subbar"><span class="sublab">Subcategoria</span><select id="subsel"></select></div>
+<div id="cards"></div>
 </section>
-
-<section id="sobre">
-  <div class="about-strip">
-    <div class="about-text">
-      <h2>Por que a Devyra existe</h2>
-      <p>
-        O maior obstáculo para quem quer aprender tecnologia no Brasil não é falta de vontade — é o idioma. A maior parte do conhecimento técnico de qualidade existe só em inglês.
-      </p>
-      <p>
-        A Devyra nasceu para mudar isso. Reunimos os melhores materiais técnicos e os tornamos acessíveis: traduzidos, organizados e gratuitos.
-      </p>
-      <a href="https://www.instagram.com/celsosre/" target="_blank" rel="noopener" class="about-link">
-        Acompanhe as novidades no Instagram →
-      </a>
-    </div>
-
-    <div class="about-card">
-      <div class="about-card-title">PILARES DA PLATAFORMA</div>
-      <div class="pillar">
-        <div class="pillar-dot" style="background: var(--green)"></div>
-        <div class="pillar-text"><strong>Gratuito para sempre.</strong> Nenhum paywall, nenhuma assinatura. Educação não deve ter preço.</div>
-      </div>
-      <div class="pillar">
-        <div class="pillar-dot" style="background: var(--accent)"></div>
-        <div class="pillar-text"><strong>Em português.</strong> Tradução cuidadosa dos melhores materiais técnicos disponíveis.</div>
-      </div>
-      <div class="pillar">
-        <div class="pillar-dot" style="background: var(--purple)"></div>
-        <div class="pillar-text"><strong>Conteúdo atualizado.</strong> Tecnologias reais usadas no mercado hoje.</div>
-      </div>
-      <div class="pillar">
-        <div class="pillar-dot" style="background: var(--orange)"></div>
-        <div class="pillar-text"><strong>Comunidade aberta.</strong> Compartilhe, colabore, aprenda junto.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="footer-inner">
-    <div>
-      <div class="footer-brand">
-        Devyra
-        <span>Educação tecnológica gratuita em português</span>
-      </div>
-    </div>
-    <ul class="footer-links">
-      <li><a href="https://www.instagram.com/celsosre/" target="_blank" rel="noopener">Instagram</a></li>
-    </ul>
-  </div>
-</footer>
-
+<section class="about" id="sobre"><div class="about-grid"><div><span class="kicker">// manifesto</span><h2>Por que a Devyra existe</h2><p>O maior obstáculo para quem quer aprender tecnologia no Brasil não é falta de vontade — é o idioma. A maior parte do conhecimento técnico de qualidade existe só em inglês.</p><p>A Devyra nasceu para mudar isso: reunimos os melhores materiais técnicos e os tornamos acessíveis — traduzidos, organizados e gratuitos.</p><a class="lnk" href="https://www.instagram.com/celsosre/" target="_blank" rel="noopener">Acompanhe as novidades no Instagram →</a></div>
+<div class="pillars"><h4>PILARES DA PLATAFORMA</h4><div class="pillar"><i style="background:var(--gold)"></i><div><strong>Gratuito para sempre.</strong> Nenhum paywall, nenhuma assinatura.</div></div><div class="pillar"><i style="background:var(--green)"></i><div><strong>Em português.</strong> Tradução cuidadosa dos melhores materiais.</div></div><div class="pillar"><i style="background:var(--cyan)"></i><div><strong>Conteúdo atualizado.</strong> Tecnologias reais do mercado.</div></div><div class="pillar"><i style="background:var(--violet)"></i><div><strong>Comunidade aberta.</strong> Compartilhe, colabore, aprenda junto.</div></div></div></div></section>
+<div class="band"><div class="band-in"><div><h3>Novas trilhas toda semana</h3><p>DevOps, Docker, Kubernetes e mais estão a caminho.</p></div><a class="btn btn-gold" href="https://www.instagram.com/celsosre/" target="_blank" rel="noopener">Seguir @celsosre</a></div></div>
+<footer><div class="foot"><div><div class="fbrand">devyra<em>.com.br</em></div><p>Educação tecnológica gratuita, em português, para sempre.</p></div><div><h5>Trilhas</h5><ul id="foot-trilhas"></ul></div><div><h5>Comunidade</h5><ul><li><a href="#sobre">Sobre a Devyra</a></li><li><a href="https://www.instagram.com/celsosre/" target="_blank" rel="noopener">Instagram @celsosre</a></li><li><a href="https://www.instagram.com/celsosre/" target="_blank" rel="noopener">Sugerir um conteúdo</a></li></ul></div></div><div class="foot-bottom">© <span id="ano"></span> <b>Devyra</b> — conteúdo | inspire | evolua</div></footer>
+<script>
+const IG='https://www.instagram.com/celsosre/';
+const CATALOG=[
+{categoria:'Linux',subcategoria:'Administração',titulo:'Linux — Manual de Produção',descricao:'Do básico à produção: comandos, administração de sistemas, monitoramento, troubleshooting e boas práticas.',nivel:'Iniciante ao avançado',capitulos:'21 capítulos',caps:21,status:'live',href:'linux.html',icone:'🐧',cor:'#E9B949'},
+{categoria:'Linux',subcategoria:'Redes e Troubleshooting',titulo:'Linux — Troubleshooting de Rede',descricao:'Árvore de decisão para diagnosticar falhas de conectividade: interface, IP, rota, gateway, DNS, firewall e aplicação.',nivel:'Intermediário',capitulos:'7 etapas + checklist',caps:0,status:'live',href:'linux-rede.html',icone:'🌐',cor:'#4CC9F0'},
+{categoria:'DevOps',titulo:'DevOps — Cultura & CI/CD',descricao:'Pipelines, automação, integração e entrega contínua.',nivel:'Iniciante',status:'soon',icone:'♾️',cor:'#3DD68C'},
+{categoria:'Docker',titulo:'Docker — Do zero ao deploy',descricao:'Contêineres, imagens, volumes e redes.',nivel:'Iniciante',status:'soon',icone:'🐳',cor:'#4CC9F0'},
+{categoria:'Kubernetes',titulo:'Kubernetes — Orquestração',descricao:'Deploy, escalabilidade e resiliência em cluster.',nivel:'Intermediário',status:'soon',icone:'☸️',cor:'#8B7CF6'},
+{categoria:'Cloud AWS',titulo:'AWS — Fundamentos de Cloud',descricao:'EC2, S3, VPC, IAM e boas práticas.',nivel:'Iniciante',status:'soon',icone:'☁️',cor:'#FF9A3D'},
+{categoria:'IA',titulo:'IA para Devs',descricao:'APIs de LLMs, automações e ferramentas.',nivel:'Iniciante',status:'soon',icone:'🤖',cor:'#FF6B8B'}
+];
+const $=s=>document.querySelector(s);
+const state={pill:'Todos',sub:'',q:''};
+function hexRgba(h,a){const v=parseInt(h.replace('#',''),16);return `rgba(${v>>16&255},${v>>8&255},${v&255},${a})`}
+function cardHTML(c){const cor=c.cor||'#E9B949';const bg=`linear-gradient(135deg,${hexRgba(cor,.30)} 0%,${hexRgba(cor,.07)} 55%,rgba(13,16,23,.92) 100%)`;const tags=[c.categoria,c.subcategoria].filter(Boolean).join(' › ');
+if(c.status==='live'){return `<a class="card" href="${c.href}"><div class="thumb" style="background:${bg}"><span class="thumb-cat">${c.categoria}</span><span class="thumb-ico">${c.icone||'📚'}</span></div><div class="card-body"><span class="card-tags">${tags}</span><h3 class="card-title">${c.titulo}</h3><p class="card-desc">${c.descricao}</p><div class="card-meta"><b>${c.capitulos||''}</b><span>·</span><span>${c.nivel||''}</span><span>·</span><span>PT-BR</span></div></div><div class="card-foot"><span class="price-free">Gratuito</span><span class="go">Acessar →</span></div></a>`}
+return `<a class="card soon" href="${IG}" target="_blank" rel="noopener"><div class="thumb" style="background:${bg}"><span class="thumb-cat">${c.categoria}</span><span class="thumb-soon">EM BREVE</span><span class="thumb-ico">${c.icone||'📚'}</span></div><div class="card-body"><span class="card-tags">${tags}</span><h3 class="card-title">${c.titulo}</h3><p class="card-desc">${c.descricao}</p><div class="card-meta"><span>${c.nivel||''}</span></div></div><div class="card-foot"><span class="price-soon">Em breve</span><span class="go">Avise-me →</span></div></a>`}
+function render(){const q=state.q.trim().toLowerCase();const items=CATALOG.filter(c=>{if(state.pill!=='Todos'&&c.categoria!==state.pill)return false;if(state.sub&&c.subcategoria!==state.sub)return false;if(q&&!(`${c.titulo} ${c.descricao} ${c.categoria} ${c.subcategoria||''}`.toLowerCase().includes(q)))return false;return true});const box=$('#cards');
+if(!items.length){box.innerHTML=`<div class="empty">Nenhuma trilha encontrada.</div>`;return}
+if(state.pill==='Todos'){const cats=[...new Set(items.map(c=>c.categoria))];box.innerHTML=cats.map(cat=>{const its=items.filter(c=>c.categoria===cat);const live=its.filter(c=>c.status==='live').length;let txt='em breve';if(live===1)txt='1 disponível';if(live>1)txt=live+' disponíveis';return `<div class="group"><div class="group-head"><h3>${cat}</h3><span class="cnt">${txt}</span><span class="ln"></span></div><div class="grid">${its.map(cardHTML).join('')}</div></div>`}).join('')}else{box.innerHTML=`<div class="grid">${items.map(cardHTML).join('')}</div>`}}
+function buildPills(){const cats=['Todos',...new Set(CATALOG.map(c=>c.categoria))];$('#pills').innerHTML=cats.map(cat=>{const n=cat==='Todos'?CATALOG.length:CATALOG.filter(c=>c.categoria===cat).length;return `<button class="pill ${state.pill===cat?'on':''}" data-cat="${cat}">${cat}<span class="n">${n}</span></button>`}).join('');document.querySelectorAll('.pill').forEach(p=>p.onclick=()=>{state.pill=p.dataset.cat;state.sub='';document.querySelectorAll('.pill').forEach(x=>x.classList.toggle('on',x===p));updateSubs();render()})}
+function updateSubs(){const bar=$('#subbar'),sel=$('#subsel');const subs=[...new Set(CATALOG.filter(c=>c.categoria===state.pill&&c.subcategoria).map(c=>c.subcategoria))];if(state.pill==='Todos'||!subs.length){bar.style.display='none';sel.innerHTML='';return}bar.style.display='flex';sel.innerHTML=`<option value="">Todas</option>`+subs.map(s=>`<option value="${s}">${s}</option>`).join('');sel.value=state.sub}
+$('#subsel').onchange=e=>{state.sub=e.target.value;render()};
+$('#q').oninput=e=>{state.q=e.target.value;render()};
+$('#burger').onclick=()=>$('#navlinks').classList.toggle('open');
+const uniq=[...new Set(CATALOG.map(c=>c.categoria))];
+document.getElementById('term-ls').innerHTML=uniq.map(cat=>{const live=CATALOG.some(c=>c.categoria===cat&&c.status==='live');const slug=cat.toLowerCase().replace(/\s+/g,'-')+'/';return `<span class="${live?'tg':''}">${slug}</span>`}).join('  ');
+$('#st-live').textContent=String(CATALOG.filter(c=>c.status==='live').length).padStart(2,'0');
+$('#st-caps').textContent=String(CATALOG.reduce((s,c)=>s+(c.caps||0),0)).padStart(2,'0');
+$('#foot-trilhas').innerHTML=CATALOG.filter(c=>c.status==='live').map(c=>`<li><a href="${c.href}">${c.titulo}</a></li>`).join('');
+$('#ano').textContent=new Date().getFullYear();
+buildPills();updateSubs();render();
+</script>
 </body>
 </html>
-

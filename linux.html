@@ -3,613 +3,122 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Linux Manual de Produção — Devyra</title>
+<title>Linux — Manual de Produção · Devyra</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Permanent+Marker&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-
-/* ════════════════════════════════
-   RESET & BASE
-════════════════════════════════ */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  --black:   #111;
-  --green:   #2e8b1a;
-  --green2:  #3aaf22;
-  --blue:    #1a5fad;
-  --blue2:   #2979d4;
-  --paper:   #fafaf7;
-  --code-bg: #1a1f2e;
-  --border:  #d0d0c8;
-  --sans:    'Inter', system-ui, sans-serif;
-  --mono:    'JetBrains Mono', monospace;
-  --hand:    'Permanent Marker', cursive;
-}
-
-html { scroll-behavior: smooth; }
-
-body {
-  background: #e8e8e4;
-  font-family: var(--sans);
-  color: var(--black);
-}
-
-/* ════════════════════════════════
-   NAVBAR DEVYRA
-════════════════════════════════ */
-.devyra-nav {
-  position: sticky; top: 0; z-index: 200;
-  background: rgba(8,15,30,0.96);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid #1E3050;
-  padding: 0 2rem; height: 52px;
-  display: flex; align-items: center; justify-content: space-between;
-  font-family: "Inter", sans-serif;
-}
-.devyra-nav-logo {
-  font-family: var(--mono);
-  font-weight: 700; font-size: 1.05rem;
-  color: #00C9FF; text-decoration: none; letter-spacing: -0.02em;
-}
-.devyra-nav-logo span { color: #EBF0FF; }
-.devyra-nav-right { display: flex; align-items: center; gap: 1.25rem; }
-.devyra-nav-back {
-  font-size: 0.78rem; color: #7A90B0;
-  text-decoration: none; font-weight: 500;
-  display: flex; align-items: center; gap: 0.4rem; transition: color 0.2s;
-}
-.devyra-nav-back:hover { color: #EBF0FF; }
-.devyra-nav-ig {
-  font-size: 0.75rem; font-weight: 600;
-  background: #00C9FF; color: #080F1E;
-  padding: 0.35rem 0.875rem; border-radius: 4px;
-  text-decoration: none; transition: opacity 0.2s;
-}
-.devyra-nav-ig:hover { opacity: 0.85; }
-
-/* ════════════════════════════════
-   NOTEBOOK WRAPPER
-════════════════════════════════ */
-.notebook {
-  max-width: 860px;
-  margin: 0 auto;
-  background: var(--paper);
-  position: relative;
-  /* Linhas exatas de 32px de espaçamento */
-  background-image: repeating-linear-gradient(
-    to bottom,
-    transparent,
-    transparent 31px,
-    #e3e3dc 31px,
-    #e3e3dc 32px
-  );
-  min-height: 100vh;
-}
-
-/* Espiral lateral contínua */
-.spiral {
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 44px;
-  background: #c8c8c4;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 32px 0;
-  gap: 28px;
-  z-index: 10;
-  height: 100%;
-}
-.spiral-ring {
-  width: 28px;
-  height: 28px;
-  background: #888;
-  border-radius: 50%;
-  border: 4px solid #555;
-  flex-shrink: 0;
-}
-
-/* ════════════════════════════════
-   SEÇÕES DA PÁGINA E MARGEM VERMELHA
-════════════════════════════════ */
-.page-section {
-  padding: 32px 40px 32px 84px; /* Espaço à esquerda garantido após a linha vermelha */
-  position: relative;
-  border-bottom: 2px dashed #d5d5cd;
-}
-
-/* Linha vermelha de margem do caderno posicionada em 68px */
-.page-section::before {
-  content: '';
-  position: absolute;
-  left: 68px; top: 0; bottom: 0;
-  width: 2px;
-  background: rgba(220, 50, 50, 0.4);
-  pointer-events: none;
-}
-
-.page-inner {
-  position: relative;
-  z-index: 1;
-}
-
-/* Capa - Header */
-.cover-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 16px;
-}
-
-.cover-brand {
-  text-align: center;
-  flex: 1;
-  padding: 0 12px;
-}
-.brand-name {
-  font-family: var(--hand);
-  font-size: 2.2rem;
-  color: var(--black);
-  letter-spacing: 0.04em;
-  line-height: 32px;
-}
-.brand-name span { color: var(--green); }
-.brand-url { font-size: 0.8rem; color: #555; margin-top: 4px; line-height: 24px; }
-
-/* Título principal */
-.cover-title {
-  text-align: center;
-  margin: 16px 0;
-}
-.title-linux {
-  font-family: var(--hand);
-  font-size: clamp(3.5rem, 8vw, 5.2rem);
-  color: var(--black);
-  display: block;
-  text-shadow: 3px 3px 0 rgba(0,0,0,0.08);
-  letter-spacing: 0.04em;
-  line-height: 1.1;
-}
-.title-manual, .title-producao {
-  font-family: var(--hand);
-  font-size: clamp(2.2rem, 5vw, 3.2rem);
-  color: var(--green);
-  display: block;
-  letter-spacing: 0.02em;
-  line-height: 1.2;
-}
-.title-producao { color: var(--black); }
-
-.cover-subtitle {
-  text-align: center;
-  font-size: 0.88rem;
-  color: var(--blue2);
-  font-weight: 600;
-  margin-top: 16px;
-  margin-bottom: 16px;
-  line-height: 32px;
-}
-
-/* ════════════════════════════════
-   TIPOGRAFIA ALINHADA ÀS PAUTAS E À MARGEM
-════════════════════════════════ */
-.ch {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 32px;
-  margin-top: 16px;
-  height: 32px;
-}
-.ch-num {
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: var(--blue2);
-  background: #e8f0fd;
-  border: 1.5px solid var(--blue2);
-  border-radius: 4px;
-  padding: 0 6px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-.ch h2 {
-  font-family: var(--sans);
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--blue);
-  border-bottom: 2px solid var(--blue);
-  line-height: 30px;
-  flex: 1;
-  height: 32px;
-}
-
-.sh {
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--green);
-  margin-top: 16px;
-  margin-bottom: 8px;
-  display: block;
-  line-height: 24px;
-}
-
-.body-text {
-  font-size: 0.9rem;
-  line-height: 32px; /* Encaixa perfeitamente na pauta de 32px */
-  color: #333;
-  margin-bottom: 16px;
-}
-
-.blist {
-  list-style: none;
-  margin: 8px 0 16px;
-}
-.blist li {
-  font-size: 0.875rem;
-  color: #333;
-  padding-left: 18px;
-  position: relative;
-  line-height: 32px; /* Alinhado à pauta */
-}
-.blist li::before {
-  content: '›';
-  position: absolute;
-  left: 2px;
-  color: var(--blue2);
-  font-weight: 700;
-  font-size: 1rem;
-  line-height: 32px;
-}
-.blist li strong { color: var(--black); }
-.blist li code {
-  font-family: var(--mono);
-  font-size: 0.8rem;
-  background: #eef2ff;
-  padding: 1px 5px;
-  border-radius: 3px;
-  color: var(--blue);
-}
-
-/* Blocos de Código */
-.code {
-  background: var(--code-bg);
-  border-radius: 6px;
-  margin: 16px 0;
-  overflow: hidden;
-  page-break-inside: avoid;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-.code-header {
-  background: #252b3b;
-  padding: 6px 14px;
-  font-family: var(--mono);
-  font-size: 0.65rem;
-  color: #7a8aaa;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.code-header::before { content: '●●●'; letter-spacing: 3px; color: #444; }
-.code pre {
-  padding: 14px 16px;
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  color: #e0e8f0;
-  line-height: 1.6;
-  overflow-x: auto;
-  white-space: pre;
-}
-.code pre .cm { color: #556b7a; font-style: italic; }
-.code pre .prompt { color: var(--green2); font-weight: 700; }
-
-/* Tabelas */
-.tbl-wrap {
-  overflow-x: auto;
-  margin: 16px 0;
-  border-radius: 6px;
-  border: 1.5px solid var(--border);
-  background: #fff;
-}
-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.82rem;
-}
-thead th {
-  background: var(--blue);
-  color: #fff;
-  padding: 10px 12px;
-  text-align: left;
-  font-weight: 600;
-  font-size: 0.75rem;
-  letter-spacing: 0.05em;
-}
-tbody td {
-  padding: 10px 12px;
-  border-bottom: 1px solid var(--border);
-  color: #333;
-  vertical-align: middle;
-  line-height: 24px;
-}
-tbody tr:last-child td { border-bottom: none; }
-tbody tr:nth-child(even) td { background: #f4f4f0; }
-td code, th code {
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  background: #e8eef8;
-  padding: 1px 5px;
-  border-radius: 3px;
-  color: var(--blue);
-}
-
-/* Rodapé do Caderno */
-.doc-footer {
-  padding: 32px 40px 32px 84px;
-  text-align: center;
-  font-size: 0.78rem;
-  color: #777;
-  background: #f5f5f0;
-  line-height: 32px;
-}
-.doc-footer a { color: var(--blue2); text-decoration: none; }
-
-/* Responsividade */
-@media (max-width: 640px) {
-  .page-section, .doc-footer { padding: 24px 20px 24px 60px; }
-  .page-section::before { left: 52px; }
-  .spiral { width: 32px; }
-  .spiral-ring { width: 22px; height: 22px; }
-}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0A0C10;--bg2:#0D1017;--surface:#12161F;--surface2:#171C27;--border:#222A38;--border2:#2E3850;--text:#F5F7FA;--muted:#98A2B3;--faint:#5E6A80;--gold:#E9B949;--gold2:#F6D47C;--gold-dim:rgba(233,185,73,.14);--green:#3DD68C;--grad:linear-gradient(92deg,#F6D47C 0%,#E9B949 45%,#C98F1B 100%);--radius:14px}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font:16px/1.6 'Inter',system-ui,sans-serif}
+body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(700px 340px at 80% -60px,rgba(233,185,73,.08),transparent 65%)}
+nav{position:sticky;top:0;z-index:100;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,4vw,2.5rem);background:rgba(10,12,16,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.logo{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:var(--text);font-family:'Space Grotesk';font-weight:700;font-size:1.15rem}
+.logo-mark{width:28px;height:28px;border-radius:8px;background:var(--grad);color:#141005;display:grid;place-items:center;font-size:.85rem;font-weight:700}
+.logo span{color:var(--faint);font-weight:500;font-size:.85rem}
+.nav-right{display:flex;align-items:center;gap:1.2rem}
+.nav-links{display:flex;gap:1.6rem;list-style:none}
+.nav-links a{font-size:.9rem;color:var(--muted);text-decoration:none}
+.nav-links a:hover{color:var(--text)}
+.btn{display:inline-flex;align-items:center;font-family:'Space Grotesk';font-weight:600;font-size:.9rem;text-decoration:none;border-radius:10px;padding:.62rem 1.15rem;border:1px solid transparent}
+.btn-gold{background:var(--grad);color:#141005}
+.btn-ghost{border-color:var(--border2);color:var(--text)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold2)}
+.btn-sm{padding:.42rem .85rem;font-size:.82rem;border-radius:8px}
+.burger{display:none;background:none;border:1px solid var(--border2);border-radius:8px;color:var(--text);width:38px;height:38px;cursor:pointer}
+.doc-hero{max-width:1150px;margin:0 auto;padding:3.2rem 1.5rem 2.6rem;border-bottom:1px solid var(--border)}
+.crumb{display:flex;gap:.55rem;align-items:center;font-size:.82rem;color:var(--faint);margin-bottom:1.4rem;flex-wrap:wrap}
+.crumb a{color:var(--muted);text-decoration:none}.crumb a:hover{color:var(--gold2)}.crumb em{font-style:normal;color:var(--gold2)}
+.chips{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.1rem}
+.chip{font-family:'JetBrains Mono';font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;padding:.34rem .75rem;border-radius:999px;border:1px solid var(--border2);color:var(--muted)}
+.chip.gold{color:var(--gold2);border-color:rgba(233,185,73,.45);background:var(--gold-dim)}
+.chip.free{color:var(--green);border-color:rgba(61,214,140,.4);background:rgba(61,214,140,.08)}
+.doc-title{font-family:'Space Grotesk';font-size:clamp(2.1rem,4.6vw,3.1rem);line-height:1.1}
+.grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.doc-sub{color:var(--muted);max-width:62ch;margin-top:1rem}
+.doc-meta{display:flex;gap:1.8rem;flex-wrap:wrap;margin-top:1.2rem;color:var(--faint);font-size:.85rem}
+.doc-meta b{color:var(--gold2);font-family:'Space Grotesk'}
+.doc-cta{display:flex;gap:.9rem;flex-wrap:wrap;margin-top:1.6rem}
+.layout{max-width:1150px;margin:0 auto;padding:2.5rem 1.5rem 4rem;display:grid;grid-template-columns:250px minmax(0,1fr);gap:2.5rem;align-items:start}
+.toc{position:sticky;top:88px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.1rem}
+.toc h4{font-family:'JetBrains Mono';font-size:.66rem;letter-spacing:.14em;color:var(--faint);margin-bottom:.75rem;text-transform:uppercase}
+.toc a{display:flex;gap:.6rem;padding:.45rem .55rem;border-radius:8px;color:var(--muted);text-decoration:none;font-size:.83rem}
+.toc a:hover{color:var(--text);background:var(--surface2)}
+.toc a.on{color:var(--gold2);background:var(--gold-dim)}
+.toc .n{font-family:'JetBrains Mono';font-size:.66rem;color:var(--gold);min-width:20px}
+.chapter{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;margin-bottom:1.5rem;scroll-margin-top:92px}
+.ch-head{display:flex;align-items:center;gap:.8rem;margin-bottom:1rem}
+.ch-num{font-family:'JetBrains Mono';font-size:.72rem;font-weight:700;color:#141005;background:var(--grad);padding:.25rem .55rem;border-radius:6px}
+.chapter h2{font-family:'Space Grotesk';font-size:1.25rem}
+.sh{display:block;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin:1.4rem 0 .6rem}
+.body-text{font-size:.92rem;color:#C7CFDC;line-height:1.75;margin-bottom:.9rem}
+.body-text strong,.blist strong{color:var(--text)}
+.blist{list-style:none;margin:.4rem 0 1rem}
+.blist li{position:relative;padding-left:1.15rem;color:#C7CFDC;font-size:.9rem;line-height:1.7;margin-bottom:.4rem}
+.blist li::before{content:'▸';position:absolute;left:0;color:var(--gold)}
+.body-text code,.blist code,.tbl-wrap code{font-family:'JetBrains Mono';font-size:.82em;background:rgba(233,185,73,.1);color:#F2D38A;border:1px solid rgba(233,185,73,.18);padding:.1em .4em;border-radius:5px;white-space:nowrap}
+.code{background:#0B0E14;border:1px solid var(--border2);border-radius:10px;overflow:hidden;margin:1.1rem 0}
+.code-h{display:flex;justify-content:space-between;align-items:center;background:#10141D;padding:.45rem .9rem;border-bottom:1px solid var(--border);font-family:'JetBrains Mono';font-size:.68rem;color:var(--faint)}
+.copy{background:none;border:1px solid var(--border2);color:var(--muted);font-family:'JetBrains Mono';font-size:.62rem;padding:.2rem .55rem;border-radius:5px;cursor:pointer}
+.code pre{padding:.9rem 1rem;font-family:'JetBrains Mono';font-size:.8rem;line-height:1.8;color:#D9E2F0;overflow-x:auto}
+.prompt{color:var(--green);font-weight:700}.cm{color:#5B6B80;font-style:italic}
+.tbl-wrap{overflow-x:auto;margin:1.1rem 0;border:1px solid var(--border);border-radius:10px}
+table{width:100%;border-collapse:collapse;font-size:.85rem;min-width:560px}
+thead th{background:var(--surface2);color:var(--gold2);text-align:left;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;padding:.7rem .9rem;border-bottom:1px solid var(--border)}
+td{padding:.7rem .9rem;border-bottom:1px solid var(--border);color:#C7CFDC;vertical-align:top}
+.next-box{border:1px solid rgba(76,201,240,.35);background:linear-gradient(120deg,rgba(76,201,240,.1),transparent),var(--surface);border-radius:var(--radius);padding:1.6rem;display:flex;justify-content:space-between;align-items:center;gap:1.2rem;flex-wrap:wrap}
+.next-box h3{font-family:'Space Grotesk'}.next-box p{color:var(--muted);font-size:.88rem}
+.btn-cyan{background:linear-gradient(92deg,#7ED6F7,#4CC9F0);color:#06121A;font-family:'Space Grotesk';font-weight:600;font-size:.9rem;text-decoration:none;border-radius:10px;padding:.62rem 1.15rem}
+.doc-foot{border-top:1px solid var(--border);background:var(--bg2);text-align:center;padding:2.5rem 1.5rem}
+.doc-foot b{color:var(--gold2)}
+.doc-links{display:flex;gap:1.5rem;justify-content:center;margin:1rem 0;flex-wrap:wrap}
+.doc-links a{color:var(--muted);font-size:.88rem;text-decoration:none}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.toc{position:static}}
+@media(max-width:760px){.nav-links{position:fixed;top:64px;left:0;right:0;flex-direction:column;background:var(--bg2);border-bottom:1px solid var(--border);display:none;padding:.5rem 0}.nav-links.open{display:flex}.nav-links a{display:block;padding:.9rem 1.5rem}.burger{display:block}}
 </style>
 </head>
 <body>
-
-<!-- NAVBAR DEVYRA -->
-<nav class="devyra-nav">
-  <a class="devyra-nav-logo" href="index.html">Devyra<span>.com.br</span></a>
-  <div class="devyra-nav-right">
-    <a class="devyra-nav-back" href="index.html">← <span>Voltar ao início</span></a>
-    <a class="devyra-nav-ig" href="https://www.instagram.com/celsosre/" target="_blank" rel="noopener">@celsosre</a>
-  </div>
-</nav>
-
-<div class="notebook" id="notebook-content">
-  <!-- Espiral gerada dinamicamente para cobrir todo o site -->
-  <div class="spiral" id="spiral-container"></div>
-
-  <!-- SEÇÃO 0: CAPA -->
-  <section class="page-section">
-    <div class="page-inner">
-      <div class="cover-header">
-        <div class="cover-brand">
-          <div class="brand-name">DEVY<span>RA</span></div>
-          <div class="brand-url">https://devyra.com.br/ · @celsosre</div>
-        </div>
-      </div>
-
-      <div class="cover-title">
-        <span class="title-linux">LINUX</span>
-        <span class="title-manual">MANUAL DE</span>
-        <span class="title-producao">PRODUÇÃO</span>
-      </div>
-
-      <div class="cover-subtitle">
-        Comandos &bull; Administração &bull; Monitoramento &bull; Solução de Problemas<br>
-        Melhores Práticas &bull; Habilidades do Mundo Real
-      </div>
-    </div>
-  </section>
-
-  <!-- SEÇÃO 1 -->
-  <section class="page-section">
-    <div class="page-inner">
-      <div class="ch"><span class="ch-num">01</span><h2>Introdução ao Linux</h2></div>
-      
-      <span class="sh">O que é o Linux?</span>
-      <p class="body-text">O Linux é um kernel de sistema operacional de código aberto, semelhante ao Unix, criado por <strong>Linus Torvalds em 1991</strong>. Ele gerencia hardware e recursos. Combinado com ferramentas, bibliotecas e aplicativos, torna-se um Sistema Operacional completo.</p>
-
-      <span class="sh">Por que o Linux domina Servidores e Nuvem?</span>
-      <ul class="blist">
-        <li><strong>Código Aberto e Gratuito:</strong> Sem custos de licença, impulsionado pela comunidade.</li>
-        <li><strong>Estável e Confiável:</strong> Construído para manter alta disponibilidade em sistemas de longa execução.</li>
-        <li><strong>Seguro por Design:</strong> Forte modelo de permissões e comunidade de segurança ativa.</li>
-        <li><strong>Alto Desempenho:</strong> Uso de recursos leve e eficiente.</li>
-        <li><strong>Nativo em Nuvem:</strong> Impulsiona contêineres, Kubernetes, DevOps e microsserviços.</li>
-        <li><strong>Padrão da Indústria:</strong> Utilizado pelos principais provedores de nuvem e data centers do mundo.</li>
-      </ul>
-
-      <span class="sh">Principais Distribuições Linux</span>
-      <ul class="blist">
-        <li><strong>Ubuntu:</strong> Amigável, excelente suporte da comunidade. Popular para servidores e desktops.</li>
-        <li><strong>Rocky / AlmaLinux:</strong> Nível empresarial, estáveis e prontas para produção.</li>
-        <li><strong>Red Hat Enterprise Linux (RHEL):</strong> Suporte empresarial e alta confiabilidade.</li>
-        <li><strong>Debian:</strong> Muito estável, seguro e amplamente utilizado.</li>
-        <li><strong>Arch Linux:</strong> Leve, rolling release para usuários avançados.</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- SEÇÃO 2 -->
-  <section class="page-section">
-    <div class="page-inner">
-      <div class="ch"><span class="ch-num">02</span><h2>Sistema de Arquivos Linux</h2></div>
-      <p class="body-text">Tudo no Linux é um arquivo, inclusive dispositivos, processos e conexões de rede. O sistema organiza tudo em uma única árvore hierárquica, começando a partir da raiz <code>/</code>.</p>
-
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr><th>Diretório</th><th>Propósito</th><th>Exemplos de Produção</th></tr></thead>
-          <tbody>
-            <tr><td><code>/etc</code></td><td>Arquivos de configuração do sistema e softwares instalados.</td><td><code>/etc/nginx/nginx.conf</code>, <code>/etc/ssh/sshd_config</code></td></tr>
-            <tr><td><code>/var</code></td><td>Dados variáveis que mudam durante a operação (logs, caches, bancos de dados).</td><td><code>/var/log/syslog</code>, <code>/var/lib/mysql</code></td></tr>
-            <tr><td><code>/home</code></td><td>Diretórios locais para usuários comuns.</td><td><code>/home/ubuntu/</code>, <code>/home/deploy/app/</code></td></tr>
-            <tr><td><code>/usr</code></td><td>Programas, utilitários e bibliotecas do sistema.</td><td><code>/usr/bin</code>, <code>/usr/lib</code></td></tr>
-            <tr><td><code>/opt</code></td><td>Softwares de terceiros instalados por administradores.</td><td><code>/opt/docker/</code>, <code>/opt/jdk/</code></td></tr>
-            <tr><td><code>/tmp</code></td><td>Arquivos temporários — limpos na reinicialização.</td><td><code>/tmp/app.sock</code>, <code>/tmp/upload/</code></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <!-- SEÇÃO 3 -->
-  <section class="page-section">
-    <div class="page-inner">
-      <div class="ch"><span class="ch-num">03</span><h2>Navegando no Linux</h2></div>
-      <ul class="blist">
-        <li><code>pwd</code> — Mostra o diretório de trabalho atual.</li>
-        <li><code>cd /var/log</code> — Altera entre diretórios.</li>
-        <li><code>ls -lah</code> — Lista com detalhes completos e arquivos ocultos.</li>
-        <li><code>tree -L 2</code> — Exibe estrutura em formato de árvore.</li>
-        <li><code>find /var/log -name "*.log"</code> — Pesquisa por nome, tipo e data.</li>
-        <li><code>locate nginx.conf</code> — Consulta rápida via banco de dados indexado.</li>
-      </ul>
-      <div class="code">
-        <div class="code-header">bash</div>
-        <pre><span class="prompt">$</span> pwd
+<nav><a class="logo" href="index.html"><span class="logo-mark">D</span>devyra<span>.com.br</span></a><div class="nav-right"><ul class="nav-links" id="navlinks"><li><a href="index.html#trilhas">Trilhas</a></li><li><a href="index.html#sobre">Sobre</a></li></ul><a class="btn btn-gold btn-sm" href="https://www.instagram.com/celsosre/" target="_blank" rel="noopener">@celsosre</a><button class="burger" id="burger">☰</button></div></nav>
+<header class="doc-hero"><div class="crumb"><a href="index.html">Início</a><span>/</span><a href="index.html#trilhas">Linux</a><span>/</span><em>Administração</em></div><div class="chips"><span class="chip gold">🐧 Linux</span><span class="chip">Administração</span><span class="chip free">Gratuito</span></div><h1 class="doc-title">Linux <span class="grad">Manual de Produção</span></h1><p class="doc-sub">Comandos, administração, monitoramento e solução de problemas — do primeiro acesso ao servidor até a rotina de quem mantém a produção no ar.</p><div class="doc-meta"><span><b>09 capítulos</b></span><span><b>Iniciante</b> → <b>Avançado</b></span><span><b>PT-BR</b></span></div><div class="doc-cta"><a class="btn btn-gold" href="#cap-1">Começar pelo capítulo 01</a><a class="btn btn-ghost" href="linux-rede.html">Troubleshooting de Rede →</a></div></header>
+<div class="layout"><aside class="toc"><h4>Neste manual</h4><a href="#cap-1" class="on"><span class="n">01</span>Introdução ao Linux</a><a href="#cap-2"><span class="n">02</span>Sistema de Arquivos</a><a href="#cap-3"><span class="n">03</span>Navegando no Linux</a><a href="#cap-4"><span class="n">04</span>Arquivos e Diretórios</a><a href="#cap-5"><span class="n">05</span>Visualizando e Editando</a><a href="#cap-6"><span class="n">06</span>Permissões</a><a href="#cap-7"><span class="n">07</span>Usuários e Grupos</a><a href="#cap-8"><span class="n">08</span>Processos</a><a href="#cap-9"><span class="n">09</span>Serviços (systemd)</a></aside>
+<main>
+<section class="chapter" id="cap-1"><div class="ch-head"><span class="ch-num">01</span><h2>Introdução ao Linux</h2></div><span class="sh">O que é o Linux?</span><p class="body-text">O Linux é um kernel de sistema operacional de código aberto, semelhante ao Unix, criado por <strong>Linus Torvalds em 1991</strong>. Ele gerencia hardware e recursos. Combinado com ferramentas, bibliotecas e aplicativos, torna-se um Sistema Operacional completo.</p><span class="sh">Por que o Linux domina servidores e nuvem?</span><ul class="blist"><li><strong>Código Aberto e Gratuito:</strong> sem custos de licença, impulsionado pela comunidade.</li><li><strong>Estável e Confiável:</strong> construído para manter alta disponibilidade.</li><li><strong>Seguro por Design:</strong> forte modelo de permissões e comunidade ativa.</li><li><strong>Alto Desempenho:</strong> uso de recursos leve e eficiente.</li><li><strong>Nativo em Nuvem:</strong> base de contêineres, Kubernetes e DevOps.</li><li><strong>Padrão da Indústria:</strong> usado pelos principais provedores de nuvem.</li></ul><span class="sh">Principais distribuições</span><ul class="blist"><li><strong>Ubuntu:</strong> amigável, excelente comunidade.</li><li><strong>Rocky / AlmaLinux:</strong> nível empresarial, prontas para produção.</li><li><strong>RHEL:</strong> suporte empresarial e alta confiabilidade.</li><li><strong>Debian:</strong> muito estável e seguro.</li><li><strong>Arch:</strong> leve, rolling release para avançados.</li></ul></section>
+<section class="chapter" id="cap-2"><div class="ch-head"><span class="ch-num">02</span><h2>Sistema de Arquivos Linux</h2></div><p class="body-text">Tudo no Linux é um arquivo. Tudo parte da raiz <code>/</code>.</p><div class="tbl-wrap"><table><thead><tr><th>Diretório</th><th>Propósito</th><th>Exemplos</th></tr></thead><tbody><tr><td><code>/etc</code></td><td>Configurações do sistema.</td><td><code>/etc/nginx/nginx.conf</code>, <code>/etc/ssh/sshd_config</code></td></tr><tr><td><code>/var</code></td><td>Dados variáveis, logs e DBs.</td><td><code>/var/log/syslog</code>, <code>/var/lib/mysql</code></td></tr><tr><td><code>/home</code></td><td>Diretórios de usuários.</td><td><code>/home/ubuntu/</code></td></tr><tr><td><code>/usr</code></td><td>Programas e bibliotecas.</td><td><code>/usr/bin</code>, <code>/usr/lib</code></td></tr><tr><td><code>/opt</code></td><td>Softwares de terceiros.</td><td><code>/opt/docker/</code></td></tr><tr><td><code>/tmp</code></td><td>Temporários.</td><td><code>/tmp/app.sock</code></td></tr></tbody></table></div></section>
+<section class="chapter" id="cap-3"><div class="ch-head"><span class="ch-num">03</span><h2>Navegando no Linux</h2></div><ul class="blist"><li><code>pwd</code> — diretório atual.</li><li><code>cd /var/log</code> — trocar diretório.</li><li><code>ls -lah</code> — listar com detalhes e ocultos.</li><li><code>tree -L 2</code> — árvore.</li><li><code>find /var/log -name "*.log"</code> — buscar.</li><li><code>locate nginx.conf</code> — busca indexada.</li></ul><div class="code"><div class="code-h"><span>bash</span><button class="copy">copiar</button></div><pre><span class="prompt">$</span> pwd
 /home/devops
 <span class="prompt">$</span> ls -lah /var/log
 <span class="prompt">$</span> find /etc -name "*.conf" -type f
-<span class="prompt">$</span> cd - <span class="cm">   # retorna ao diretório anterior</span></pre>
-      </div>
-    </div>
-  </section>
-
-  <!-- SEÇÃO 4 -->
-  <section class="page-section">
-    <div class="page-inner">
-      <div class="ch"><span class="ch-num">04</span><h2>Trabalhando com Arquivos e Diretórios</h2></div>
-      <ul class="blist">
-        <li><code>touch file.txt</code> — Cria um arquivo vazio ou atualiza o timestamp.</li>
-        <li><code>mkdir -p /opt/app/logs</code> — Cria diretórios com caminhos aninhados.</li>
-        <li><code>cp -r /etc/nginx /backup/</code> — Copia arquivos e diretórios recursivamente.</li>
-        <li><code>mv oldname.txt newname.txt</code> — Move ou renomeia.</li>
-        <li><code>rm -r olddir/</code> — Remove diretório e seu conteúdo.</li>
-        <li><code>ln -s /var/log/app.log app.log</code> — Cria link simbólico.</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- SEÇÃO 5 -->
-  <section class="page-section">
-    <div class="page-inner">
-      <div class="ch"><span class="ch-num">05</span><h2>Visualizando e Editando Arquivos</h2></div>
-      <ul class="blist">
-        <li><code>cat /etc/hosts</code> — Exibe o conteúdo completo (ideal para arquivos pequenos).</li>
-        <li><code>less /var/log/syslog</code> — Rola para cima e para baixo em arquivos grandes.</li>
-        <li><code>head -n 20 app.log</code> / <code>tail -n 50 app.log</code> — Primeiras ou últimas linhas.</li>
-        <li><code>tail -f /var/log/nginx/access.log</code> — Monitora logs em tempo real.</li>
-        <li><code>nano</code> / <code>vim</code> — Editores de texto para configurações e scripts.</li>
-      </ul>
-      <div class="code">
-        <div class="code-header">vim — atalhos essenciais</div>
-        <pre>i        → modo de inserção
-Esc      → modo normal
-:w       → salvar
-:q       → sair
-:wq      → salvar e sair
-:q!      → sair sem salvar</pre>
-      </div>
-    </div>
-  </section>
-
-  <!-- SEÇÃO 6 -->
-  <section class="page-section">
-    <div class="page-inner">
-      <div class="ch"><span class="ch-num">06</span><h2>Permissões no Linux</h2></div>
-      <p class="body-text">Permissões protegem o sistema através de três entidades: <strong>Usuário (owner)</strong>, <strong>Grupo</strong> e <strong>Outros</strong>, usando <code>r</code> (leitura), <code>w</code> (escrita) e <code>x</code> (execução).</p>
-      <div class="code">
-        <div class="code-header">bash</div>
-        <pre><span class="prompt">$</span> chmod 755 script.sh    <span class="cm"># rwxr-xr-x</span>
-<span class="prompt">$</span> chmod u+x script.sh   <span class="cm"># adiciona execução ao owner</span>
+<span class="prompt">$</span> cd -   <span class="cm"># volta ao anterior</span></pre></div></section>
+<section class="chapter" id="cap-4"><div class="ch-head"><span class="ch-num">04</span><h2>Trabalhando com Arquivos e Diretórios</h2></div><ul class="blist"><li><code>touch file.txt</code> — cria arquivo vazio.</li><li><code>mkdir -p /opt/app/logs</code> — cria pastas aninhadas.</li><li><code>cp -r /etc/nginx /backup/</code> — copia recursivo.</li><li><code>mv old.txt new.txt</code> — move ou renomeia.</li><li><code>rm -r olddir/</code> — remove diretório.</li><li><code>ln -s /var/log/app.log app.log</code> — link simbólico.</li></ul></section>
+<section class="chapter" id="cap-5"><div class="ch-head"><span class="ch-num">05</span><h2>Visualizando e Editando Arquivos</h2></div><ul class="blist"><li><code>cat /etc/hosts</code> — arquivo pequeno.</li><li><code>less /var/log/syslog</code> — arquivo grande.</li><li><code>head -n 20</code> / <code>tail -n 50</code> — início e fim.</li><li><code>tail -f /var/log/nginx/access.log</code> — tempo real.</li><li><code>nano</code> / <code>vim</code> — editores.</li></ul><div class="code"><div class="code-h"><span>vim — essencial</span><button class="copy">copiar</button></div><pre>i → inserir | Esc → normal | :w → salvar | :q → sair | :wq → salvar e sair | :q! → sair sem salvar</pre></div></section>
+<section class="chapter" id="cap-6"><div class="ch-head"><span class="ch-num">06</span><h2>Permissões no Linux</h2></div><p class="body-text">Usuário, Grupo e Outros com <code>r</code>, <code>w</code> e <code>x</code>.</p><div class="code"><div class="code-h"><span>bash</span><button class="copy">copiar</button></div><pre><span class="prompt">$</span> chmod 755 script.sh          <span class="cm"># rwxr-xr-x</span>
+<span class="prompt">$</span> chmod u+x script.sh
 <span class="prompt">$</span> chown -R user:group /opt/app
-<span class="prompt">$</span> chgrp -R webteam /var/www</pre>
-      </div>
-    </div>
-  </section>
-
-  <!-- SEÇÃO 7 -->
-  <section class="page-section">
-    <div class="page-inner">
-      <div class="ch"><span class="ch-num">07</span><h2>Usuários e Grupos</h2></div>
-      <p class="body-text">O Linux é um sistema multiusuário. O gerenciamento adequado garante o <strong>Princípio do Menor Privilégio (PoLP)</strong> — cada processo recebe somente o acesso que precisa.</p>
-      <div class="code">
-        <div class="code-header">bash</div>
-        <pre><span class="prompt">$</span> sudo useradd -m alice         <span class="cm"># cria usuário com home</span>
-<span class="prompt">$</span> sudo passwd alice             <span class="cm"># define senha</span>
-<span class="prompt">$</span> sudo usermod -aG devops alice <span class="cm"># adiciona ao grupo</span>
+<span class="prompt">$</span> chgrp -R webteam /var/www</pre></div></section>
+<section class="chapter" id="cap-7"><div class="ch-head"><span class="ch-num">07</span><h2>Usuários e Grupos</h2></div><p class="body-text">Princípio do Menor Privilégio: cada um só com o acesso necessário.</p><div class="code"><div class="code-h"><span>bash</span><button class="copy">copiar</button></div><pre><span class="prompt">$</span> sudo useradd -m alice
+<span class="prompt">$</span> sudo passwd alice
+<span class="prompt">$</span> sudo usermod -aG devops alice
 <span class="prompt">$</span> sudo groupadd devops
-<span class="prompt">$</span> groups alice                  <span class="cm"># lista grupos do usuário</span></pre>
-      </div>
-    </div>
-  </section>
-
-  <!-- SEÇÃO 8 -->
-  <section class="page-section">
-    <div class="page-inner">
-      <div class="ch"><span class="ch-num">08</span><h2>Processos</h2></div>
-      <p class="body-text">Um processo é a instância de um programa em execução, identificado por um <strong>PID</strong> (Process ID).</p>
-      <div class="code">
-        <div class="code-header">bash</div>
-        <pre><span class="prompt">$</span> ps aux                <span class="cm"># fotografia de todos os processos</span>
-<span class="prompt">$</span> top / htop            <span class="cm"># monitoramento em tempo real</span>
-<span class="prompt">$</span> pgrep -l nginx        <span class="cm"># localiza por nome</span>
-<span class="prompt">$</span> kill 1234             <span class="cm"># SIGTERM — finalização suave</span>
-<span class="prompt">$</span> kill -9 1234          <span class="cm"># SIGKILL — força bruta</span>
-<span class="prompt">$</span> killall nginx</pre>
-      </div>
-    </div>
-  </section>
-
-  <!-- SEÇÃO 9 -->
-  <section class="page-section">
-    <div class="page-inner">
-      <div class="ch"><span class="ch-num">09</span><h2>Serviços do Sistema (systemd)</h2></div>
-      <p class="body-text">O <strong>systemd</strong> gerencia o ciclo de vida dos serviços no Linux moderno.</p>
-      <div class="code">
-        <div class="code-header">bash</div>
-        <pre><span class="prompt">$</span> sudo systemctl start nginx    <span class="cm"># inicia o serviço</span>
-<span class="prompt">$</span> sudo systemctl stop nginx     <span class="cm"># para o serviço</span>
-<span class="prompt">$</span> sudo systemctl restart nginx  <span class="cm"># reinicia</span>
-<span class="prompt">$</span> sudo systemctl reload nginx   <span class="cm"># recarrega</span></pre>
-      </div>
-    </div>
-  </section>
-
-  <!-- Rodapé -->
-  <footer class="doc-footer">
-    <p>Devyra Linux Production Handbook • Instagram: <a href="https://www.instagram.com/celsosre/" target="_blank">@celsosre</a> • <a href="https://devyra.com.br/" target="_blank">devyra.com.br</a></p>
-  </footer>
-</div>
-
+<span class="prompt">$</span> groups alice</pre></div></section>
+<section class="chapter" id="cap-8"><div class="ch-head"><span class="ch-num">08</span><h2>Processos</h2></div><p class="body-text">Todo processo tem um <strong>PID</strong>.</p><div class="code"><div class="code-h"><span>bash</span><button class="copy">copiar</button></div><pre><span class="prompt">$</span> ps aux
+<span class="prompt">$</span> top / htop
+<span class="prompt">$</span> pgrep -l nginx
+<span class="prompt">$</span> kill 1234       <span class="cm"># suave SIGTERM</span>
+<span class="prompt">$</span> kill -9 1234    <span class="cm"># força SIGKILL</span>
+<span class="prompt">$</span> killall nginx</pre></div></section>
+<section class="chapter" id="cap-9"><div class="ch-head"><span class="ch-num">09</span><h2>Serviços do Sistema (systemd)</h2></div><p class="body-text">O <strong>systemd</strong> gerencia o ciclo de vida dos serviços.</p><div class="code"><div class="code-h"><span>bash</span><button class="copy">copiar</button></div><pre><span class="prompt">$</span> sudo systemctl start nginx
+<span class="prompt">$</span> sudo systemctl stop nginx
+<span class="prompt">$</span> sudo systemctl restart nginx
+<span class="prompt">$</span> sudo systemctl reload nginx</pre></div></section>
+<div class="next-box"><div><h3>Próximo: Troubleshooting de Rede 🌐</h3><p>Árvore de decisão: IP, rota, gateway, DNS, firewall e aplicação.</p></div><a class="btn-cyan" href="linux-rede.html">Abrir guia →</a></div>
+</main></div>
+<footer class="doc-foot"><p><b>Devyra</b> — Educação tecnológica gratuita</p><div class="doc-links"><a href="index.html">← Início</a><a href="linux-rede.html">Troubleshooting de Rede →</a><a href="https://www.instagram.com/celsosre/" target="_blank" rel="noopener">Instagram</a></div><p style="font-size:.78rem;color:var(--faint)">Linux › Administração › Manual de Produção</p></footer>
 <script>
-  window.addEventListener('DOMContentLoaded', () => {
-    const notebook = document.getElementById('notebook-content');
-    const spiral = document.getElementById('spiral-container');
-    
-    function updateSpiral() {
-      spiral.innerHTML = '';
-      const height = notebook.offsetHeight;
-      const ringSpacing = 56;
-      const count = Math.floor(height / ringSpacing);
-      
-      for (let i = 0; i < count; i++) {
-        const ring = document.createElement('div');
-        ring.className = 'spiral-ring';
-        spiral.appendChild(ring);
-      }
-    }
-    
-    updateSpiral();
-    window.addEventListener('resize', updateSpiral);
-  });
+document.querySelectorAll('.copy').forEach(b=>b.addEventListener('click',()=>{navigator.clipboard.writeText(b.closest('.code').querySelector('pre').innerText).then(()=>{b.textContent='copiado!';setTimeout(()=>b.textContent='copiar',1500)})}));
+document.getElementById('burger').onclick=()=>document.getElementById('navlinks').classList.toggle('open');
+const links=[...document.querySelectorAll('.toc a')];
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(l=>l.classList.toggle('on',l.getAttribute('href')==='#'+e.target.id))}),{rootMargin:'-15% 0px -75% 0px'});
+document.querySelectorAll('.chapter[id]').forEach(s=>obs.observe(s));
 </script>
-
 </body>
 </html>

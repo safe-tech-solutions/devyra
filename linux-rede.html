@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Troubleshooting de Rede no Linux · Devyra</title>
+<meta name="description" content="Árvore de decisão para rede no Linux: interface, IP, rota, gateway, internet, DNS e aplicação.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0A0C10;--bg2:#0D1017;--surface:#12161F;--surface2:#171C27;--border:#222A38;--border2:#2E3850;--text:#F5F7FA;--muted:#98A2B3;--faint:#5E6A80;--gold:#E9B949;--gold2:#F6D47C;--green:#3DD68C;--cyan:#4CC9F0;--cyan-dim:rgba(76,201,240,.12);--warn:#FF9A3D;--danger:#FF6B6B;--grad:linear-gradient(92deg,#F6D47C 0%,#E9B949 45%,#C98F1B 100%);--radius:14px}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font:16px/1.6 'Inter',system-ui,sans-serif}
+body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(700px 340px at 80% -60px,rgba(76,201,240,.08),transparent 65%)}
+nav{position:sticky;top:0;z-index:100;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,4vw,2.5rem);background:rgba(10,12,16,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.logo{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:var(--text);font-family:'Space Grotesk';font-weight:700;font-size:1.15rem}
+.logo-mark{width:28px;height:28px;border-radius:8px;background:var(--grad);color:#141005;display:grid;place-items:center;font-size:.85rem;font-weight:700}
+.logo span{color:var(--faint);font-weight:500;font-size:.85rem}
+.nav-right{display:flex;align-items:center;gap:1.2rem}
+.nav-links{display:flex;gap:1.6rem;list-style:none}
+.nav-links a{font-size:.9rem;color:var(--muted);text-decoration:none}
+.btn{display:inline-flex;align-items:center;font-family:'Space Grotesk';font-weight:600;font-size:.9rem;text-decoration:none;border-radius:10px;padding:.62rem 1.15rem;border:1px solid transparent;cursor:pointer}
+.btn-gold{background:var(--grad);color:#141005}
+.btn-ghost{border-color:var(--border2);color:var(--text);background:transparent}
+.btn-ghost:hover{border-color:var(--cyan);color:var(--cyan)}
+.btn-sm{padding:.42rem .85rem;font-size:.82rem;border-radius:8px}
+.burger{display:none;background:none;border:1px solid var(--border2);border-radius:8px;color:var(--text);width:38px;height:38px;cursor:pointer}
+.doc-hero{max-width:1150px;margin:0 auto;padding:3.2rem 1.5rem 2.6rem;border-bottom:1px solid var(--border)}
+.crumb{display:flex;gap:.55rem;align-items:center;font-size:.82rem;color:var(--faint);margin-bottom:1.4rem;flex-wrap:wrap}
+.crumb a{color:var(--muted);text-decoration:none}.crumb a:hover{color:var(--cyan)}.crumb em{font-style:normal;color:var(--cyan)}
+.chips{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.1rem}
+.chip{font-family:'JetBrains Mono';font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;padding:.34rem .75rem;border-radius:999px;border:1px solid var(--border2);color:var(--muted)}
+.chip.cyan{color:var(--cyan);border-color:rgba(76,201,240,.45);background:var(--cyan-dim)}
+.chip.free{color:var(--green);border-color:rgba(61,214,140,.4);background:rgba(61,214,140,.08)}
+.doc-title{font-family:'Space Grotesk';font-size:clamp(2rem,4.4vw,2.9rem);line-height:1.12}
+.grad-cyan{background:linear-gradient(92deg,#9BEBFF,#4CC9F0 50%,#2A9DC4);-webkit-background-clip:text;background-clip:text;color:transparent}
+.doc-sub{color:var(--muted);max-width:68ch;margin-top:1rem}
+.doc-meta{display:flex;gap:1.8rem;flex-wrap:wrap;margin-top:1.2rem;color:var(--faint);font-size:.85rem}
+.doc-meta b{color:var(--cyan);font-family:'Space Grotesk'}
+.doc-cta{display:flex;gap:.9rem;flex-wrap:wrap;margin-top:1.6rem}
+.layout{max-width:1150px;margin:0 auto;padding:2.5rem 1.5rem 4rem;display:grid;grid-template-columns:260px minmax(0,1fr);gap:2.5rem;align-items:start}
+.toc{position:sticky;top:88px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.1rem;max-height:calc(100vh - 110px);overflow:auto}
+.toc h4{font-family:'JetBrains Mono';font-size:.66rem;letter-spacing:.14em;color:var(--faint);margin-bottom:.75rem;text-transform:uppercase}
+.toc a{display:flex;gap:.6rem;padding:.42rem .55rem;border-radius:8px;color:var(--muted);text-decoration:none;font-size:.82rem}
+.toc a:hover{color:var(--text);background:var(--surface2)}
+.toc a.on{color:var(--cyan);background:var(--cyan-dim)}
+.toc .n{font-family:'JetBrains Mono';font-size:.66rem;color:var(--cyan);min-width:20px}
+.chapter{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;margin-bottom:1.5rem;scroll-margin-top:92px}
+.ch-head{display:flex;align-items:center;gap:.8rem;margin-bottom:1rem}
+.ch-num{font-family:'JetBrains Mono';font-size:.72rem;font-weight:700;color:#06121A;background:linear-gradient(92deg,#7ED6F7,#4CC9F0);padding:.25rem .55rem;border-radius:6px;white-space:nowrap}
+.chapter h2{font-family:'Space Grotesk';font-size:1.22rem}
+.body-text{font-size:.92rem;color:#C7CFDC;line-height:1.75;margin-bottom:.9rem}
+.body-text strong{color:var(--text)}
+code.inline{font-family:'JetBrains Mono';font-size:.82em;background:rgba(76,201,240,.1);color:#8EDDFA;border:1px solid rgba(76,201,240,.2);padding:.1em .4em;border-radius:5px;white-space:nowrap}
+.note{border:1px solid var(--border);border-left:3px solid var(--cyan);background:var(--bg2);border-radius:10px;padding:1rem 1.1rem;margin:1.1rem 0;font-size:.9rem;color:#C7CFDC}
+.note.warn{border-left-color:var(--warn)}.note.danger{border-left-color:var(--danger)}.note.ok{border-left-color:var(--green)}
+.note .label{display:block;font-family:'JetBrains Mono';font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--faint);margin-bottom:.4rem;font-weight:700}
+.code{background:#0B0E14;border:1px solid var(--border2);border-radius:10px;overflow:hidden;margin:1rem 0}
+.code-h{display:flex;justify-content:space-between;align-items:center;background:#10141D;padding:.45rem .9rem;border-bottom:1px solid var(--border);font-family:'JetBrains Mono';font-size:.68rem;color:var(--faint)}
+.copy{background:none;border:1px solid var(--border2);color:var(--muted);font-family:'JetBrains Mono';font-size:.62rem;padding:.2rem .55rem;border-radius:5px;cursor:pointer}
+.code pre{margin:0;padding:.9rem 1rem;font-family:'JetBrains Mono';font-size:.8rem;line-height:1.7;color:#D9E2F0;overflow-x:auto}
+.cm{color:#5B6B80;font-style:italic}
+.flow{background:var(--bg2);border:1px dashed var(--border2);border-radius:10px;padding:1.1rem;overflow-x:auto;margin-top:1rem}
+.flow pre{margin:0;font-family:'JetBrains Mono';font-size:.76rem;line-height:1.55;color:#D9E2F0;white-space:pre}
+.step{background:var(--bg2);border:1px solid var(--border);border-radius:10px;margin:1rem 0;overflow:hidden}
+.step>summary{cursor:pointer;list-style:none;padding:1rem 1.1rem;display:flex;align-items:center;gap:.8rem;font-family:'Space Grotesk';font-weight:600}
+.step>summary::-webkit-details-marker{display:none}
+.step>summary::after{content:"▸";margin-left:auto;color:var(--faint)}
+.step[open]>summary::after{transform:rotate(90deg)}
+.badge{width:2.1rem;height:2.1rem;border-radius:7px;background:var(--cyan-dim);color:var(--cyan);border:1px solid rgba(76,201,240,.4);display:grid;place-items:center;font-weight:700;flex-shrink:0}
+.step .sbody{padding:0 1.1rem 1.2rem;border-top:1px solid var(--border)}
+.question{font-size:.9rem;color:var(--muted);margin:1rem 0 .4rem;font-weight:500}
+ul.outcomes{list-style:none;margin:.9rem 0 0;padding:0;display:grid;gap:.55rem}
+ul.outcomes li{display:grid;grid-template-columns:auto 1fr;gap:.7rem;padding:.7rem .85rem;border:1px solid var(--border);border-radius:8px;background:rgba(255,255,255,.02);font-size:.9rem;color:#C7CFDC}
+.dot{width:.62rem;height:.62rem;border-radius:50%;margin-top:.45rem;background:var(--faint)}
+li.bad .dot{background:var(--danger)}li.mid .dot{background:var(--warn)}li.good .dot{background:var(--green)}
+ul.outcomes b{color:var(--text);display:block}ul.outcomes .act{color:var(--muted);font-size:.87rem}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:10px;margin:1rem 0}
+table{width:100%;border-collapse:collapse;font-size:.87rem;min-width:560px}
+th,td{text-align:left;padding:.65rem .9rem;border-bottom:1px solid var(--border);vertical-align:top}
+th{font-size:.7rem;text-transform:uppercase;letter-spacing:.07em;color:var(--cyan);background:rgba(76,201,240,.06)}
+td{color:#C7CFDC}td code{font-family:'JetBrains Mono';font-size:.84em;color:#8EDDFA}
+.checklist{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.2rem}
+.checklist label{display:flex;gap:.65rem;padding:.45rem 0;cursor:pointer;font-size:.92rem;color:#C7CFDC}
+.checklist input{margin-top:.35rem;accent-color:var(--cyan);width:1rem;height:1rem;flex-shrink:0}
+.checklist input:checked+span{text-decoration:line-through;color:var(--faint)}
+.progress{height:6px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden;margin:0 0 1rem}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,#4CC9F0,#9BEBFF);transition:width .25s}
+.next-box{border:1px solid rgba(233,185,73,.35);background:linear-gradient(120deg,rgba(233,185,73,.1),transparent),var(--surface);border-radius:var(--radius);padding:1.6rem;display:flex;justify-content:space-between;align-items:center;gap:1.2rem;flex-wrap:wrap}
+.doc-foot{border-top:1px solid var(--border);background:var(--bg2);text-align:center;padding:2.5rem 1.5rem}
+.doc-foot b{color:var(--cyan)}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.toc{position:static;max-height:none}}
+@media(max-width:760px){.nav-links{position:fixed;top:64px;left:0;right:0;flex-direction:column;background:var(--bg2);border-bottom:1px solid var(--border);display:none;padding:.5rem 0}.nav-links.open{display:flex}.nav-links a{display:block;padding:.9rem 1.5rem}.burger{display:block}}
+@media print{nav,.toc,.copy,.doc-cta{display:none!important}.layout{display:block}}
+</style>
+</head>
+<body>
+<nav><a class="logo" href="index.html"><span class="logo-mark">D</span>devyra<span>.com.br</span></a><div class="nav-right"><ul class="nav-links" id="navlinks"><li><a href="index.html#trilhas">Trilhas</a></li><li><a href="index.html#sobre">Sobre</a></li></ul><a class="btn btn-gold btn-sm" href="https://www.instagram.com/celsosre/" target="_blank" rel="noopener">@celsosre</a><button class="burger" id="burger">☰</button></div></nav>
+<header class="doc-hero"><div class="crumb"><a href="index.html">Início</a><span>/</span><a href="index.html#trilhas">Linux</a><span>/</span><em>Redes e Troubleshooting</em></div><div class="chips"><span class="chip cyan">🌐 Linux</span><span class="chip">Troubleshooting</span><span class="chip free">Gratuito</span></div><h1 class="doc-title">Troubleshooting de Rede <span class="grad-cyan">no Linux</span></h1><p class="doc-sub">Árvore de decisão para um <strong style="color:var(--text)">cliente Linux com foco em IPv4</strong>. Suba a pilha de baixo para cima: cada camada depende da anterior.</p><div class="doc-meta"><span><b>7 etapas</b></span><span><b>Intermediário</b></span><span><b>Checklist + PDF</b></span></div><div class="doc-cta"><a class="btn btn-gold" href="#passo1">Começar diagnóstico</a><button class="btn btn-ghost" id="expandAll" type="button">Expandir tudo</button><button class="btn btn-ghost" id="printBtn" type="button">Imprimir / PDF</button></div></header>
+<div class="layout"><aside class="toc"><h4>Diagnóstico</h4><a href="#metodologia"><span class="n">•</span>Metodologia</a><a href="#fluxo"><span class="n">•</span>Fluxograma</a><a href="#passo1"><span class="n">01</span>Link físico</a><a href="#passo2"><span class="n">02</span>Endereço IP</a><a href="#passo3"><span class="n">03</span>Rota</a><a href="#passo4"><span class="n">04</span>Gateway</a><a href="#passo5"><span class="n">05</span>Saída externa</a><a href="#passo6"><span class="n">06</span>DNS</a><a href="#passo7"><span class="n">07</span>Serviço / App</a><a href="#profunda"><span class="n">•</span>Análise profunda</a><a href="#referencia"><span class="n">•</span>Referência rápida</a><a href="#cuidados"><span class="n">•</span>Cuidados</a><a href="#checklist"><span class="n">✓</span>Checklist</a></aside>
+<main>
+<section class="chapter" id="metodologia"><div class="ch-head"><span class="ch-num">START</span><h2>Metodologia</h2></div><p class="body-text">Substitua <code class="inline">INTERFACE</code> pela real (<code class="inline">enp3s0</code>, <code class="inline">wlan0</code>) e <code class="inline">GATEWAY</code> pelo roteador de <code class="inline">ip route</code>.</p><div class="note"><span class="label">Ponto de partida — somente leitura</span><div class="code"><div class="code-h"><span>bash</span><button class="copy">copiar</button></div><pre>ip -br addr
+ip route</pre></div></div><div class="note warn"><span class="label">Escopo</span>Causas são <strong>hipóteses</strong>, não diagnósticos. Muda com VM, container, VPN, Wi-Fi corporativo.</div></section>
+<section class="chapter" id="fluxo"><div class="ch-head"><span class="ch-num">MAP</span><h2>Fluxograma geral</h2></div><div class="flow"><pre>INÍCIO: sem conectividade
+│
+[1] Link? ── NÃO ─► Física / enlace
+│ SIM
+[2] IPv4? ── NÃO ─► DHCP / estático
+│ SIM
+[3] Rota? ── NÃO ─► Rota / VPN
+│ SIM
+[4] Gateway? ── NÃO ─► L2 ARP/VLAN
+│ SIM
+[5] Saída por IP? ── NÃO ─► NAT / firewall / MTU
+│ SIM
+[6] DNS? ── NÃO ─► Resolver / VPN DNS
+│ SIM
+[7] Serviço? ── NÃO ─► Porta / TLS / proxy</pre></div></section>
+<section class="chapter" id="passo1"><div class="ch-head"><span class="ch-num">01</span><h2>Interface e link físico</h2></div><details class="step" open><summary><span class="badge">1</span>A interface existe e tem link?</summary><div class="sbody"><div class="code"><div class="code-h"><span>bash</span><button class="copy">copiar</button></div><pre>ip -br link
+ethtool INTERFACE
+rfkill list
+nmcli device status
+dmesg | grep -iE 'eth|wlan|link'</pre></div><ul class="outcomes"><li class="bad"><span class="dot"></span><div><b>Interface nem aparece</b><span class="act">Driver/hardware. Veja lspci e lsusb.</span></div></li><li class="bad"><span class="dot"></span><div><b>DOWN</b><span class="act">ip link set INTERFACE up</span></div></li><li class="mid"><span class="dot"></span><div><b>NO-CARRIER</b><span class="act">Cabo, switch, Wi-Fi não associado.</span></div></li><li class="good"><span class="dot"></span><div><b>Link ativo</b><span class="act">Vá para passo 2.</span></div></li></ul></div></details></section>
+<section class="chapter" id="passo2"><div class="ch-head"><span class="ch-num">02</span><h2>Endereço IP</h2></div><details class="step"><summary><span class="badge">2</span>Tem o IPv4 esperado?</summary><div class="sbody"><div class="code"><div class="code-h"><span>bash</span><button class="copy">copiar</button></div><pre>ip -4 -br addr
+nmcli device show INTERFACE
+journalctl -u NetworkManager -e</pre></div><ul class="outcomes"><li class="bad"><span class="dot"></span><div><b>Sem IP ou 169.254.x.x</b><span class="act">DHCP falhou. Veja servidor, VLAN.</span></div></li><li class="mid"><span class="dot"></span><div><b>IP/prefixo errado</b><span class="act">Máscara errada esconde gateway.</span></div></li><li class="good"><span class="dot"></span><div><b>IP correto</b><span class="act">Vá para passo 3.</span></div></li></ul><div class="note warn"><span class="label">Renovar DHCP</span><div class="code"><div class="code-h"><span>bash</span><button class="copy">copiar</button></div><pre>nmcli con down "NOME" &amp;&amp; nmcli con up "NOME"</pre></div></div></div></details></section>
+<section class="chapter" id="passo3"><div class="ch-head"><span class="ch-num">03</span><h2>Rota</h2></div><details class="step"><summary><span class="badge">3</span>Existe rota para o destino?</summary><div class="sbody"><div class="code"><div class="code-h"><span>bash</span><button class="copy">copiar</button></div><pre>ip -4 route
+ip -4 route get 1.1.1.1
+ip rule show</pre></div><ul class="outcomes"><li class="bad"><span class="dot"></span><div><b>Sem rota padrão</b><span class="act">DHCP sem gateway.</span></div></li><li class="mid"><span class="dot"></span><div><b>Gateway inesperado</b><span class="act">Métricas, VPN, bridge container.</span></div></li><li class="good"><span class="dot"></span><div><b>Rota correta</b><span class="act">Vá para passo 4.</span></div></li></ul></div></details></section>
+<section class="chapter" id="passo4"><div class="ch-head"><span class="ch-num">04</span><h2>Gateway</h2></div><details class="step"><summary><span class="badge">4</span>Gateway alcançável?</summary><div class="sbody"><div class="code"><div class="code-h"><span>bash</span><button class="copy">copiar</button></div><pre>ping -c 3 -W 2 GATEWAY
+ip neigh show dev INTERFACE</pre></div><ul class="outcomes"><li class="bad"><span class="dot"></span><div><b>Ping falha + ARP FAILED</b><span class="act">L2: VLAN, isolamento, filtro MAC.</span></div></li><li class="mid"><span class="dot"></span><div><b>ARP OK, ping falha</b><span class="act">ICMP filtrado. Continue passo 5.</span></div></li><li class="good"><span class="dot"></span><div><b>Responde</b><span class="act">Vá para passo 5.</span></div></li></ul></div></details></section>
+<section class="chapter" id="passo5"><div class="ch-head"><span class="ch-num">05</span><h2>Saída externa sem DNS</h2></div><details class="step"><summary><span class="badge">5</span>Internet por IP puro?</summary><div class="sbody"><div class="code"><div class="code-h"><span>bash</span><button class="copy">copiar</button></div><pre>ping -c 3 -W 2 1.1.1.1
+nc -vz -w 3 1.1.1.1 443
+mtr -rw 1.1.1.1
+ping -M do -s 1472 1.1.1.1</pre></div><ul class="outcomes"><li class="good"><span class="dot"></span><div><b>TCP OK, ping falha</b><span class="act">ICMP filtrado. Vá passo 6.</span></div></li><li class="mid"><span class="dot"></span><div><b>Ping OK, TCP falha</b><span class="act">Filtro porta, proxy.</span></div></li><li class="bad"><span class="dot"></span><div><b>Ambos falham</b><span class="act">Firewall, NAT, VPN, provedor.</span></div></li><li class="mid"><span class="dot"></span><div><b>Só pacote grande falha</b><span class="act">MTU/MSS: PPPoE, VPN.</span></div></li></ul></div></details></section>
+<section class="chapter" id="passo6"><div class="ch-head"><span class="ch-num">06</span><h2>DNS</h2></div><details class="step"><summary><span class="badge">6</span>Resolve nomes?</summary><div class="sbody"><div class="code"><div class="code-h"><span>bash</span><button class="copy">copiar</button></div><pre>getent ahosts example.com
+dig example.com
+dig @1.1.1.1 example.com
+resolvectl status
+cat /etc/resolv.conf</pre></div><div class="note"><span class="label">getent vs dig</span>dig ignora /etc/hosts. getent usa caminho real da app.</div><ul class="outcomes"><li class="bad"><span class="dot"></span><div><b>Sem resposta</b><span class="act">Resolvedor, DNS VPN.</span></div></li><li class="mid"><span class="dot"></span><div><b>Só @1.1.1.1 funciona</b><span class="act">Resolvedor configurado errado.</span></div></li><li class="good"><span class="dot"></span><div><b>Resolve certo</b><span class="act">Vá passo 7.</span></div></li></ul></div></details></section>
+<section class="chapter" id="passo7"><div class="ch-head"><span class="ch-num">07</span><h2>Serviço e aplicação</h2></div><details class="step"><summary><span class="badge">7</span>O serviço responde?</summary><div class="sbody"><p class="question">Cliente:</p><div class="code"><div class="code-h"><span>bash</span><button class="copy">copiar</button></div><pre>curl -I --connect-timeout 5 --max-time 10 https://example.com
+curl -v https://example.com
+nc -vz -w 3 servidor 443</pre></div><p class="question">Servidor:</p><div class="code"><div class="code-h"><span>bash</span><button class="copy">copiar</button></div><pre>ss -tulpn
+systemctl status SERVICO
+sudo nft list ruleset
+sudo iptables -L -n -v
+getenforce</pre></div><ul class="outcomes"><li class="mid"><span class="dot"></span><div><b>Timeout</b><span class="act">Rota, firewall DROP, proxy.</span></div></li><li class="bad"><span class="dot"></span><div><b>Connection refused</b><span class="act">Serviço parado, bind 127.0.0.1.</span></div></li><li class="mid"><span class="dot"></span><div><b>Erro TLS</b><span class="act">Relógio, certificado, MITM.</span></div></li><li class="mid"><span class="dot"></span><div><b>HTTP 4xx/5xx</b><span class="act">Rede OK, problema app.</span></div></li></ul></div></details></section>
+<section class="chapter" id="profunda"><div class="ch-head"><span class="ch-num">LAB</span><h2>Análise profunda</h2></div><div class="code"><div class="code-h"><span>bash</span><button class="copy">copiar</button></div><pre>sudo tcpdump -i INTERFACE -nn host 1.1.1.1
+sudo tcpdump -i INTERFACE -nn port 443
+sudo tcpdump -i INTERFACE -nn -w captura.pcap</pre></div><div class="note ok"><span class="label">Dica de ouro</span>Rode tcpdump nos dois lados ao mesmo tempo.</div></section>
+<section class="chapter" id="referencia"><div class="ch-head"><span class="ch-num">REF</span><h2>Referência rápida</h2></div><div class="tbl-wrap"><table><thead><tr><th>Sintoma</th><th>Hipótese</th><th>Comando</th></tr></thead><tbody><tr><td>NO-CARRIER</td><td>Cabo/switch</td><td><code>ip -br link</code></td></tr><tr><td>169.254.x.x</td><td>DHCP</td><td><code>journalctl -u NetworkManager -e</code></td></tr><tr><td>Network unreachable</td><td>Sem rota</td><td><code>ip -4 route</code></td></tr><tr><td>ARP FAILED</td><td>L2/VLAN</td><td><code>ip neigh</code></td></tr><tr><td>IP ok, nome não</td><td>DNS</td><td><code>getent ahosts example.com</code></td></tr><tr><td>Trava arquivo grande</td><td>MTU</td><td><code>ping -M do -s 1472 DEST</code></td></tr><tr><td>Refused</td><td>Serviço/bind</td><td><code>ss -tulpn</code></td></tr><tr><td>Quebrou na VPN</td><td>Rota/DNS VPN</td><td><code>ip rule show</code></td></tr></tbody></table></div></section>
+<section class="chapter" id="cuidados"><div class="ch-head"><span class="ch-num">!</span><h2>Cuidados</h2></div><div class="note danger"><span class="label">Não perca o SSH</span><strong>Nunca reinicie rede via SSH sem console alternativa.</strong><div class="code"><div class="code-h"><span>bash</span><button class="copy">copiar</button></div><pre>sudo sh -c 'sleep 300 &amp;&amp; reboot' &amp;</pre></div></div><div class="note warn"><span class="label">Ping não é prova</span>Sem ping não significa fora do ar. Confirme com TCP.</div><div class="note ok"><span class="label">Diagnóstico antes de mudar</span>Verificação é leitura. Só mude após hipótese.</div></section>
+<section class="chapter" id="checklist"><div class="ch-head"><span class="ch-num">✓</span><h2>Checklist</h2></div><div class="checklist"><div class="progress"><i id="bar"></i></div><label><input type="checkbox"><span>Coletei ip addr e ip route</span></label><label><input type="checkbox"><span>1 — UP com carrier</span></label><label><input type="checkbox"><span>2 — IPv4/prefixo corretos</span></label><label><input type="checkbox"><span>3 — ip route get correto</span></label><label><input type="checkbox"><span>4 — Gateway/ARP OK</span></label><label><input type="checkbox"><span>5 — TCP externo OK</span></label><label><input type="checkbox"><span>6 — getent OK</span></label><label><input type="checkbox"><span>7 — curl OK</span></label><label><input type="checkbox"><span>Comparei IPv4 x IPv6</span></label><label><input type="checkbox"><span>Documentei causa</span></label></div></section>
+<div class="next-box"><div><h3 style="font-family:'Space Grotesk'">Voltar: Manual de Produção 🐧</h3><p style="color:var(--muted);font-size:.88rem">Comandos, permissões, processos e systemd.</p></div><a class="btn btn-gold" href="linux.html">← Abrir manual</a></div>
+</main></div>
+<footer class="doc-foot"><p><b>Devyra</b> — Troubleshooting de Rede no Linux</p><p style="font-size:.78rem;color:var(--faint);margin-top:.5rem"><a href="index.html" style="color:var(--muted)">← Início</a> · <a href="linux.html" style="color:var(--muted)">Manual de Produção</a></p></footer>
+<script>
+document.getElementById('burger').onclick=()=>document.getElementById('navlinks').classList.toggle('open');
+document.getElementById('printBtn').onclick=()=>{document.querySelectorAll('details.step').forEach(d=>d.open=true);window.print()};
+let exp=false;document.getElementById('expandAll').onclick=function(){exp=!exp;document.querySelectorAll('details.step').forEach(d=>d.open=exp);this.textContent=exp?'Recolher tudo':'Expandir tudo'};
+document.querySelectorAll('.copy').forEach(b=>b.addEventListener('click',()=>{navigator.clipboard.writeText(b.closest('.code').querySelector('pre').innerText).then(()=>{b.textContent='copiado!';setTimeout(()=>b.textContent='copiar',1500)})}));
+const links=[...document.querySelectorAll('.toc a')];
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(l=>l.classList.toggle('on',l.getAttribute('href')==='#'+e.target.id))}),{rootMargin:'-20% 0px -70% 0px'});
+document.querySelectorAll('section[id]').forEach(s=>obs.observe(s));
+const boxes=[...document.querySelectorAll('.checklist input')];const bar=document.getElementById('bar');
+function upd(){bar.style.width=(boxes.filter(b=>b.checked).length/boxes.length*100)+'%'}
+boxes.forEach(b=>b.addEventListener('change',upd));upd();
+</script>
+</body>
+</html>
