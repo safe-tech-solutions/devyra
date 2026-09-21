@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcards-Linux</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0d1117;
+            color: #c9d1d9;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(56, 139, 253, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(34, 197, 94, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #58a6ff, #bc8cff, #56d364);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: #8b949e;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .header .terminal-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        /* Stats bar */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .stat-item {
+            background: rgba(22, 27, 34, 0.8);
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 15px 25px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-2px);
+            border-color: #58a6ff;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #58a6ff;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #8b949e;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+
+        /* Progress bar */
+        .progress-container {
+            max-width: 500px;
+            margin: 0 auto 40px;
+            animation: fadeInUp 0.8s ease-out 0.3s both;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            color: #8b949e;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #21262d;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #58a6ff, #bc8cff);
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        /* Category Section */
+        .category {
+            margin-bottom: 50px;
+            animation: fadeInUp 0.6s ease-out both;
+        }
+
+        .category:nth-child(1) { animation-delay: 0.4s; }
+        .category:nth-child(2) { animation-delay: 0.5s; }
+        .category:nth-child(3) { animation-delay: 0.6s; }
+        .category:nth-child(4) { animation-delay: 0.7s; }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 25px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #21262d;
+        }
+
+        .category-icon {
+            font-size: 1.6rem;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            flex-shrink: 0;
+        }
+
+        .category-icon.nav { background: rgba(56, 139, 253, 0.15); }
+        .category-icon.files { background: rgba(210, 153, 34, 0.15); }
+        .category-icon.search { background: rgba(139, 92, 246, 0.15); }
+        .category-icon.system { background: rgba(86, 211, 100, 0.15); }
+
+        .category-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #e6edf3;
+        }
+
+        .category-count {
+            font-size: 0.8rem;
+            color: #8b949e;
+            background: #21262d;
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-left: auto;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 20px;
+        }
+
+        /* Flashcard */
+        .flashcard {
+            perspective: 1000px;
+            height: 280px;
+            cursor: pointer;
+        }
+
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .flashcard.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-front,
+        .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 16px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .flashcard-front {
+            background: linear-gradient(145deg, #161b22, #1c2333);
+            border: 1px solid #30363d;
+        }
+
+        .flashcard-front:hover {
+            border-color: #58a6ff;
+            box-shadow: 0 0 30px rgba(56, 139, 253, 0.1);
+        }
+
+        .flashcard-back {
+            background: linear-gradient(145deg, #1a2332, #162030);
+            border: 1px solid #1f6feb;
+            transform: rotateY(180deg);
+            box-shadow: 0 0 30px rgba(56, 139, 253, 0.1);
+        }
+
+        .card-number {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #58a6ff;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-number::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, #30363d, transparent);
+        }
+
+        .card-question {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #e6edf3;
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .card-flip-hint {
+            font-size: 0.75rem;
+            color: #484f58;
+            text-align: center;
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .card-flip-hint .flip-icon {
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+
+        .card-answer {
+            flex: 1;
+        }
+
+        .command-main {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #7ee787;
+            background: rgba(56, 211, 100, 0.08);
+            padding: 10px 16px;
+            border-radius: 8px;
+            border-left: 3px solid #56d364;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        .command-desc {
+            font-size: 0.85rem;
+            color: #8b949e;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        .command-detail {
+            font-size: 0.88rem;
+            color: #c9d1d9;
+            line-height: 1.7;
+        }
+
+        .command-detail code {
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(110, 118, 129, 0.15);
+            color: #79c0ff;
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-size: 0.82rem;
+        }
+
+        .command-detail .tip {
+            display: block;
+            margin-top: 6px;
+            padding: 6px 10px;
+            background: rgba(210, 153, 34, 0.08);
+            border-left: 2px solid #d29922;
+            border-radius: 0 4px 4px 0;
+            color: #d29922;
+            font-size: 0.82rem;
+        }
+
+        .command-detail .warning {
+            display: block;
+            margin-top: 6px;
+            padding: 6px 10px;
+            background: rgba(248, 81, 73, 0.08);
+            border-left: 2px solid #f85149;
+            border-radius: 0 4px 4px 0;
+            color: #f85149;
+            font-size: 0.82rem;
+        }
+
+        .back-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #1f6feb;
+            margin-bottom: 12px;
+        }
+
+        /* Mastered checkbox */
+        .mastered-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: auto;
+            padding-top: 10px;
+            font-size: 0.8rem;
+            color: #484f58;
+        }
+
+        .mastered-toggle input[type="checkbox"] {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #30363d;
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .mastered-toggle input[type="checkbox"]:checked {
+            background: #56d364;
+            border-color: #56d364;
+        }
+
+        .mastered-toggle input[type="checkbox"]:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #0d1117;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Tip Box at bottom */
+        .study-tip {
+            background: linear-gradient(145deg, #1a2332, #161b22);
+            border: 1px solid #30363d;
+            border-left: 4px solid #d29922;
+            border-radius: 12px;
+            padding: 25px 30px;
+            margin-top: 50px;
+            animation: fadeInUp 0.8s ease-out 0.8s both;
+        }
+
+        .study-tip .tip-header {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #d29922;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .study-tip p {
+            color: #8b949e;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        .study-tip code {
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(110, 118, 129, 0.15);
+            color: #79c0ff;
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease-out 0.35s both;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1px solid #30363d;
+            background: #161b22;
+            color: #c9d1d9;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn:hover {
+            border-color: #58a6ff;
+            color: #58a6ff;
+            transform: translateY(-1px);
+        }
+
+        .btn.active {
+            background: rgba(56, 139, 253, 0.15);
+            border-color: #58a6ff;
+            color: #58a6ff;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #238636, #2ea043);
+            border-color: #238636;
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #2ea043, #3fb950);
+            border-color: #3fb950;
+            color: #ffffff;
+            box-shadow: 0 0 20px rgba(46, 160, 67, 0.3);
+        }
+
+        /* Scrollbar */
+        .flashcard-front::-webkit-scrollbar,
+        .flashcard-back::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .flashcard-front::-webkit-scrollbar-track,
+        .flashcard-back::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .flashcard-front::-webkit-scrollbar-thumb,
+        .flashcard-back::-webkit-scrollbar-thumb {
+            background: #30363d;
+            border-radius: 2px;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .flashcard {
+                height: 300px;
+            }
+
+            .stats-bar {
+                gap: 15px;
+            }
+
+            .stat-item {
+                padding: 12px 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .header h1 {
+                font-size: 1.6rem;
+            }
+
+            .flashcard {
+                height: 320px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <span class="terminal-icon">🐧</span>
+            <h1>Comandos Básicos do Linux</h1>
+            <p>Flashcards interativos para dominar o terminal. Clique nos cards para revelar as respostas.</p>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-number">15</div>
+                <div class="stat-label">Total de Cards</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">4</div>
+                <div class="stat-label">Categorias</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="mastered-count">0</div>
+                <div class="stat-label">Dominados</div>
+            </div>
+        </div>
+
+        <!-- Progress -->
+        <div class="progress-container">
+            <div class="progress-header">
+                <span>Progresso</span>
+                <span id="progress-text">0 de 15</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <button class="btn btn-primary" onclick="revealAll()">👁️ Revelar Todos</button>
+            <button class="btn" onclick="hideAll()">🔒 Ocultar Todos</button>
+            <button class="btn" onclick="resetProgress()">🔄 Resetar Progresso</button>
+        </div>
+
+        <!-- Category 1: Navegação -->
+        <div class="category">
+            <div class="category-header">
+                <div class="category-icon nav">📂</div>
+                <h2 class="category-title">Navegação de Diretórios</h2>
+                <span class="category-count">3 cards</span>
+            </div>
+            <div class="cards-grid">
+                <!-- Card 1 -->
+                <div class="flashcard" onclick="flipCard(this)">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <div class="card-number">Card 01</div>
+                            <div class="card-question">
+                                Qual comando exibe o caminho completo do diretório atual onde você está?
+                            </div>
+                            <div class="card-flip-hint">
+                                <span class="flip-icon">🔄</span> Clique para ver a resposta
+                            </div>
+                        </div>
+                        <div class="flashcard-back">
+                            <div class="back-label">✅ Resposta</div>
+                            <div class="card-answer">
+                                <div class="command-main">pwd</div>
+                                <div class="command-desc">Print Working Directory</div>
+                                <div class="command-detail">
+                                    Exemplo de saída: <code>/home/usuario/documentos</code>
+                                </div>
+                            </div>
+                            <label class="mastered-toggle">
+                                <input type="checkbox" onchange="updateProgress(event)">
+                                Dominei este card
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="flashcard" onclick="flipCard(this)">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <div class="card-number">Card 02</div>
+                            <div class="card-question">
+                                Qual comando lista os arquivos e pastas do diretório atual?
+                            </div>
+                            <div class="card-flip-hint">
+                                <span class="flip-icon">🔄</span> Clique para ver a resposta
+                            </div>
+                        </div>
+                        <div class="flashcard-back">
+                            <div class="back-label">✅ Resposta</div>
+                            <div class="card-answer">
+                                <div class="command-main">ls</div>
+                                <div class="command-desc">List</div>
+                                <div class="command-detail">
+                                    <span class="tip">💡 Dica: <code>ls -la</code> lista todos os arquivos (incluindo ocultos) em formato detalhado.</span>
+                                </div>
+                            </div>
+                            <label class="mastered-toggle">
+                                <input type="checkbox" onchange="updateProgress(event)">
+                                Dominei este card
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="flashcard" onclick="flipCard(this)">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <div class="card-number">Card 03</div>
+                            <div class="card-question">
+                                Como mudar de diretório no Linux? E como voltar para o diretório pai (anterior)?
+                            </div>
+                            <div class="card-flip-hint">
+                                <span class="flip-icon">🔄</span> Clique para ver a resposta
+                            </div>
+                        </div>
+                        <div class="flashcard-back">
+                            <div class="back-label">✅ Resposta</div>
+                            <div class="card-answer">
+                                <div class="command-main">cd &lt;caminho&gt;</div>
+                                <div class="command-desc">Change Directory</div>
+                                <div class="command-detail">
+                                    • Entrar: <code>cd &lt;caminho&gt;</code><br>
+                                    • Voltar um nível: <code>cd ..</code><br>
+                                    • Ir para home: <code>cd ~</code> ou apenas <code>cd</code>
+                                </div>
+                            </div>
+                            <label class="mastered-toggle">
+                                <input type="checkbox" onchange="updateProgress(event)">
+                                Dominei este card
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category 2: Manipulação de Arquivos -->
+        <div class="category">
+            <div class="category-header">
+                <div class="category-icon files">📄</div>
+                <h2 class="category-title">Manipulação de Arquivos e Pastas</h2>
+                <span class="category-count">5 cards</span>
+            </div>
+            <div class="cards-grid">
+                <!-- Card 4 -->
+                <div class="flashcard" onclick="flipCard(this)">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <div class="card-number">Card 04</div>
+                            <div class="card-question">
+                                Como criar uma nova pasta (diretório)?
+                            </div>
+                            <div class="card-flip-hint">
+                                <span class="flip-icon">🔄</span> Clique para ver a resposta
+                            </div>
+                        </div>
+                        <div class="flashcard-back">
+                            <div class="back-label">✅ Resposta</div>
+                            <div class="card-answer">
+                                <div class="command-main">mkdir &lt;nome_da_pasta&gt;</div>
+                                <div class="command-desc">Make Directory</div>
+                                <div class="command-detail">
+                                    <span class="tip">💡 Dica: <code>mkdir -p pasta/subpasta</code> cria a estrutura completa de uma vez.</span>
+                                </div>
+                            </div>
+                            <label class="mastered-toggle">
+                                <input type="checkbox" onchange="updateProgress(event)">
+                                Dominei este card
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="flashcard" onclick="flipCard(this)">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <div class="card-number">Card 05</div>
+                            <div class="card-question">
+                                Qual comando cria um arquivo vazio ou atualiza a data/hora de modificação de um arquivo existente?
+                            </div>
+                            <div class="card-flip-hint">
+                                <span class="flip-icon">🔄</span> Clique para ver a resposta
+                            </div>
+                        </div>
+                        <div class="flashcard-back">
+                            <div class="back-label">✅ Resposta</div>
+                            <div class="card-answer">
+                                <div class="command-main">touch &lt;nome_do_arquivo&gt;</div>
+                                <div class="command-detail">
+                                    Exemplo: <code>touch notas.txt</code>
+                                </div>
+                            </div>
+                            <label class="mastered-toggle">
+                                <input type="checkbox" onchange="updateProgress(event)">
+                                Dominei este card
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="flashcard" onclick="flipCard(this)">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <div class="card-number">Card 06</div>
+                            <div class="card-question">
+                                Qual comando é usado para copiar arquivos? Como copiar diretórios inteiros?
+                            </div>
+                            <div class="card-flip-hint">
+                                <span class="flip-icon">🔄</span> Clique para ver a resposta
+                            </div>
+                        </div>
+                        <div class="flashcard-back">
+                            <div class="back-label">✅ Resposta</div>
+                            <div class="card-answer">
+                                <div class="command-main">cp &lt;origem&gt; &lt;destino&gt;</div>
+                                <div class="command-desc">Copy</div>
+                                <div class="command-detail">
+                                    Para diretórios, use a flag recursiva:<br>
+                                    <code>cp -r &lt;pasta_origem&gt; &lt;pasta_destino&gt;</code>
+                                </div>
+                            </div>
+                            <label class="mastered-toggle">
+                                <input type="checkbox" onchange="updateProgress(event)">
+                                Dominei este card
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 7 -->
+                <div class="flashcard" onclick="flipCard(this)">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <div class="card-number">Card 07</div>
+                            <div class="card-question">
+                                Qual comando serve tanto para <strong>mover</strong> quanto para <strong>renomear</strong> arquivos e pastas?
+                            </div>
+                            <div class="card-flip-hint">
+                                <span class="flip-icon">🔄</span> Clique para ver a resposta
+                            </div>
+                        </div>
+                        <div class="flashcard-back">
+                            <div class="back-label">✅ Resposta</div>
+                            <div class="card-answer">
+                                <div class="command-main">mv &lt;origem&gt; &lt;destino&gt;</div>
+                                <div class="command-desc">Move</div>
+                                <div class="command-detail">
+                                    • Renomear: <code>mv antigo.txt novo.txt</code><br>
+                                    • Mover: <code>mv arquivo.txt /caminho/pasta/</code>
+                                </div>
+                            </div>
+                            <label class="mastered-toggle">
+                                <input type="checkbox" onchange="updateProgress(event)">
+                                Dominei este card
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 8 -->
+                <div class="flashcard" onclick="flipCard(this)">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <div class="card-number">Card 08</div>
+                            <div class="card-question">
+                                Como remover (deletar) um arquivo? E como remover uma pasta com conteúdo?
+                            </div>
+                            <div class="card-flip-hint">
+                                <span class="flip-icon">🔄</span> Clique para ver a resposta
+                            </div>
+                        </div>
+                        <div class="flashcard-back">
+                            <div class="back-label">✅ Resposta</div>
+                            <div class="card-answer">
+                                <div class="command-main">rm &lt;arquivo&gt;</div>
+                                <div class="command-desc">Remove</div>
+                                <div class="command-detail">
+                                    • Para pastas: <code>rm -r &lt;pasta&gt;</code><br>
+                                    <span class="warning">⚠️ <code>rm -rf</code> deleta recursivamente e sem confirmação. Não há "Lixeira" no terminal!</span>
+                                </div>
+                            </div>
+                            <label class="mastered-toggle">
+                                <input type="checkbox" onchange="updateProgress(event)">
+                                Dominei este card
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category 3: Leitura e Busca -->
+        <div class="category">
+            <div class="category-header">
+                <div class="category-icon search">🔍</div>
+                <h2 class="category-title">Leitura e Busca de Conteúdo</h2>
+                <span class="category-count">3 cards</span>
+            </div>
+            <div class="cards-grid">
+                <!-- Card 9 -->
+                <div class="flashcard" onclick="flipCard(this)">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <div class="card-number">Card 09</div>
+                            <div class="card-question">
+                                Qual comando exibe todo o conteúdo de um arquivo de texto diretamente no terminal?
+                            </div>
+                            <div class="card-flip-hint">
+                                <span class="flip-icon">🔄</span> Clique para ver a resposta
+                            </div>
+                        </div>
+                        <div class="flashcard-back">
+                            <div class="back-label">✅ Resposta</div>
+                            <div class="card-answer">
+                                <div class="command-main">cat &lt;arquivo&gt;</div>
+                                <div class="command-desc">Concatenate</div>
+                                <div class="command-detail">
+                                    Exemplo: <code>cat script.py</code>
+                                </div>
+                            </div>
+                            <label class="mastered-toggle">
+                                <input type="checkbox" onchange="updateProgress(event)">
+                                Dominei este card
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 10 -->
+                <div class="flashcard" onclick="flipCard(this)">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <div class="card-number">Card 10</div>
+                            <div class="card-question">
+                                Quais comandos exibem apenas o <strong>início</strong> ou o <strong>fim</strong> de um arquivo?
+                            </div>
+                            <div class="card-flip-hint">
+                                <span class="flip-icon">🔄</span> Clique para ver a resposta
+                            </div>
+                        </div>
+                        <div class="flashcard-back">
+                            <div class="back-label">✅ Resposta</div>
+                            <div class="card-answer">
+                                <div class="command-main">head / tail</div>
+                                <div class="command-detail">
+                                    • Início: <code>head &lt;arquivo&gt;</code> (10 primeiras linhas)<br>
+                                    • Fim: <code>tail &lt;arquivo&gt;</code> (10 últimas linhas)<br>
+                                    <span class="tip">💡 Logs em tempo real: <code>tail -f arquivo.log</code></span>
+                                </div>
+                            </div>
+                            <label class="mastered-toggle">
+                                <input type="checkbox" onchange="updateProgress(event)">
+                                Dominei este card
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 11 -->
+                <div class="flashcard" onclick="flipCard(this)">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <div class="card-number">Card 11</div>
+                            <div class="card-question">
+                                Qual comando busca por padrões de texto dentro de arquivos?
+                            </div>
+                            <div class="card-flip-hint">
+                                <span class="flip-icon">🔄</span> Clique para ver a resposta
+                            </div>
+                        </div>
+                        <div class="flashcard-back">
+                            <div class="back-label">✅ Resposta</div>
+                            <div class="card-answer">
+                                <div class="command-main">grep "&lt;termo&gt;" &lt;arquivo&gt;</div>
+                                <div class="command-detail">
+                                    Exemplo: <code>grep "erro" log.txt</code><br>
+                                    <span class="tip">💡 Flag <code>-i</code> ignora maiúsculas/minúsculas: <code>grep -i "erro" log.txt</code></span>
+                                </div>
+                            </div>
+                            <label class="mastered-toggle">
+                                <input type="checkbox" onchange="updateProgress(event)">
+                                Dominei este card
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category 4: Sistema -->
+        <div class="category">
+            <div class="category-header">
+                <div class="category-icon system">⚙️</div>
+                <h2 class="category-title">Sistema, Permissões e Ajuda</h2>
+                <span class="category-count">4 cards</span>
+            </div>
+            <div class="cards-grid">
+                <!-- Card 12 -->
+                <div class="flashcard" onclick="flipCard(this)">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <div class="card-number">Card 12</div>
+                            <div class="card-question">
+                                Como executar um comando com privilégios de administrador (root)?
+                            </div>
+                            <div class="card-flip-hint">
+                                <span class="flip-icon">🔄</span> Clique para ver a resposta
+                            </div>
+                        </div>
+                        <div class="flashcard-back">
+                            <div class="back-label">✅ Resposta</div>
+                            <div class="card-answer">
+                                <div class="command-main">sudo &lt;comando&gt;</div>
+                                <div class="command-desc">SuperUser DO</div>
+                                <div class="command-detail">
+                                    Exemplo: <code>sudo apt update</code>
+                                </div>
+                            </div>
+                            <label class="mastered-toggle">
+                                <input type="checkbox" onchange="updateProgress(event)">
+                                Dominei este card
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 13 -->
+                <div class="flashcard" onclick="flipCard(this)">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <div class="card-number">Card 13</div>
+                            <div class="card-question">
+                                Qual comando altera as permissões de leitura, escrita e execução de um arquivo?
+                            </div>
+                            <div class="card-flip-hint">
+                                <span class="flip-icon">🔄</span> Clique para ver a resposta
+                            </div>
+                        </div>
+                        <div class="flashcard-back">
+                            <div class="back-label">✅ Resposta</div>
+                            <div class="card-answer">
+                                <div class="command-main">chmod &lt;permissões&gt; &lt;arquivo&gt;</div>
+                                <div class="command-desc">Change Mode</div>
+                                <div class="command-detail">
+                                    Exemplo: <code>chmod +x script.sh</code> (torna o arquivo executável).
+                                </div>
+                            </div>
+                            <label class="mastered-toggle">
+                                <input type="checkbox" onchange="updateProgress(event)">
+                                Dominei este card
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 14 -->
+                <div class="flashcard" onclick="flipCard(this)">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <div class="card-number">Card 14</div>
+                            <div class="card-question">
+                                Como ver o manual/documentação oficial de qualquer comando no terminal?
+                            </div>
+                            <div class="card-flip-hint">
+                                <span class="flip-icon">🔄</span> Clique para ver a resposta
+                            </div>
+                        </div>
+                        <div class="flashcard-back">
+                            <div class="back-label">✅ Resposta</div>
+                            <div class="card-answer">
+                                <div class="command-main">man &lt;comando&gt;</div>
+                                <div class="command-desc">Manual</div>
+                                <div class="command-detail">
+                                    Exemplo: <code>man ls</code><br>
+                                    <span class="tip">💡 Pressione <code>q</code> para sair do manual.</span>
+                                </div>
+                            </div>
+                            <label class="mastered-toggle">
+                                <input type="checkbox" onchange="updateProgress(event)">
+                                Dominei este card
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 15 -->
+                <div class="flashcard" onclick="flipCard(this)">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <div class="card-number">Card 15</div>
+                            <div class="card-question">
+                                Qual comando limpa a tela do terminal e qual é o seu atalho de teclado equivalente?
+                            </div>
+                            <div class="card-flip-hint">
+                                <span class="flip-icon">🔄</span> Clique para ver a resposta
+                            </div>
+                        </div>
+                        <div class="flashcard-back">
+                            <div class="back-label">✅ Resposta</div>
+                            <div class="card-answer">
+                                <div class="command-main">clear</div>
+                                <div class="command-detail">
+                                    • Comando: <code>clear</code><br>
+                                    • Atalho de teclado: <code>Ctrl + L</code>
+                                </div>
+                            </div>
+                            <label class="mastered-toggle">
+                                <input type="checkbox" onchange="updateProgress(event)">
+                                Dominei este card
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Study Tip -->
+        <div class="study-tip">
+            <div class="tip-header">💡 Dica de Estudo</div>
+            <p>
+                Tente praticar esses comandos abrindo um terminal e executando um por um em uma pasta temporária de testes.
+                Por exemplo, crie uma pasta com <code>mkdir teste</code> e pratique todos os comandos dentro dela.
+                A prática constante é a melhor forma de memorizar!
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function flipCard(card) {
+            // Prevent flipping when clicking checkbox
+            if (event.target.type === 'checkbox' || event.target.tagName === 'LABEL') {
+                return;
+            }
+            card.classList.toggle('flipped');
+        }
+
+        function revealAll() {
+            document.querySelectorAll('.flashcard').forEach(card => {
+                card.classList.add('flipped');
+            });
+        }
+
+        function hideAll() {
+            document.querySelectorAll('.flashcard').forEach(card => {
+                card.classList.remove('flipped');
+            });
+        }
+
+        function updateProgress(event) {
+            event.stopPropagation();
+            const checkboxes = document.querySelectorAll('.mastered-toggle input[type="checkbox"]');
+            let count = 0;
+            checkboxes.forEach(cb => {
+                if (cb.checked) count++;
+            });
+            
+            document.getElementById('mastered-count').textContent = count;
+            document.getElementById('progress-text').textContent = `${count} de 15`;
+            document.getElementById('progress-fill').style.width = `${(count / 15) * 100}%`;
+
+            // Save to localStorage
+            const states = [];
+            checkboxes.forEach(cb => states.push(cb.checked));
+            localStorage.setItem('linux-flashcards-progress', JSON.stringify(states));
+        }
+
+        function resetProgress() {
+            document.querySelectorAll('.mastered-toggle input[type="checkbox"]').forEach(cb => {
+                cb.checked = false;
+            });
+            document.getElementById('mastered-count').textContent = '0';
+            document.getElementById('progress-text').textContent = '0 de 15';
+            document.getElementById('progress-fill').style.width = '0%';
+            localStorage.removeItem('linux-flashcards-progress');
+            hideAll();
+        }
+
+        // Load saved progress
+        window.addEventListener('DOMContentLoaded', () => {
+            const saved = localStorage.getItem('linux-flashcards-progress');
+            if (saved) {
+                const states = JSON.parse(saved);
+                const checkboxes = document.querySelectorAll('.mastered-toggle input[type="checkbox"]');
+                let count = 0;
+                checkboxes.forEach((cb, i) => {
+                    if (states[i]) {
+                        cb.checked = true;
+                        count++;
+                    }
+                });
+                document.getElementById('mastered-count').textContent = count;
+                document.getElementById('progress-text').textContent = `${count} de 15`;
+                document.getElementById('progress-fill').style.width = `${(count / 15) * 100}%`;
+            }
+        });
+    </script>
+</body>
+</html>
