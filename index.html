@@ -165,11 +165,11 @@ educação tech gratuita · pt-BR
 <script>
 const IG='https://www.instagram.com/celsosre/';
 const CATALOG=[
-{categoria:'Linux',subcategoria:'Administração',titulo:'Linux — Manual de Produção',descricao:'Do básico à produção: comandos, administração de sistemas, monitoramento, troubleshooting e boas práticas.',nivel:'Iniciante ao avançado',capitulos:'21 capítulos',caps:21,status:'live',href:'linux.html',icone:'🐧',cor:'#E9B949'},
-{categoria:'Linux',subcategoria:'Redes e Troubleshooting',titulo:'Linux — Troubleshooting de Rede',descricao:'Árvore de decisão para diagnosticar falhas de conectividade: interface, IP, rota, gateway, DNS, firewall e aplicação.',nivel:'Intermediário',capitulos:'7 etapas + checklist',caps:0,status:'live',href:'linux-rede.html',icone:'🌐',cor:'#4CC9F0'},
-{categoria:'Linux',subcategoria:'Redes e Troubleshooting',titulo:'Linux — Projetos de Rede para DevOps',descricao:'Projetos práticos de redes para engenheiros DevOps: VLANs, roteamento, firewall, VPN, monitoramento e muito mais.',nivel:'Intermediário ao Avançado',capitulos:'Laboratórios práticos',caps:0,status:'live',href:'linux-rede-2.0.html',icone:'🔬',cor:'#3DD68C'},
-{categoria:'Linux',subcategoria:'Estudo',titulo:'Linux — Flashcards de Estudo',descricao:'Flashcards interativos para fixar comandos, conceitos e boas práticas Linux de forma dinâmica e eficiente.',nivel:'Iniciante ao Avançado',capitulos:'Flashcards interativos',caps:0,status:'live',href:'FlashcardsLinux.html',icone:'🃏',cor:'#8B7CF6'},
-{categoria:'IA',subcategoria:'Prompts',titulo:'IA — Central de Prompts',descricao:'Biblioteca prática de prompts e atalhos para ChatGPT e outros LLMs. Comandos organizados por categoria para maximizar sua produtividade.',nivel:'Iniciante ao Avançado',capitulos:'Biblioteca completa',caps:0,status:'live',href:'central-de-prompts-devyra.html',icone:'🤖',cor:'#FF6B8B'},
+{categoria:'Linux',subcategoria:'Administração',titulo:'Linux — Manual de Produção',descricao:'Do básico à produção: comandos, administração de sistemas, monitoramento, troubleshooting e boas práticas.',nivel:'Iniciante ao avançado',capitulos:'21 capítulos',caps:21,status:'live',href:'linux/',icone:'🐧',cor:'#E9B949'},
+{categoria:'Linux',subcategoria:'Redes e Troubleshooting',titulo:'Linux — Troubleshooting de Rede',descricao:'Árvore de decisão para diagnosticar falhas de conectividade: interface, IP, rota, gateway, DNS, firewall e aplicação.',nivel:'Intermediário',capitulos:'7 etapas + checklist',caps:0,status:'live',href:'rede/',icone:'🌐',cor:'#4CC9F0'},
+{categoria:'Linux',subcategoria:'Redes e Troubleshooting',titulo:'Linux — Projetos de Rede para DevOps',descricao:'Projetos práticos de redes para engenheiros DevOps: VLANs, roteamento, firewall, VPN, monitoramento e muito mais.',nivel:'Intermediário ao Avançado',capitulos:'Laboratórios práticos',caps:0,status:'live',href:'rede-2.0/',icone:'🔬',cor:'#3DD68C'},
+{categoria:'Linux',subcategoria:'Estudo',titulo:'Linux — Flashcards de Estudo',descricao:'Flashcards interativos para fixar comandos, conceitos e boas práticas Linux de forma dinâmica e eficiente.',nivel:'Iniciante ao Avançado',capitulos:'Flashcards interativos',caps:0,status:'live',href:'flashcardsLinux/',icone:'🃏',cor:'#8B7CF6'},
+{categoria:'IA',subcategoria:'Prompts',titulo:'IA — Central de Prompts',descricao:'Biblioteca prática de prompts e atalhos para ChatGPT e outros LLMs. Comandos organizados por categoria para maximizar sua produtividade.',nivel:'Iniciante ao Avançado',capitulos:'Biblioteca completa',caps:0,status:'live',href:'ia/',icone:'🤖',cor:'#FF6B8B'},
 {categoria:'DevOps',titulo:'DevOps — Cultura & CI/CD',descricao:'Pipelines, automação, integração e entrega contínua.',nivel:'Iniciante',status:'soon',icone:'♾️',cor:'#3DD68C'},
 {categoria:'Docker',titulo:'Docker — Do zero ao deploy',descricao:'Contêineres, imagens, volumes e redes.',nivel:'Iniciante',status:'soon',icone:'🐳',cor:'#4CC9F0'},
 {categoria:'Kubernetes',titulo:'Kubernetes — Orquestração',descricao:'Deploy, escalabilidade e resiliência em cluster.',nivel:'Intermediário',status:'soon',icone:'☸️',cor:'#8B7CF6'},
@@ -191,7 +191,7 @@ $('#subsel').onchange=e=>{state.sub=e.target.value;render()};
 $('#q').oninput=e=>{state.q=e.target.value;render()};
 $('#burger').onclick=()=>$('#navlinks').classList.toggle('open');
 const uniq=[...new Set(CATALOG.map(c=>c.categoria))];
-document.getElementById('term-ls').innerHTML=uniq.map(cat=>{const live=CATALOG.some(c=>c.categoria===cat&&c.status==='live');const slug=cat.toLowerCase().replace(/\s+/g,'-')+'/';return `<span class="${live?'tg':''}">${slug}</span>`}).join('  ');
+document.getElementById('term-ls').innerHTML=uniq.map(cat=>{const live=CATALOG.some(c=>c.categoria===cat&&c.status==='live');const slug=cat.toLowerCase().replace(/\s+/g,'-')+'/';return `<span class="${live?'tg':''}">${slug}</span>`}).join('  ');
 $('#st-live').textContent=String(CATALOG.filter(c=>c.status==='live').length).padStart(2,'0');
 $('#st-caps').textContent=String(CATALOG.reduce((s,c)=>s+(c.caps||0),0)).padStart(2,'0');
 $('#foot-trilhas').innerHTML=CATALOG.filter(c=>c.status==='live').map(c=>`<li><a href="${c.href}">${c.titulo}</a></li>`).join('');
