@@ -34,16 +34,8 @@
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   html { scroll-behavior: smooth; }
-
-  body {
-    font-family: var(--sans);
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.6;
-    font-size: 14px;
-  }
+  body { font-family: var(--sans); background: var(--bg); color: var(--text); line-height: 1.6; font-size: 14px; }
 
   /* ── HEADER ── */
   .site-header {
@@ -278,7 +270,6 @@
   }
   .block ul li strong { color: var(--text); }
 
-  /* checklist */
   .checklist li { padding-left: 20px; }
   .checklist li::before { content: '✓'; color: var(--green); font-size: 11px; }
 
@@ -297,32 +288,6 @@
   }
   .code-block .comment { color: #8b949e; }
   .code-block .cmd     { color: #79c0ff; }
-
-  /* ── TABLE ── */
-  .data-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 12px;
-  }
-  .data-table th {
-    background: #010409;
-    color: var(--text-muted);
-    font-weight: 600;
-    text-align: left;
-    padding: 8px 12px;
-    font-size: 11px;
-    letter-spacing: .05em;
-    text-transform: uppercase;
-    border-bottom: 1px solid var(--border);
-  }
-  .data-table td {
-    padding: 7px 12px;
-    border-bottom: 1px solid #21262d;
-    color: var(--text-muted);
-    vertical-align: top;
-  }
-  .data-table td:first-child { color: var(--text); font-weight: 500; }
-  .data-table tr:last-child td { border-bottom: none; }
 
   /* ── CALLOUT STRIP ── */
   .strip-row {
@@ -353,7 +318,6 @@
   .strip-key   .strip-label { color: var(--yellow); }
   .strip-skill .strip-label { color: var(--green); }
   .strip-next  .strip-label { color: var(--blue); }
-
   .strip p { color: var(--text-muted); }
 
   /* ── STEP BADGE ── */
@@ -400,34 +364,6 @@
   }
   .step-body { padding: 10px 14px; }
 
-  /* ── NUMBERED LIST ── */
-  .num-list { list-style: none; counter-reset: nl; }
-  .num-list li {
-    counter-increment: nl;
-    display: flex;
-    gap: 10px;
-    padding: 5px 0;
-    font-size: 12.5px;
-    color: var(--text-muted);
-  }
-  .num-list li::before {
-    content: counter(nl);
-    background: var(--surface);
-    border: 1px solid var(--border);
-    color: var(--text-muted);
-    font-family: var(--mono);
-    font-size: 10px;
-    font-weight: 700;
-    min-width: 20px;
-    height: 20px;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 1px;
-    flex-shrink: 0;
-  }
-
   /* ── TAG PILLS ── */
   .tag-list { display: flex; flex-wrap: wrap; gap: 6px; }
   .tag {
@@ -446,9 +382,6 @@
   .tag.purple { background: var(--purple-dim); color: var(--purple); border-color: var(--purple); }
   .tag.orange { background: var(--orange-dim); color: var(--orange); border-color: var(--orange); }
 
-  /* ── SEPARATOR ── */
-  .sep { height: 1px; background: var(--border); margin: 20px 0; }
-
   /* ── TOPOLOGY BOX ── */
   .topology {
     background: #010409;
@@ -464,21 +397,7 @@
     margin-bottom: 16px;
   }
   .topology .node { color: var(--blue); font-weight: 700; }
-  .topology .ip   { color: var(--green); }
   .topology .link { color: var(--yellow); }
-
-  /* ── FAILURE TABLE ── */
-  .fail-badge {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 10px;
-    font-weight: 700;
-    font-family: var(--mono);
-  }
-  .fail-badge.red    { background: var(--red-dim);    color: var(--red); }
-  .fail-badge.yellow { background: var(--yellow-dim); color: var(--yellow); }
-  .fail-badge.blue   { background: var(--blue-dim);   color: var(--blue); }
 
   /* ── FOOTER ── */
   footer {
@@ -492,9 +411,9 @@
 </head>
 <body>
 
-<!-- ═══════════════════════════ HEADER ═══════════════════════════ -->
+<!-- HEADER -->
 <header class="site-header">
-  <div class="header-badge">Projetos Práticos de Redes</div>
+  <div class="header-badge">CELSOSRE • Projetos Práticos de Redes</div>
   <h1>Projetos de Redes<br><span>para Engenheiros DevOps</span></h1>
   <p>Construa, configure, solucione problemas, proteja e automatize infraestruturas de rede com laboratórios práticos prontos para produção.</p>
   <div class="header-tags">
@@ -506,7 +425,7 @@
   </div>
 </header>
 
-<!-- ═══════════════════════════ NAV ═══════════════════════════ -->
+<!-- NAV -->
 <nav class="nav-bar">
   <div class="nav-inner">
     <a href="#p01"><span class="nav-num">01</span> Lab Linux</a>
@@ -532,144 +451,573 @@
   </div>
 </nav>
 
-<!-- ═══════════════════════════ MAIN ═══════════════════════════ -->
 <main class="main">
 
-<!-- ══════════════════ PROJETO 01 ══════════════════ -->
+<!-- PROJETO 01 -->
 <article class="project cat-linux" id="p01">
   <div class="project-header">
     <div>
       <div class="project-num">Projeto 01</div>
       <h2 class="project-title cat-linux">Monte um Lab de Troubleshooting de Redes no Linux</h2>
-      <p class="project-subtitle">Crie hosts Linux isolados com namespaces de rede e pares veth. Inspecione interfaces, rotas, tabelas ARP/neighbor, sockets e tráfego usando <strong>ip, ss, ping, traceroute</strong> e <strong>tcpdump</strong>.</p>
+      <p class="project-subtitle">Crie hosts Linux isolados com namespaces de rede e pares veth. Inspecione interfaces, rotas, tabelas ARP/neighbor, sockets e tráfego.</p>
     </div>
     <div class="project-badge">01</div>
   </div>
   <div class="project-body">
-
     <div class="grid-3">
       <div class="block">
-        <div class="block-title green">Objetivo do Projeto</div>
-        <ul>
-          <li>Configurar hosts Linux isolados usando namespaces de rede.</li>
-          <li>Conectá-los com pares veth.</li>
-          <li>Explorar o comportamento real de rede.</li>
-          <li>Praticar troubleshooting com ferramentas de produção.</li>
-        </ul>
+        <div class="block-title green">Objetivo</div>
+        <ul><li>Configurar hosts isolados via namespaces.</li><li>Conectá-los com pares veth.</li><li>Praticar troubleshooting de nível real.</li></ul>
       </div>
       <div class="block">
-        <div class="block-title blue">O Que Você Vai Construir</div>
+        <div class="block-title blue">O Que Vai Construir</div>
         <ul class="checklist">
-          <li>3 hosts Linux isolados (namespaces)</li>
-          <li>Rede virtual com pares veth</li>
-          <li>Endereçamento IP e roteamento</li>
-          <li>Teste de conectividade e falhas</li>
-          <li>Captura e análise de tráfego</li>
-          <li>Investigação de ARP, rotas e sockets</li>
+          <li>3 hosts Linux isolados</li>
+          <li>Rede virtual veth</li>
+          <li>Testes de conectividade</li>
         </ul>
       </div>
       <div class="block">
-        <div class="block-title red">Ferramentas Utilizadas</div>
-        <div class="tag-list">
-          <span class="tag">ip (iproute2)</span>
-          <span class="tag">ss</span>
-          <span class="tag">ping</span>
-          <span class="tag">traceroute</span>
-          <span class="tag">tcpdump</span>
-          <span class="tag">nsenter</span>
-          <span class="tag green">wireshark (opcional)</span>
-        </div>
+        <div class="block-title red">Ferramentas</div>
+        <div class="tag-list"><span class="tag">ip</span><span class="tag">ss</span><span class="tag">ping</span><span class="tag">tcpdump</span></div>
       </div>
     </div>
-
-    <div class="block" style="margin-bottom:16px">
-      <div class="block-title yellow">Topologia do Lab</div>
-<div class="topology">  <span class="node">ns1</span> (10.10.1.1/24)          <span class="node">ns-router</span> (10.10.1.254/24  ·  10.10.2.254/24)          <span class="node">ns2</span> (10.10.2.1/24)
-   App / Cliente  ←──<span class="link">veth1</span>──→  Roteador Linux (IP Forwarding habilitado)  ←──<span class="link">veth2</span>──→  App / Servidor</div>
-    </div>
-
     <div class="step-grid">
-      <div class="step-block">
-        <div class="step-header"><span class="step-num">1</span><span class="step-label">Criar Namespaces de Rede</span></div>
-        <div class="step-body"><div class="code-block">sudo ip netns add ns1
-sudo ip netns add ns2
-sudo ip netns add ns-router</div></div>
-      </div>
-      <div class="step-block">
-        <div class="step-header"><span class="step-num">2</span><span class="step-label">Criar Pares Veth</span></div>
-        <div class="step-body"><div class="code-block">sudo ip link add veth1 type veth \
-  peer name veth1-r
-sudo ip link add veth2 type veth \
-  peer name veth2-r</div></div>
-      </div>
-      <div class="step-block">
-        <div class="step-header"><span class="step-num">3</span><span class="step-label">Mover Interfaces para Namespaces</span></div>
-        <div class="step-body"><div class="code-block">sudo ip link set veth1 netns ns1
-sudo ip link set veth1-r netns ns-router
-sudo ip link set veth2 netns ns2
-sudo ip link set veth2-r netns ns-router</div></div>
-      </div>
-      <div class="step-block">
-        <div class="step-header"><span class="step-num">4</span><span class="step-label">Configurar Endereços IP</span></div>
-        <div class="step-body"><div class="code-block">sudo ip netns exec ns1 ip addr add \
-  10.10.1.1/24 dev veth1
-sudo ip netns exec ns1 ip link set veth1 up
-sudo ip netns exec ns1 ip route add \
-  default via 10.10.1.254</div></div>
-      </div>
-      <div class="step-block">
-        <div class="step-header"><span class="step-num">5</span><span class="step-label">Habilitar IP Forwarding (Roteador)</span></div>
-        <div class="step-body"><div class="code-block">sudo ip netns exec ns-router \
-  sysctl -w net.ipv4.ip_forward=1
-<span class="comment"># Adicionar IPs ao roteador</span>
-sudo ip netns exec ns-router ip addr add \
-  10.10.1.254/24 dev veth1-r
-sudo ip netns exec ns-router ip addr add \
-  10.10.2.254/24 dev veth2-r</div></div>
-      </div>
-      <div class="step-block">
-        <div class="step-header"><span class="step-num">6</span><span class="step-label">Testar Conectividade</span></div>
-        <div class="step-body"><div class="code-block">sudo ip netns exec ns1 ping 10.10.2.1
-sudo ip netns exec ns1 traceroute 10.10.2.1
-sudo ip netns exec ns2 ping 10.10.1.1</div></div>
-      </div>
-      <div class="step-block">
-        <div class="step-header"><span class="step-num">7</span><span class="step-label">Inspecionar Estado da Rede</span></div>
-        <div class="step-body"><div class="code-block">sudo ip netns exec ns1 ip a
-sudo ip netns exec ns1 ip r
-sudo ip netns exec ns1 ip neigh
-sudo ip netns exec ns1 ss -tunap</div></div>
-      </div>
-      <div class="step-block">
-        <div class="step-header"><span class="step-num">8</span><span class="step-label">Capturar e Analisar Tráfego</span></div>
-        <div class="step-body"><div class="code-block">sudo ip netns exec ns-router tcpdump -i any
-sudo ip netns exec ns1 tcpdump -i veth1
-<span class="comment"># Gerar tráfego em outro terminal:</span>
-sudo ip netns exec ns1 ping 10.10.2.1</div></div>
-      </div>
-      <div class="step-block">
-        <div class="step-header"><span class="step-num">9</span><span class="step-label">Experimentar e Quebrar Coisas</span></div>
-        <div class="step-body">
-          <ul><li>Remover uma rota e observar a falha</li><li>Alterar MTU e observar problemas de pacotes</li><li>Bloquear tráfego com iptables</li><li>Observar comportamento do cache ARP</li><li>Analisar handshakes e resets TCP</li></ul>
-        </div>
-      </div>
+      <div class="step-block"><div class="step-header"><span class="step-num">1</span><span class="step-label">Criar Namespaces</span></div><div class="step-body"><div class="code-block">sudo ip netns add ns1
+sudo ip netns add ns2</div></div></div>
+      <div class="step-block"><div class="step-header"><span class="step-num">2</span><span class="step-label">Pares Veth</span></div><div class="step-body"><div class="code-block">sudo ip link add veth1 type veth peer name veth2
+sudo ip link set veth1 netns ns1
+sudo ip link set veth2 netns ns2</div></div></div>
     </div>
-
     <div class="strip-row">
-      <div class="strip strip-key"><div class="strip-label">🔑 Conclusão Chave</div><p>Problemas de rede são mais fáceis de resolver quando você consegue reproduzi-los.</p></div>
-      <div class="strip strip-skill"><div class="strip-label">✅ Habilidade Real</div><p>Este lab cria a base para troubleshooting de containers, Kubernetes e redes em nuvem.</p></div>
-      <div class="strip strip-next"><div class="strip-label">⚙️ Próximo Passo</div><p>Estenda este lab com DNS, regras de firewall e NAT nos próximos projetos.</p></div>
+      <div class="strip strip-key"><div class="strip-label">🔑 Conclusão</div><p>Problemas de rede são fáceis de resolver quando reproduzidos.</p></div>
+      <div class="strip strip-skill"><div class="strip-label">✅ Habilidade</div><p>Base sólida para containers e Kubernetes.</p></div>
+      <div class="strip strip-next"><div class="strip-label">⚙️ Próximo</div><p>Avançar para rastreamento de pacotes E2E.</p></div>
     </div>
   </div>
 </article>
 
-<!-- (Demais artigos omitidos por brevidade no snippet, mas todos mantidos e limpos no arquivo gerado no Drive) -->
+<!-- PROJETO 02 -->
+<article class="project cat-tcp" id="p02">
+  <div class="project-header">
+    <div>
+      <div class="project-num">Projeto 02</div>
+      <h2 class="project-title cat-tcp">Rastrear um Pacote de Ponta a Ponta</h2>
+      <p class="project-subtitle">Acompanhe requisições desde DNS, roteamento, ARP, handshake TCP até a resposta utilizando tcpdump e Wireshark.</p>
+    </div>
+    <div class="project-badge">02</div>
+  </div>
+  <div class="project-body">
+    <div class="grid-3">
+      <div class="block"><div class="block-title red">Objetivo</div><ul><li>Mapear o ciclo de vida do pacote.</li><li>Analisar handshakes TCP.</li></ul></div>
+      <div class="block"><div class="block-title blue">O Que Vai Construir</div><ul class="checklist"><li>Captura de tráfego HTTP/HTTPS</li><li>Análise de camadas OSI</li></ul></div>
+      <div class="block"><div class="block-title yellow">Ferramentas</div><div class="tag-list"><span class="tag">dig</span><span class="tag">tcpdump</span><span class="tag">Wireshark</span><span class="tag">curl</span></div></div>
+    </div>
+    <div class="step-grid">
+      <div class="step-block"><div class="step-header"><span class="step-num">1</span><span class="step-label">Capturar Pacotes</span></div><div class="step-body"><div class="code-block">sudo tcpdump -i eth0 -nn -vv 'port 80'</div></div></div>
+    </div>
+    <div class="strip-row">
+      <div class="strip strip-key"><div class="strip-label">🔑 Conclusão</div><p>Cada requisição passa por múltiplas camadas.</p></div>
+      <div class="strip strip-skill"><div class="strip-label">✅ Habilidade</div><p>Inspeção profunda de tráfego.</p></div>
+      <div class="strip strip-next"><div class="strip-label">⚙️ Próximo</div><p>Configuração de servidores DNS.</p></div>
+    </div>
+  </div>
+</article>
+
+<!-- PROJETO 03 -->
+<article class="project cat-dns" id="p03">
+  <div class="project-header">
+    <div>
+      <div class="project-num">Projeto 03</div>
+      <h2 class="project-title cat-dns">Construir e Solucionar Problemas de DNS</h2>
+      <p class="project-subtitle">Execute um ambiente DNS local com BIND9, crie registros, teste resolução recursiva e diagnostique falhas comuns.</p>
+    </div>
+    <div class="project-badge">03</div>
+  </div>
+  <div class="project-body">
+    <div class="grid-3">
+      <div class="block"><div class="block-title yellow">Objetivo</div><ul><li>Implantar servidor BIND9 local.</li><li>Resolver falhas NXDOMAIN e SERVFAIL.</li></ul></div>
+      <div class="block"><div class="block-title blue">O Que Vai Construir</div><ul class="checklist"><li>Servidor DNS configurado</li><li>Testes de cache e TTL</li></ul></div>
+      <div class="block"><div class="block-title red">Ferramentas</div><div class="tag-list"><span class="tag">BIND9</span><span class="tag">dig</span><span class="tag">nslookup</span></div></div>
+    </div>
+    <div class="step-grid">
+      <div class="step-block"><div class="step-header"><span class="step-num">1</span><span class="step-label">Consultar DNS</span></div><div class="step-body"><div class="code-block">dig @127.0.0.1 meudominio.local +trace</div></div></div>
+    </div>
+    <div class="strip-row">
+      <div class="strip strip-key"><div class="strip-label">🔑 Conclusão</div><p>Problemas de DNS derrubam aplicações inteiras.</p></div>
+      <div class="strip strip-skill"><div class="strip-label">✅ Habilidade</div><p>Diagnóstico de resolução de nomes.</p></div>
+      <div class="strip strip-next"><div class="strip-label">⚙️ Próximo</div><p>Diagnóstico de conexões TCP.</p></div>
+    </div>
+  </div>
+</article>
+
+<!-- PROJETO 04 -->
+<article class="project cat-tcp" id="p04">
+  <div class="project-header">
+    <div>
+      <div class="project-num">Projeto 04</div>
+      <h2 class="project-title cat-tcp">Diagnosticar Falhas de Conexão TCP</h2>
+      <p class="project-subtitle">Reproduza conexões recusadas, timeouts, resets e exaustão de portas analisando estados TCP (TIME-WAIT, CLOSE-WAIT).</p>
+    </div>
+    <div class="project-badge">04</div>
+  </div>
+  <div class="project-body">
+    <div class="grid-3">
+      <div class="block"><div class="block-title red">Objetivo</div><ul><li>Identificar estados problemáticos do TCP.</li><li>Simular exaustão de portas.</li></ul></div>
+      <div class="block"><div class="block-title blue">O Que Vai Construir</div><ul class="checklist"><li>Cenários de erro TCP</li><li>Mapeamento de sockets</li></ul></div>
+      <div class="block"><div class="block-title yellow">Ferramentas</div><div class="tag-list"><span class="tag">ss</span><span class="tag">netstat</span><span class="tag">nc</span><span class="tag">hping3</span></div></div>
+    </div>
+    <div class="step-grid">
+      <div class="step-block"><div class="step-header"><span class="step-num">1</span><span class="step-label">Listar Sockets</span></div><div class="step-body"><div class="code-block">ss -s
+ss -tan 'state time-wait'</div></div></div>
+    </div>
+    <div class="strip-row">
+      <div class="strip strip-key"><div class="strip-label">🔑 Conclusão</div><p>Erros diferentes podem gerar sintomas parecidos.</p></div>
+      <div class="strip strip-skill"><div class="strip-label">✅ Habilidade</div><p>Análise detalhada de sockets.</p></div>
+      <div class="strip strip-next"><div class="strip-label">⚙️ Próximo</div><p>Laboratório de roteamento Linux.</p></div>
+    </div>
+  </div>
+</article>
+
+<!-- PROJETO 05 -->
+<article class="project cat-linux" id="p05">
+  <div class="project-header">
+    <div>
+      <div class="project-num">Projeto 05</div>
+      <h2 class="project-title cat-linux">Construir um Laboratório de Roteamento Linux</h2>
+      <p class="project-subtitle">Crie múltiplas sub-redes com namespaces, configure tabelas de roteamento e gateways padrão para simular rotas assimétricas.</p>
+    </div>
+    <div class="project-badge">05</div>
+  </div>
+  <div class="project-body">
+    <div class="grid-3">
+      <div class="block"><div class="block-title green">Objetivo</div><ul><li>Configurar roteamento estático avançado.</li><li>Testar encaminhamento de pacotes.</li></ul></div>
+      <div class="block"><div class="block-title blue">O Que Vai Construir</div><ul class="checklist"><li>Topologia multi-sub-rede</li><li>Roteador Linux dedicado</li></ul></div>
+      <div class="block"><div class="block-title red">Ferramentas</div><div class="tag-list"><span class="tag">ip route</span><span class="tag">sysctl</span><span class="tag">traceroute</span></div></div>
+    </div>
+    <div class="step-grid">
+      <div class="step-block"><div class="step-header"><span class="step-num">1</span><span class="step-label">Adicionar Rota</span></div><div class="step-body"><div class="code-block">sudo ip route add 192.168.20.0/24 via 192.168.10.254</div></div></div>
+    </div>
+    <div class="strip-row">
+      <div class="strip strip-key"><div class="strip-label">🔑 Conclusão</div><p>Roteamento exige validar o caminho completo.</p></div>
+      <div class="strip strip-skill"><div class="strip-label">✅ Habilidade</div><p>Domínio de tabelas de roteamento.</p></div>
+      <div class="strip strip-next"><div class="strip-label">⚙️ Próximo</div><p>Regras de NAT e Firewall.</p></div>
+    </div>
+  </div>
+</article>
+
+<!-- PROJETO 06 -->
+<article class="project cat-linux" id="p06">
+  <div class="project-header">
+    <div>
+      <div class="project-num">Projeto 06</div>
+      <h2 class="project-title cat-linux">Construir Regras de NAT e Firewall</h2>
+      <p class="project-subtitle">Configure encaminhamento de IP, NAT (SNAT/DNAT), mascaramento e filtragem de pacotes com iptables.</p>
+    </div>
+    <div class="project-badge">06</div>
+  </div>
+  <div class="project-body">
+    <div class="grid-3">
+      <div class="block"><div class="block-title green">Objetivo</div><ul><li>Implementar regras de NAT e filtros.</li><li>Proteger nós com iptables.</li></ul></div>
+      <div class="block"><div class="block-title blue">O Que Vai Construir</div><ul class="checklist"><li>Firewall stateful</li><li>Redirecionamento de portas (DNAT)</li></ul></div>
+      <div class="block"><div class="block-title red">Ferramentas</div><div class="tag-list"><span class="tag">iptables</span><span class="tag">nftables</span><span class="tag">tcpdump</span></div></div>
+    </div>
+    <div class="step-grid">
+      <div class="step-block"><div class="step-header"><span class="step-num">1</span><span class="step-label">Mascaramento NAT</span></div><div class="step-body"><div class="code-block">sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE</div></div></div>
+    </div>
+    <div class="strip-row">
+      <div class="strip strip-key"><div class="strip-label">🔑 Conclusão</div><p>NAT altera endereços para mascarar topologias.</p></div>
+      <div class="strip strip-skill"><div class="strip-label">✅ Habilidade</div><p>Controle de tráfego de borda.</p></div>
+      <div class="strip strip-next"><div class="strip-label">⚙️ Próximo</div><p>Proxy reverso com NGINX.</p></div>
+    </div>
+  </div>
+</article>
+
+<!-- PROJETO 07 -->
+<article class="project cat-proxy" id="p07">
+  <div class="project-header">
+    <div>
+      <div class="project-num">Projeto 07</div>
+      <h2 class="project-title cat-proxy">Construir um Proxy Reverso com NGINX</h2>
+      <p class="project-subtitle">Posicione múltiplos servidores de aplicação atrás do NGINX configurando upstreams, cabeçalhos, timeouts e terminação TLS.</p>
+    </div>
+    <div class="project-badge">07</div>
+  </div>
+  <div class="project-body">
+    <div class="grid-3">
+      <div class="block"><div class="block-title purple">Objetivo</div><ul><li>Configurar NGINX como proxy reverso.</li><li>Gerenciar blocos upstream.</li></ul></div>
+      <div class="block"><div class="block-title blue">O Que Vai Construir</div><ul class="checklist"><li>Servidor proxy ativo</li><li>Terminação SSL básica</li></ul></div>
+      <div class="block"><div class="block-title red">Ferramentas</div><div class="tag-list"><span class="tag">NGINX</span><span class="tag">openssl</span><span class="tag">curl</span></div></div>
+    </div>
+    <div class="step-grid">
+      <div class="step-block"><div class="step-header"><span class="step-num">1</span><span class="step-label">Configurar Upstream</span></div><div class="step-body"><div class="code-block">upstream backend { server 127.0.0.1:8080; }</div></div></div>
+    </div>
+    <div class="strip-row">
+      <div class="strip strip-key"><div class="strip-label">🔑 Conclusão</div><p>Proxies melhoram segurança e desempenho.</p></div>
+      <div class="strip strip-skill"><div class="strip-label">✅ Habilidade</div><p>Gestão de tráfego web.</p></div>
+      <div class="strip strip-next"><div class="strip-label">⚙️ Próximo</div><p>Balanceamento de carga em produção.</p></div>
+    </div>
+  </div>
+</article>
+
+<!-- PROJETO 08 -->
+<article class="project cat-proxy" id="p08">
+  <div class="project-header">
+    <div>
+      <div class="project-num">Projeto 08</div>
+      <h2 class="project-title cat-proxy">Construir um Laboratório de Balanceamento de Carga</h2>
+      <p class="project-subtitle">Implante instâncias de backend atrás de um balanceador testando health checks, distribuição e persistência de sessão.</p>
+    </div>
+    <div class="project-badge">08</div>
+  </div>
+  <div class="project-body">
+    <div class="grid-3">
+      <div class="block"><div class="block-title purple">Objetivo</div><ul><li>Implantar HAProxy ou NGINX Load Balancer.</li><li>Testar verificações de saúde (health checks).</li></ul></div>
+      <div class="block"><div class="block-title blue">O Que Vai Construir</div><ul class="checklist"><li>Cluster balanceado</li><li>Testes de carga simulados</li></ul></div>
+      <div class="block"><div class="block-title red">Ferramentas</div><div class="tag-list"><span class="tag">HAProxy</span><span class="tag">Docker</span><span class="tag">wrk</span></div></div>
+    </div>
+    <div class="step-grid">
+      <div class="step-block"><div class="step-header"><span class="step-num">1</span><span class="step-label">Configurar HAProxy</span></div><div class="step-body"><div class="code-block">backend web_backends
+  balance roundrobin
+  server app1 192.168.1.10:80 check</div></div></div>
+    </div>
+    <div class="strip-row">
+      <div class="strip strip-key"><div class="strip-label">🔑 Conclusão</div><p>Health checks evitam tráfego em nós mortos.</p></div>
+      <div class="strip strip-skill"><div class="strip-label">✅ Habilidade</div><p>Alta disponibilidade em aplicações.</p></div>
+      <div class="strip strip-next"><div class="strip-label">⚙️ Próximo</div><p>Construir e depurar TLS.</p></div>
+    </div>
+  </div>
+</article>
+
+<!-- PROJETO 09 -->
+<article class="project cat-tls" id="p09">
+  <div class="project-header">
+    <div>
+      <div class="project-num">Projeto 09</div>
+      <h2 class="project-title cat-tls">Construir e Depurar TLS</h2>
+      <p class="project-subtitle">Crie certificados, configure HTTPS, inspecione o handshake TLS, cadeia de certificados e expiração com openssl.</p>
+    </div>
+    <div class="project-badge">09</div>
+  </div>
+  <div class="project-body">
+    <div class="grid-3">
+      <div class="block"><div class="block-title orange">Objetivo</div><ul><li>Gerar certificados autoassinados.</li><li>Depurar falhas de handshake TLS.</li></ul></div>
+      <div class="block"><div class="block-title blue">O Que Vai Construir</div><ul class="checklist"><li>Servidor HTTPS seguro</li><li>Validação de cadeia</li></ul></div>
+      <div class="block"><div class="block-title red">Ferramentas</div><div class="tag-list"><span class="tag">openssl</span><span class="tag">certbot</span><span class="tag">wireshark</span></div></div>
+    </div>
+    <div class="step-grid">
+      <div class="step-block"><div class="step-header"><span class="step-num">1</span><span class="step-label">Inspecionar TLS</span></div><div class="step-body"><div class="code-block">openssl s_client -connect meu-site.com:443 -servername meu-site.com</div></div></div>
+    </div>
+    <div class="strip-row">
+      <div class="strip strip-key"><div class="strip-label">🔑 Conclusão</div><p>Cadeias de certificados válidas evitam indisponibilidade.</p></div>
+      <div class="strip strip-skill"><div class="strip-label">✅ Habilidade</div><p>Gestão de criptografia web.</p></div>
+      <div class="strip strip-next"><div class="strip-label">⚙️ Próximo</div><p>Diagnóstico de latência e perda de pacotes.</p></div>
+    </div>
+  </div>
+</article>
+
+<!-- PROJETO 10 -->
+<article class="project cat-tls" id="p10">
+  <div class="project-header">
+    <div>
+      <div class="project-num">Projeto 10</div>
+      <h2 class="project-title cat-tls">Diagnosticar Latência e Perda de Pacotes</h2>
+      <p class="project-subtitle">Introduza latência, jitter, perda de pacotes e restrições de largura de banda com tc para determinar a origem de gargalos.</p>
+    </div>
+    <div class="project-badge">10</div>
+  </div>
+  <div class="project-body">
+    <div class="grid-3">
+      <div class="block"><div class="block-title orange">Objetivo</div><ul><li>Simular condições reais de rede ruim.</li><li>Medir impactos com iperf3.</li></ul></div>
+      <div class="block"><div class="block-title blue">O Que Vai Construir</div><ul class="checklist"><li>Ambiente com degradação controlada</li></ul></div>
+      <div class="block"><div class="block-title red">Ferramentas</div><div class="tag-list"><span class="tag">tc (traffic control)</span><span class="tag">iperf3</span><span class="tag">mtr</span></div></div>
+    </div>
+    <div class="step-grid">
+      <div class="step-block"><div class="step-header"><span class="step-num">1</span><span class="step-label">Adicionar Latência</span></div><div class="step-body"><div class="code-block">sudo tc qdisc add dev eth0 root netem delay 100ms 10ms loss 2%</div></div></div>
+    </div>
+    <div class="strip-row">
+      <div class="strip strip-key"><div class="strip-label">🔑 Conclusão</div><p>Simular cenários de rede previne falhas em produção.</p></div>
+      <div class="strip strip-skill"><div class="strip-label">✅ Habilidade</div><p>Análise de resiliência.</p></div>
+      <div class="strip strip-next"><div class="strip-label">⚙️ Próximo</div><p>Redes de contêineres no Docker.</p></div>
+    </div>
+  </div>
+</article>
+
+<!-- PROJETO 11 -->
+<article class="project cat-docker" id="p11">
+  <div class="project-header">
+    <div>
+      <div class="project-num">Projeto 11</div>
+      <h2 class="project-title cat-docker">Construir Redes de Contêineres no Docker</h2>
+      <p class="project-subtitle">Compare drivers de rede bridge, host e customizadas no Docker inspecionando namespaces, interfaces veth e DNS interno.</p>
+    </div>
+    <div class="project-badge">11</div>
+  </div>
+  <div class="project-body">
+    <div class="grid-3">
+      <div class="block"><div class="block-title blue">Objetivo</div><ul><li>Compreender drivers de rede do Docker.</li><li>Isolar serviços em redes bridge customizadas.</li></ul></div>
+      <div class="block"><div class="block-title blue">O Que Vai Construir</div><ul class="checklist"><li>Redes bridge isoladas</li><li>Comunicação inter-contêineres</li></ul></div>
+      <div class="block"><div class="block-title red">Ferramentas</div><div class="tag-list"><span class="tag">Docker CLI</span><span class="tag">ip</span><span class="tag">nsenter</span></div></div>
+    </div>
+    <div class="step-grid">
+      <div class="step-block"><div class="step-header"><span class="step-num">1</span><span class="step-label">Criar Rede Customizada</span></div><div class="step-body"><div class="code-block">docker network create --driver bridge minha-rede</div></div></div>
+    </div>
+    <div class="strip-row">
+      <div class="strip strip-key"><div class="strip-label">🔑 Conclusão</div><p>Redes customizadas melhoram service discovery.</p></div>
+      <div class="strip strip-skill"><div class="strip-label">✅ Habilidade</div><p>Gestão de redes Docker.</p></div>
+      <div class="strip strip-next"><div class="strip-label">⚙️ Próximo</div><p>Solucionar falhas de rede no Docker.</p></div>
+    </div>
+  </div>
+</article>
+
+<!-- PROJETO 12 -->
+<article class="project cat-docker" id="p12">
+  <div class="project-header">
+    <div>
+      <div class="project-num">Projeto 12</div>
+      <h2 class="project-title cat-docker">Solucionar Falhas de Rede no Docker</h2>
+      <p class="project-subtitle">Interrompa intencionalmente DNS, portas publicadas, rotas e conectividade entre contêineres investigando o pacote.</p>
+    </div>
+    <div class="project-badge">12</div>
+  </div>
+  <div class="project-body">
+    <div class="grid-3">
+      <div class="block"><div class="block-title blue">Objetivo</div><ul><li>Diagnosticar falhas de DNS em containers.</li><li>Corrigir portas publicadas incorretamente.</li></ul></div>
+      <div class="block"><div class="block-title blue">O Que Vai Construir</div><ul class="checklist"><li>Cenários de troubleshooting Docker</li></ul></div>
+      <div class="block"><div class="block-title red">Ferramentas</div><div class="tag-list"><span class="tag">Docker CLI</span><span class="tag">iptables</span><span class="tag">nsenter</span></div></div>
+    </div>
+    <div class="step-grid">
+      <div class="step-block"><div class="step-header"><span class="step-num">1</span><span class="step-label">Inspecionar Namespace do Container</span></div><div class="step-body"><div class="code-block">sudo nsenter -t $(docker inspect -f '{{.State.Pid}}' <container>) -n ip a</div></div></div>
+    </div>
+    <div class="strip-row">
+      <div class="strip strip-key"><div class="strip-label">🔑 Conclusão</div><p>Investigar o trajeto evita reboots cegos.</p></div>
+      <div class="strip strip-skill"><div class="strip-label">✅ Habilidade</div><p>Debugging avançado de containers.</p></div>
+      <div class="strip strip-next"><div class="strip-label">⚙️ Próximo</div><p>Rastrear redes Pod-to-Pod no Kubernetes.</p></div>
+    </div>
+  </div>
+</article>
+
+<!-- PROJETO 13 -->
+<article class="project cat-k8s" id="p13">
+  <div class="project-header">
+    <div>
+      <div class="project-num">Projeto 13</div>
+      <h2 class="project-title cat-k8s">Rastrear Redes Pod-to-Pod no Kubernetes</h2>
+      <p class="project-subtitle">Implante cargas de trabalho em múltiplos nós e rastreie o tráfego de Pods através da CNI examinando IPs, rotas e namespaces.</p>
+    </div>
+    <div class="project-badge">13</div>
+  </div>
+  <div class="project-body">
+    <div class="grid-3">
+      <div class="block"><div class="block-title blue">Objetivo</div><ul><li>Analisar plugins CNI (Calico/Flannel/Cilium).</li><li>Rastrear pacotes entre nós do cluster.</li></ul></div>
+      <div class="block"><div class="block-title blue">O Que Vai Construir</div><ul class="checklist"><li>Cluster K8s instrumentado</li><li>Mapeamento CNI</li></ul></div>
+      <div class="block"><div class="block-title red">Ferramentas</div><div class="tag-list"><span class="tag">kubectl</span><span class="tag">iproute2</span><span class="tag">tcpdump</span></div></div>
+    </div>
+    <div class="step-grid">
+      <div class="step-block"><div class="step-header"><span class="step-num">1</span><span class="step-label">Verificar IPs de Pods</span></div><div class="step-body"><div class="code-block">kubectl get pods -o wide --all-namespaces</div></div></div>
+    </div>
+    <div class="strip-row">
+      <div class="strip strip-key"><div class="strip-label">🔑 Conclusão</div><p>A CNI gerencia a camada de transporte dos Pods.</p></div>
+      <div class="strip strip-skill"><div class="strip-label">✅ Habilidade</div><p>Compreensão de arquitetura CNI.</p></div>
+      <div class="strip strip-next"><div class="strip-label">⚙️ Próximo</div><p>Solucionar problemas de DNS no Kubernetes.</p></div>
+    </div>
+  </div>
+</article>
+
+<!-- PROJETO 14 -->
+<article class="project cat-k8s" id="p14">
+  <div class="project-header">
+    <div>
+      <div class="project-num">Projeto 14</div>
+      <h2 class="project-title cat-k8s">Solucionar Problemas de DNS no Kubernetes</h2>
+      <p class="project-subtitle">Construa um laboratório de incidentes baseado no CoreDNS para diagnosticar falhas de descoberta de serviços e domínios de busca.</p>
+    </div>
+    <div class="project-badge">14</div>
+  </div>
+  <div class="project-body">
+    <div class="grid-3">
+      <div class="block"><div class="block-title blue">Objetivo</div><ul><li>Depurar falhas do CoreDNS.</li><li>Verificar configuração resolv.conf nos Pods.</li></ul></div>
+      <div class="block"><div class="block-title blue">O Que Vai Construir</div><ul class="checklist"><li>Diagnóstico de CoreDNS</li><li>Testes de ndots</li></ul></div>
+      <div class="block"><div class="block-title red">Ferramentas</div><div class="tag-list"><span class="tag">kubectl</span><span class="tag">dig</span><span class="tag">CoreDNS logs</span></div></div>
+    </div>
+    <div class="step-grid">
+      <div class="step-block"><div class="step-header"><span class="step-num">1</span><span class="step-label">Testar DNS em Pod</span></div><div class="step-body"><div class="code-block">kubectl exec -it <pod-name> -- nslookup kubernetes.default</div></div></div>
+    </div>
+    <div class="strip-row">
+      <div class="strip strip-key"><div class="strip-label">🔑 Conclusão</div><p>O arquivo resolv.conf do Pod dita o comportamento de busca.</p></div>
+      <div class="strip strip-skill"><div class="strip-label">✅ Habilidade</div><p>Troubleshooting de DNS em clusters.</p></div>
+      <div class="strip strip-next"><div class="strip-label">⚙️ Próximo</div><p>Rastrear tráfego de serviços no K8s.</p></div>
+    </div>
+  </div>
+</article>
+
+<!-- PROJETO 15 -->
+<article class="project cat-k8s" id="p15">
+  <div class="project-header">
+    <div>
+      <div class="project-num">Projeto 15</div>
+      <h2 class="project-title cat-k8s">Rastrear o Tráfego de Serviços no Kubernetes</h2>
+      <p class="project-subtitle">Acompanhe o fluxo Cliente → Serviço → EndpointSlice → Pod investigando seletores, portas e checagens de prontidão.</p>
+    </div>
+    <div class="project-badge">15</div>
+  </div>
+  <div class="project-body">
+    <div class="grid-3">
+      <div class="block"><div class="block-title blue">Objetivo</div><ul><li>Entender o papel de iptables/IPVS nos Services.</li><li>Inspecionar EndpointSlices.</li></ul></div>
+      <div class="block"><div class="block-title blue">O Que Vai Construir</div><ul class="checklist"><li>Mapeamento de Services para Pods</li></ul></div>
+      <div class="block"><div class="block-title red">Ferramentas</div><div class="tag-list"><span class="tag">kubectl</span><span class="tag">iptables</span><span class="tag">EndpointSlices</span></div></div>
+    </div>
+    <div class="step-grid">
+      <div class="step-block"><div class="step-header"><span class="step-num">1</span><span class="step-label">Ver Endpoints</span></div><div class="step-body"><div class="code-block">kubectl get endpointslices -l kubernetes.io/service-name=<servico></div></div></div>
+    </div>
+    <div class="strip-row">
+      <div class="strip strip-key"><div class="strip-label">🔑 Conclusão</div><p>Sem endpoints ativos, o tráfego não alcança os Pods.</p></div>
+      <div class="strip strip-skill"><div class="strip-label">✅ Habilidade</div><p>Gestão de load balancing interno no K8s.</p></div>
+      <div class="strip strip-next"><div class="strip-label">⚙️ Próximo</div><p>Construir segmentação de rede no Kubernetes.</p></div>
+    </div>
+  </div>
+</article>
+
+<!-- PROJETO 16 -->
+<article class="project cat-k8s" id="p16">
+  <div class="project-header">
+    <div>
+      <div class="project-num">Projeto 16</div>
+      <h2 class="project-title cat-k8s">Construir Segmentação de Rede no Kubernetes</h2>
+      <p class="project-subtitle">Implemente NetworkPolicies (default-deny, allow-list) testando controles de tráfego de entrada/saída e isolamento de namespaces.</p>
+    </div>
+    <div class="project-badge">16</div>
+  </div>
+  <div class="project-body">
+    <div class="grid-3">
+      <div class="block"><div class="block-title blue">Objetivo</div><ul><li>Isolar namespaces com NetworkPolicies.</li><li>Bloquear tráfego não autorizado.</li></ul></div>
+      <div class="block"><div class="block-title blue">O Que Vai Construir</div><ul class="checklist"><li>Políticas de negação padrão</li><li>Listas de permissão de tráfego</li></ul></div>
+      <div class="block"><div class="block-title red">Ferramentas</div><div class="tag-list"><span class="tag">kubectl</span><span class="tag">Calico/Cilium</span><span class="tag">NetworkPolicy</span></div></div>
+    </div>
+    <div class="step-grid">
+      <div class="step-block"><div class="step-header"><span class="step-num">1</span><span class="step-label">Aplicar Default Deny</span></div><div class="step-body"><div class="code-block">kubectl apply -f default-deny-ingress.yaml</div></div></div>
+    </div>
+    <div class="strip-row">
+      <div class="strip strip-key"><div class="strip-label">🔑 Conclusão</div><p>NetworkPolicies reduzem o raio de impacto de brechas.</p></div>
+      <div class="strip strip-skill"><div class="strip-label">✅ Habilidade</div><p>Segurança de rede L3/L4 em clusters.</p></div>
+      <div class="strip strip-next"><div class="strip-label">⚙️ Próximo</div><p>Construir uma VPC Multi-AZ na AWS.</p></div>
+    </div>
+  </div>
+</article>
+
+<!-- PROJETO 17 -->
+<article class="project cat-aws" id="p17">
+  <div class="project-header">
+    <div>
+      <div class="project-num">Projeto 17</div>
+      <h2 class="project-title cat-aws">Construir uma VPC Multi-AZ na AWS</h2>
+      <p class="project-subtitle">Projete sub-redes públicas e privadas distribuídas em múltiplas AZs usando tabelas de rotas, IGW, NAT Gateway e ALB.</p>
+    </div>
+    <div class="project-badge">17</div>
+  </div>
+  <div class="project-body">
+    <div class="grid-3">
+      <div class="block"><div class="block-title orange">Objetivo</div><ul><li>Arquitetar VPC segura na AWS.</li><li>Configurar NAT Gateways e subnets privadas.</li></ul></div>
+      <div class="block"><div class="block-title blue">O Que Vai Construir</div><ul class="checklist"><li>VPC Multi-AZ isolada</li><li>Rotas e Gateways configurados</li></ul></div>
+      <div class="block"><div class="block-title red">Ferramentas</div><div class="tag-list"><span class="tag">AWS VPC</span><span class="tag">Terraform/Console</span><span class="tag">ALB</span></div></div>
+    </div>
+    <div class="step-grid">
+      <div class="step-block"><div class="step-header"><span class="step-num">1</span><span class="step-label">Criar VPC via CLI</span></div><div class="step-body"><div class="code-block">aws ec2 create-vpc --cidr-block 10.0.0.0/16</div></div></div>
+    </div>
+    <div class="strip-row">
+      <div class="strip strip-key"><div class="strip-label">🔑 Conclusão</div><p>Arquitetura Multi-AZ garante alta disponibilidade.</p></div>
+      <div class="strip strip-skill"><div class="strip-label">✅ Habilidade</div><p>Design de redes em nuvem.</p></div>
+      <div class="strip strip-next"><div class="strip-label">⚙️ Próximo</div><p>Solucionar falhas de conectividade em VPCs.</p></div>
+    </div>
+  </div>
+</article>
+
+<!-- PROJETO 18 -->
+<article class="project cat-aws" id="p18">
+  <div class="project-header">
+    <div>
+      <div class="project-num">Projeto 18</div>
+      <h2 class="project-title cat-aws">Solucionar Falhas de Conectividade em VPCs da AWS</h2>
+      <p class="project-subtitle">Diagnostique falhas de conexão em EC2 envolvendo Security Groups, NACLs, rotas e DNS utilizando VPC Flow Logs.</p>
+    </div>
+    <div class="project-badge">18</div>
+  </div>
+  <div class="project-body">
+    <div class="grid-3">
+      <div class="block"><div class="block-title orange">Objetivo</div><ul><li>Depurar regras restritivas de Security Groups e NACLs.</li><li>Analisar tráfego via VPC Flow Logs.</li></ul></div>
+      <div class="block"><div class="block-title blue">O Que Vai Construir</div><ul class="checklist"><li>Ambiente de testes de troubleshooting AWS</li></ul></div>
+      <div class="block"><div class="block-title red">Ferramentas</div><div class="tag-list"><span class="tag">AWS Flow Logs</span><span class="tag">Reachability Analyzer</span></div></div>
+    </div>
+    <div class="step-grid">
+      <div class="step-block"><div class="step-header"><span class="step-num">1</span><span class="step-label">Analisar Flow Logs</span></div><div class="step-body"><div class="code-block">aws logs start-query --log-group-name vpc-flow-logs ...</div></div></div>
+    </div>
+    <div class="strip-row">
+      <div class="strip strip-key"><div class="strip-label">🔑 Conclusão</div><p>VPC Flow Logs fornecem evidências reais de conexões perdidas.</p></div>
+      <div class="strip strip-skill"><div class="strip-label">✅ Habilidade</div><p>Resolução de incidentes Cloud.</p></div>
+      <div class="strip strip-next"><div class="strip-label">⚙️ Próximo</div><p>Construir observabilidade de rede.</p></div>
+    </div>
+  </div>
+</article>
+
+<!-- PROJETO 19 -->
+<article class="project cat-obs" id="p19">
+  <div class="project-header">
+    <div>
+      <div class="project-num">Projeto 19</div>
+      <h2 class="project-title cat-obs">Construir Observabilidade de Rede</h2>
+      <p class="project-subtitle">Combine capturas, métricas de conexões, consultas DNS e logs de fluxo para estruturar um painel centralizado de solução.</p>
+    </div>
+    <div class="project-badge">19</div>
+  </div>
+  <div class="project-body">
+    <div class="grid-3">
+      <div class="block"><div class="block-title purple">Objetivo</div><ul><li>Integrar métricas de rede no Prometheus/Grafana.</li><li>Correlacionar telemetria de infra e app.</li></ul></div>
+      <div class="block"><div class="block-title blue">O Que Vai Construir</div><ul class="checklist"><li>Dashboard de observabilidade de rede</li></ul></div>
+      <div class="block"><div class="block-title red">Ferramentas</div><div class="tag-list"><span class="tag">Prometheus</span><span class="tag">Grafana</span><span class="tag">node_exporter</span></div></div>
+    </div>
+    <div class="step-grid">
+      <div class="step-block"><div class="step-header"><span class="step-num">1</span><span class="step-label">Métricas de Conexão</span></div><div class="step-body"><div class="code-block">node_netstat_tcp_active_opens</div></div></div>
+    </div>
+    <div class="strip-row">
+      <div class="strip strip-key"><div class="strip-label">🔑 Conclusão</div><p>Observabilidade unificada reduz drasticamente o MTTR.</p></div>
+      <div class="strip strip-skill"><div class="strip-label">✅ Habilidade</div><p>Monitoramento avançado de redes.</p></div>
+      <div class="strip strip-next"><div class="strip-label">⚙️ Próximo</div><p>Projeto final: Incidente de rede em produção.</p></div>
+    </div>
+  </div>
+</article>
+
+<!-- PROJETO 20 -->
+<article class="project cat-final" id="p20">
+  <div class="project-header">
+    <div>
+      <div class="project-num">Projeto 20</div>
+      <h2 class="project-title cat-final">Projeto Final — Incidente de Rede em Produção</h2>
+      <p class="project-subtitle">Opere uma aplicação multi-tier com falhas induzidas mitigando impactos e desenhando barreiras de prevenção definitivas.</p>
+    </div>
+    <div class="project-badge">20</div>
+  </div>
+  <div class="project-body">
+    <div class="grid-3">
+      <div class="block"><div class="block-title red">Objetivo</div><ul><li>Simular caos controlado em produção.</li><li>Resolver falhas encadeadas em tempo real.</li></ul></div>
+      <div class="block"><div class="block-title blue">O Que Vai Construir</div><ul class="checklist"><li>Simulação de outage completo e recuperação</li></ul></div>
+      <div class="block"><div class="block-title yellow">Ferramentas</div><div class="tag-list"><span class="tag">Stack Observabilidade</span><span class="tag">kubectl</span><span class="tag">tcpdump</span></div></div>
+    </div>
+    <div class="step-grid">
+      <div class="step-block"><div class="step-header"><span class="step-num">1</span><span class="step-label">Executar Diagnóstico Global</span></div><div class="step-body"><div class="code-block"># Correlacionar logs, métricas e pacotes em tempo real.</div></div></div>
+    </div>
+    <div class="strip-row">
+      <div class="strip strip-key"><div class="strip-label">🔑 Conclusão</div><p>Incidentes reais exigem calma e metodologia baseada em evidências.</p></div>
+      <div class="strip strip-skill"><div class="strip-label">✅ Habilidade</div><p>Resolução holística de falhas de rede complexas.</p></div>
+      <div class="strip strip-next"><div class="strip-label">⚙️ Concluído</div><p>Parabéns por concluir a jornada CELSOSRE de Redes DevOps!</p></div>
+    </div>
+  </div>
+</article>
 
 </main>
 
 <footer>
-  <p>Projetos de Redes para Engenheiros DevOps · Traduzido para Português do Brasil</p>
-  <p style="margin-top:8px;color:#484f58">Construa · Configure · Diagnostique · Proteja · Automatize</p>
+  <p>Projetos de Redes para Engenheiros DevOps · Selo CELSOSRE</p>
+  <p style="margin-top:8px;color:#484f58">Construir · Configurar · Diagnosticar · Proteger · Automatizar</p>
 </footer>
 
 </body>
