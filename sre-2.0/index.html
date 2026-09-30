@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRE vs DevOps: qual a diferença? — devyra.com.br</title>
+    <!-- Tailwind CSS para design moderno e responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0f19;
+            color: #cbd5e1;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-slate-950">
+
+    <!-- Cabeçalho / Navbar -->
+    <header class="w-full border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="#" class="font-bold text-xl text-white tracking-tight hover:text-amber-400 transition">
+                devyra<span class="text-amber-500">.com.br</span>
+            </a>
+            <div class="flex items-center gap-3">
+                <a href="https://instagram.com/celsosre" target="_blank" class="text-xs font-semibold bg-amber-500/10 text-amber-400 px-3.5 py-2 rounded-xl border border-amber-500/20 hover:bg-amber-500/20 transition">
+                    @celsosre
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal do Artigo -->
+    <main class="w-full max-w-3xl mx-auto px-6 py-12 md:py-16 flex-grow">
+        
+        <!-- Metadados do Artigo -->
+        <div class="flex items-center gap-3 mb-6">
+            <span class="bg-amber-500/10 text-amber-400 text-xs font-bold px-3 py-1 rounded-full border border-amber-500/20">
+                Série SRE do Zero
+            </span>
+            <span class="text-slate-500 text-xs">• Leitura de 4 min</span>
+        </div>
+
+        <!-- Título do Artigo -->
+        <h1 class="text-3xl md:text-5xl font-extrabold text-white tracking-tight leading-tight mb-8">
+            SRE vs DevOps: qual a diferença?
+        </h1>
+
+        <!-- Introdução em destaque -->
+        <div class="border-l-4 border-amber-500 pl-6 py-2 my-8 text-slate-300 text-lg md:text-xl leading-relaxed italic bg-slate-900/40 rounded-r-2xl">
+            DevOps é uma filosofia. Surgiu para acabar com a barreira entre quem desenvolve software e quem opera. A ideia é simples: os dois times trabalham juntos, com processos compartilhados e automação no centro.
+        </div>
+
+        <!-- Corpo do Artigo -->
+        <div class="space-y-10 text-base md:text-lg leading-relaxed text-slate-300">
+            
+            <section class="space-y-4">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-2.5">
+                    <span>⚙️</span> O que é SRE?
+                </h2>
+                <p>
+                    SRE é como o Google decidiu aplicar essa filosofia. Em vez de só falar em cultura, eles criaram uma função de engenharia com responsabilidades claras: manter sistemas confiáveis, responder a incidentes e definir quanto de instabilidade é aceitável.
+                </p>
+            </section>
+
+            <section class="space-y-4">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-2.5">
+                    <span>⚖️</span> A diferença prática
+                </h2>
+                <p>
+                    DevOps foca em entregar software mais rápido e com mais qualidade. SRE foca em garantir que esse software funcione bem depois que foi entregue.
+                </p>
+                <p>
+                    Um time DevOps pergunta: <strong class="text-white font-semibold">como faço para lançar mais vezes com menos risco?</strong> Um time SRE pergunta: <strong class="text-white font-semibold">quanto esse sistema aguenta antes de prejudicar o usuário?</strong>
+                </p>
+            </section>
+
+            <section class="space-y-4">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-2.5">
+                    <span>🤝</span> Os dois se completam
+                </h2>
+                <p>
+                    Empresas maduras usam os dois juntos. DevOps para acelerar a entrega. SRE para garantir que a velocidade não vire caos.
+                </p>
+                <p>
+                    Se você está começando na área, entender os dois lados é uma vantagem enorme.
+                </p>
+            </section>
+
+            <section class="space-y-4 pt-4 border-t border-slate-800">
+                <h2 class="text-2xl font-bold text-white">Conclusão</h2>
+                <p class="text-amber-400/90 font-medium pt-2">
+                    Acompanhe a série "SRE do Zero" no <a href="https://devyra.com.br" class="underline hover:text-amber-300 transition">devyra.com.br</a> e no Instagram <a href="https://instagram.com/celsosre" target="_blank" class="underline hover:text-amber-300 transition">@celsosre</a>.
+                </p>
+            </section>
+
+        </div>
+
+        <!-- Box de Chamada / Autor -->
+        <div class="mt-16 p-6 md:p-8 bg-slate-900 border border-slate-800 rounded-3xl text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div>
+                <h3 class="text-lg font-bold text-white">Série SRE do Zero</h3>
+                <p class="text-slate-400 text-sm mt-1">Conteúdos práticos sobre Linux, DevOps e SRE de forma clara e objetiva.</p>
+            </div>
+            <a href="https://instagram.com/celsosre" target="_blank" class="text-xs font-semibold bg-amber-500 text-slate-950 px-5 py-3 rounded-xl hover:bg-amber-400 transition shrink-0">
+                Seguir @celsosre
+            </a>
+        </div>
+
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="w-full border-t border-slate-800/80 bg-slate-950 py-8 text-center text-xs text-slate-500">
+        <div class="max-w-4xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p>© 2026 devyra.com.br — Todos os direitos reservados.</p>
+            <p class="text-amber-400/80 font-medium">Conteúdo • Inspire • Evolua</p>
+        </div>
+    </footer>
+
+</body>
+</html>
