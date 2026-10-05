@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>O que é disponibilidade? — devyra.com.br</title>
+    <title>SRE vs DevOps: qual a diferença? — devyra.com.br</title>
+    <!-- Tailwind CSS para design moderno e responsivo -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body {
@@ -16,7 +18,7 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-slate-950">
 
-    <!-- Navbar -->
+    <!-- Cabeçalho / Navbar -->
     <header class="w-full border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50">
         <div class="max-w-4xl mx-auto px-6 h-20 flex items-center justify-between">
             <a href="#" class="font-bold text-xl text-white tracking-tight hover:text-amber-400 transition">
@@ -30,10 +32,10 @@
         </div>
     </header>
 
-    <!-- Artigo -->
+    <!-- Conteúdo Principal do Artigo -->
     <main class="w-full max-w-3xl mx-auto px-6 py-12 md:py-16 flex-grow">
-
-        <!-- Metadados -->
+        
+        <!-- Metadados do Artigo -->
         <div class="flex items-center gap-3 mb-6">
             <span class="bg-amber-500/10 text-amber-400 text-xs font-bold px-3 py-1 rounded-full border border-amber-500/20">
                 Série SRE do Zero
@@ -41,84 +43,49 @@
             <span class="text-slate-500 text-xs">• Leitura de 4 min</span>
         </div>
 
-        <!-- Título -->
+        <!-- Título do Artigo -->
         <h1 class="text-3xl md:text-5xl font-extrabold text-white tracking-tight leading-tight mb-8">
-            O que é disponibilidade? A matemática que todo SRE precisa saber
+            SRE vs DevOps: qual a diferença?
         </h1>
 
         <!-- Introdução em destaque -->
         <div class="border-l-4 border-amber-500 pl-6 py-2 my-8 text-slate-300 text-lg md:text-xl leading-relaxed italic bg-slate-900/40 rounded-r-2xl">
-            Quando alguém diz que um sistema tem 99% de disponibilidade, parece muito. Mas 99% significa quase 4 dias fora do ar por ano. Para um e-commerce na Black Friday, isso é catastrófico.
+            DevOps é uma filosofia. Surgiu para acabar com a barreira entre quem desenvolve software e quem opera. A ideia é simples: os dois times trabalham juntos, com processos compartilhados e automação no centro.
         </div>
 
-        <!-- Corpo -->
+        <!-- Corpo do Artigo -->
         <div class="space-y-10 text-base md:text-lg leading-relaxed text-slate-300">
-
+            
             <section class="space-y-4">
                 <h2 class="text-2xl font-bold text-white flex items-center gap-2.5">
-                    <span>9️⃣</span> Os noves
-                </h2>
-                <p>Na área de SRE, disponibilidade se mede em "noves":</p>
-
-                <!-- Tabela dos noves -->
-                <div class="rounded-2xl overflow-hidden border border-slate-800 mt-2">
-                    <table class="w-full text-sm md:text-base">
-                        <thead>
-                            <tr class="bg-slate-900 text-slate-400 text-xs uppercase tracking-wider">
-                                <th class="px-5 py-3 text-left font-semibold">Disponibilidade</th>
-                                <th class="px-5 py-3 text-left font-semibold">Tempo fora por ano</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-800">
-                            <tr class="bg-slate-900/40 hover:bg-slate-900/80 transition">
-                                <td class="px-5 py-4 font-mono font-bold text-red-400">99%</td>
-                                <td class="px-5 py-4 text-slate-300">3 dias e 15 horas</td>
-                            </tr>
-                            <tr class="bg-slate-900/20 hover:bg-slate-900/80 transition">
-                                <td class="px-5 py-4 font-mono font-bold text-orange-400">99,9%</td>
-                                <td class="px-5 py-4 text-slate-300">8 horas e 45 minutos</td>
-                            </tr>
-                            <tr class="bg-slate-900/40 hover:bg-slate-900/80 transition">
-                                <td class="px-5 py-4 font-mono font-bold text-yellow-400">99,99%</td>
-                                <td class="px-5 py-4 text-slate-300">52 minutos</td>
-                            </tr>
-                            <tr class="bg-slate-900/20 hover:bg-slate-900/80 transition">
-                                <td class="px-5 py-4 font-mono font-bold text-green-400">99,999%</td>
-                                <td class="px-5 py-4 text-slate-300">5 minutos</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <p>Cada nível a mais exige muito mais investimento em infraestrutura, automação e processos.</p>
-            </section>
-
-            <section class="space-y-4">
-                <h2 class="text-2xl font-bold text-white flex items-center gap-2.5">
-                    <span>🎯</span> SLO e error budget
-                </h2>
-                <p>O SRE usa dois conceitos para trabalhar com disponibilidade.</p>
-
-                <!-- Card SLO -->
-                <div class="bg-slate-900 border border-slate-700 rounded-2xl p-5 space-y-2">
-                    <p class="text-amber-400 font-bold text-sm uppercase tracking-wider">SLO — Service Level Objective</p>
-                    <p>É a meta de disponibilidade que o time define. Não é o máximo possível. É o necessário para o negócio funcionar bem.</p>
-                </div>
-
-                <!-- Card Error Budget -->
-                <div class="bg-slate-900 border border-slate-700 rounded-2xl p-5 space-y-2">
-                    <p class="text-amber-400 font-bold text-sm uppercase tracking-wider">Error Budget — Orçamento de erros</p>
-                    <p>Se o SLO é 99,9%, o time tem um "orçamento" de 8 horas e 45 minutos de instabilidade por ano para usar. Pode ser em deploys arriscados, testes, experimentos.</p>
-                    <p>Quando o orçamento acaba, o time para de lançar coisas novas e foca em estabilidade.</p>
-                </div>
-            </section>
-
-            <section class="space-y-4">
-                <h2 class="text-2xl font-bold text-white flex items-center gap-2.5">
-                    <span>💡</span> Por que isso importa
+                    <span>⚙️</span> O que é SRE?
                 </h2>
                 <p>
-                    Esse modelo transforma a disponibilidade de um objetivo vago para uma métrica concreta. O time sabe exatamente onde está e o que pode fazer.
+                    SRE é como o Google decidiu aplicar essa filosofia. Em vez de só falar em cultura, eles criaram uma função de engenharia com responsabilidades claras: manter sistemas confiáveis, responder a incidentes e definir quanto de instabilidade é aceitável.
+                </p>
+            </section>
+
+            <section class="space-y-4">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-2.5">
+                    <span>⚖️</span> A diferença prática
+                </h2>
+                <p>
+                    DevOps foca em entregar software mais rápido e com mais qualidade. SRE foca em garantir que esse software funcione bem depois que foi entregue.
+                </p>
+                <p>
+                    Um time DevOps pergunta: <strong class="text-white font-semibold">como faço para lançar mais vezes com menos risco?</strong> Um time SRE pergunta: <strong class="text-white font-semibold">quanto esse sistema aguenta antes de prejudicar o usuário?</strong>
+                </p>
+            </section>
+
+            <section class="space-y-4">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-2.5">
+                    <span>🤝</span> Os dois se completam
+                </h2>
+                <p>
+                    Empresas maduras usam os dois juntos. DevOps para acelerar a entrega. SRE para garantir que a velocidade não vire caos.
+                </p>
+                <p>
+                    Se você está começando na área, entender os dois lados é uma vantagem enorme.
                 </p>
             </section>
 
@@ -131,7 +98,7 @@
 
         </div>
 
-        <!-- Box autor -->
+        <!-- Box de Chamada / Autor -->
         <div class="mt-16 p-6 md:p-8 bg-slate-900 border border-slate-800 rounded-3xl text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6">
             <div>
                 <h3 class="text-lg font-bold text-white">Série SRE do Zero</h3>

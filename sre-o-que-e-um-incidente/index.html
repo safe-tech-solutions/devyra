@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O que é um incidente? — devyra.com.br</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0b0f19; color: #cbd5e1; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-slate-950">
+
+    <header class="w-full border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="#" class="font-bold text-xl text-white tracking-tight hover:text-amber-400 transition">
+                devyra<span class="text-amber-500">.com.br</span>
+            </a>
+            <a href="https://instagram.com/celsosre" target="_blank" class="text-xs font-semibold bg-amber-500/10 text-amber-400 px-3.5 py-2 rounded-xl border border-amber-500/20 hover:bg-amber-500/20 transition">
+                @celsosre
+            </a>
+        </div>
+    </header>
+
+    <main class="w-full max-w-3xl mx-auto px-6 py-12 md:py-16 flex-grow">
+
+        <div class="flex items-center gap-3 mb-6">
+            <span class="bg-amber-500/10 text-amber-400 text-xs font-bold px-3 py-1 rounded-full border border-amber-500/20">Série SRE do Zero</span>
+            <span class="text-slate-500 text-xs">• Leitura de 4 min</span>
+        </div>
+
+        <h1 class="text-3xl md:text-5xl font-extrabold text-white tracking-tight leading-tight mb-8">
+            O que é um incidente? E como o SRE responde
+        </h1>
+
+        <div class="border-l-4 border-amber-500 pl-6 py-2 my-8 text-slate-300 text-lg md:text-xl leading-relaxed italic bg-slate-900/40 rounded-r-2xl">
+            Incidente é qualquer situação que prejudica o usuário. O sistema ficou lento, o app caiu, o checkout parou de funcionar. Se o usuário sentiu o impacto, é um incidente.
+        </div>
+
+        <div class="space-y-10 text-base md:text-lg leading-relaxed text-slate-300">
+
+            <section class="space-y-6">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-2.5">
+                    <span>🚨</span> As etapas da resposta
+                </h2>
+                <p>O SRE responde com método, não com desespero. O processo segue etapas.</p>
+
+                <div class="space-y-4">
+                    <div class="flex gap-4 bg-slate-900 border border-slate-800 rounded-2xl p-5">
+                        <span class="text-2xl">🔴</span>
+                        <div>
+                            <p class="font-bold text-white">1. Detectar</p>
+                            <p class="mt-1">O alerta disparou automaticamente ou alguém reportou? Quanto mais rápido detectar, menor o impacto.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 bg-slate-900 border border-slate-800 rounded-2xl p-5">
+                        <span class="text-2xl">🟡</span>
+                        <div>
+                            <p class="font-bold text-white">2. Comunicar</p>
+                            <p class="mt-1">O time precisa saber. As partes afetadas precisam saber. Comunicação clara durante o incidente é tão importante quanto a solução técnica.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 bg-slate-900 border border-slate-800 rounded-2xl p-5">
+                        <span class="text-2xl">🔧</span>
+                        <div>
+                            <p class="font-bold text-white">3. Mitigar</p>
+                            <p class="mt-1">O objetivo aqui não é corrigir tudo. É fazer o sistema voltar a funcionar, mesmo que de forma temporária. Um rollback, um desvio de tráfego, um restart controlado.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 bg-slate-900 border border-slate-800 rounded-2xl p-5">
+                        <span class="text-2xl">✅</span>
+                        <div>
+                            <p class="font-bold text-white">4. Resolver</p>
+                            <p class="mt-1">Com o sistema estabilizado, vem a correção real. A causa raiz é investigada e corrigida.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 bg-slate-900 border border-slate-800 rounded-2xl p-5">
+                        <span class="text-2xl">📝</span>
+                        <div>
+                            <p class="font-bold text-white">5. Documentar</p>
+                            <p class="mt-1">O postmortem. Um registro do que aconteceu, por que aconteceu e o que vai mudar para não repetir. Sem culpar pessoas. Só melhorando processos.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="space-y-4">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-2.5">
+                    <span>🧠</span> A mentalidade certa
+                </h2>
+                <p>Em um incidente, pânico não ajuda. O SRE aprende a agir com calma mesmo sob pressão. Isso se treina. E cada incidente vivido é um aprendizado real.</p>
+            </section>
+
+            <section class="space-y-4 pt-4 border-t border-slate-800">
+                <h2 class="text-2xl font-bold text-white">Conclusão</h2>
+                <p class="text-amber-400/90 font-medium pt-2">
+                    Acompanhe a série "SRE do Zero" no <a href="https://devyra.com.br" class="underline hover:text-amber-300 transition">devyra.com.br</a> e no Instagram <a href="https://instagram.com/celsosre" target="_blank" class="underline hover:text-amber-300 transition">@celsosre</a>.
+                </p>
+            </section>
+
+        </div>
+
+        <div class="mt-16 p-6 md:p-8 bg-slate-900 border border-slate-800 rounded-3xl text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div>
+                <h3 class="text-lg font-bold text-white">Série SRE do Zero</h3>
+                <p class="text-slate-400 text-sm mt-1">Conteúdos práticos sobre Linux, DevOps e SRE de forma clara e objetiva.</p>
+            </div>
+            <a href="https://instagram.com/celsosre" target="_blank" class="text-xs font-semibold bg-amber-500 text-slate-950 px-5 py-3 rounded-xl hover:bg-amber-400 transition shrink-0">
+                Seguir @celsosre
+            </a>
+        </div>
+
+    </main>
+
+    <footer class="w-full border-t border-slate-800/80 bg-slate-950 py-8 text-center text-xs text-slate-500">
+        <div class="max-w-4xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p>© 2026 devyra.com.br — Todos os direitos reservados.</p>
+            <p class="text-amber-400/80 font-medium">Conteúdo • Inspire • Evolua</p>
+        </div>
+    </footer>
+
+</body>
+</html>
