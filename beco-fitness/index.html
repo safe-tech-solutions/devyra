@@ -16,18 +16,8 @@
             --border-color: #333333;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.6;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; }
 
         header {
             background-color: var(--card-bg);
@@ -41,78 +31,28 @@
             z-index: 100;
         }
 
-        .logo-container h1 {
-            font-size: 1.25rem;
-            font-weight: 900;
-            letter-spacing: 1px;
-            color: var(--text-main);
-        }
+        .logo-container h1 { font-size: 1.25rem; font-weight: 900; letter-spacing: 1px; color: var(--text-main); }
+        .logo-container span { color: var(--primary-gold); }
 
-        .logo-container span {
-            color: var(--primary-gold);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 20px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary-gold);
-        }
+        .nav-links { display: flex; gap: 20px; list-style: none; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 600; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--primary-gold); }
 
         .hero {
-            background: linear-gradient(rgba(18, 18, 18, 0.8), rgba(18, 18, 18, 0.95)), url('../logo.jpeg') center/cover no-repeat;
+            background: linear-gradient(rgba(18, 18, 18, 0.85), rgba(18, 18, 18, 0.95)), #1a1a1a center/cover no-repeat;
             padding: 5rem 2rem;
             text-align: center;
             border-bottom: 1px solid var(--border-color);
         }
 
-        .hero h2 {
-            font-size: 2.5rem;
-            font-weight: 900;
-            margin-bottom: 1rem;
-            color: var(--text-main);
-        }
+        .hero h2 { font-size: 2.5rem; font-weight: 900; margin-bottom: 1rem; color: var(--text-main); }
+        .hero h2 span { color: var(--primary-gold); }
+        .hero p { color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto 2rem auto; }
 
-        .hero h2 span {
-            color: var(--primary-gold);
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
+        .section-title { font-size: 1.8rem; margin-bottom: 2rem; border-left: 4px solid var(--primary-gold); padding-left: 12px; font-weight: 700; }
 
-        .hero p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto 2rem auto;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
-
-        .section-title {
-            font-size: 1.8rem;
-            margin-bottom: 2rem;
-            border-left: 4px solid var(--primary-gold);
-            padding-left: 12px;
-            font-weight: 700;
-        }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
 
         .product-card {
             background-color: var(--card-bg);
@@ -125,10 +65,7 @@
             justify-content: space-between;
         }
 
-        .product-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary-gold);
-        }
+        .product-card:hover { transform: translateY(-5px); border-color: var(--primary-gold); }
 
         .product-img {
             background-color: #262626;
@@ -136,27 +73,17 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--text-muted);
-            font-weight: 600;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .product-info {
-            padding: 1.5rem;
-            flex-grow: 1;
-        }
-
-        .product-title {
-            font-size: 1.15rem;
+            color: var(--primary-gold);
             font-weight: 700;
-            margin-bottom: 8px;
+            font-size: 1.1rem;
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+            padding: 0 1rem;
         }
 
-        .product-meta {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 4px;
-        }
+        .product-info { padding: 1.5rem; flex-grow: 1; }
+        .product-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; }
+        .product-meta { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 4px; }
 
         .product-footer {
             display: flex;
@@ -167,11 +94,7 @@
             background-color: #161616;
         }
 
-        .product-price {
-            font-size: 1.25rem;
-            font-weight: 900;
-            color: var(--text-main);
-        }
+        .product-price { font-size: 1.25rem; font-weight: 900; color: var(--text-main); }
 
         .btn-buy {
             background-color: var(--primary-gold);
@@ -183,29 +106,14 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
+        .btn-buy:hover { background-color: var(--primary-gold-hover); }
 
-        .btn-buy:hover {
-            background-color: var(--primary-gold-hover);
-        }
-
-        /* Modal de Compra */
+        /* Modal */
         .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 1000;
         }
-        .modal-content {
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 8px;
-            width: 100%;
-            max-width: 400px;
-            border: 1px solid var(--border-color);
-        }
+        .modal-content { background: var(--card-bg); padding: 2rem; border-radius: 8px; width: 100%; max-width: 400px; border: 1px solid var(--border-color); }
         .modal-content h3 { margin-bottom: 1rem; color: var(--primary-gold); }
         .form-group { margin-bottom: 1rem; }
         .form-group label { display: block; font-size: 0.9rem; margin-bottom: 5px; color: var(--text-muted); }
@@ -214,16 +122,8 @@
         }
         .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 1.5rem; }
         .btn-cancel { background: #333; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; }
-        
-        footer {
-            background-color: var(--card-bg);
-            border-top: 1px solid var(--border-color);
-            text-align: center;
-            padding: 2rem;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-top: 4rem;
-        }
+
+        footer { background-color: var(--card-bg); border-top: 1px solid var(--border-color); text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.9rem; margin-top: 4rem; }
     </style>
 </head>
 <body>
@@ -240,16 +140,16 @@
 
     <section class="hero">
         <h2>Vestindo a Paixão pelo <span>Esporte e Performance</span></h2>
-        <p>Catálogo integrado em tempo real com o sistema de estoque do clube.</p>
+        <p>Sistema integrado de compras, estoque e vendas do clube.</p>
     </section>
 
     <main class="container" id="produtos">
         <h3 class="section-title">Estoque Disponível</h3>
-        <div id="loading" style="text-align: center; color: var(--text-muted); padding: 2rem;">Carregando produtos da planilha...</div>
+        <div id="loading" style="text-align: center; color: var(--text-muted); padding: 2rem;">Carregando produtos em tempo real...</div>
         <div class="product-grid" id="product-grid"></div>
     </main>
 
-    <!-- Modal de Finalização de Pedido -->
+    <!-- Modal de Venda -->
     <div class="modal" id="modal-pedido">
         <div class="modal-content">
             <h3 id="modal-produto-nome">Finalizar Compra</h3>
@@ -257,8 +157,8 @@
                 <input type="hidden" id="modal-sku">
                 <input type="hidden" id="modal-preco">
                 <div class="form-group">
-                    <label>Seu Nome / Cliente</label>
-                    <input type="text" id="cliente-nome" required placeholder="Ex: João da Silva">
+                    <label>Seu Nome</label>
+                    <input type="text" id="cliente-nome" required placeholder="Ex: Carlos Silva">
                 </div>
                 <div class="form-group">
                     <label>Tamanho</label>
@@ -266,4 +166,31 @@
                 </div>
                 <div class="form-group">
                     <label>Quantidade</label>
-                    <input type="number" id="modal-qtd" value="1" min="1" max
+                    <input type="number" id="modal-qtd" value="1" min="1" max="10" required>
+                </div>
+                <div class="form-group">
+                    <label>Pagamento</label>
+                    <select id="modal-pagamento">
+                        <option value="Pix">Pix</option>
+                        <option value="Cartão">Cartão</option>
+                        <option value="Dinheiro">Dinheiro</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="fecharModal()">Cancelar</button>
+                    <button type="submit" class="btn-buy" id="btn-finalizar">Confirmar Pedido</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Beco Fitness Esporte Clube. Desenvolvido para Portfólio Profissional (devyra.com.br).</p>
+    </footer>
+
+    <script>
+        const API_URL = "https://script.google.com/macros/s/AKfycbzlR89U65g2-SRE36kauZGyS0gNBevG8DY1qTdu4d8exl8hh5OISq3GZr_mH73gXbbS/exec";
+        
+        // Produtos padrão baseados na sua planilha para garantir funcionamento imediato
+        const produtosFallback = [
+            {
