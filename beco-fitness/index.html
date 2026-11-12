@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loja Oficial — Beco Fitness Esporte Clube</title>
+    <!-- Fonte Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --primary-gold: #D4AF37;
+            --primary-gold-hover: #e5be3b;
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+            --border-color: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Header & Navegação */
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-container h1 {
+            font-size: 1.25rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+            color: var(--text-main);
+        }
+
+        .logo-container span {
+            color: var(--primary-gold);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-gold);
+        }
+
+        /* Banner Principal */
+        .hero {
+            background: linear-gradient(rgba(18, 18, 18, 0.8), rgba(18, 18, 18, 0.95)), url('logo.jpeg') center/cover no-repeat;
+            padding: 5rem 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+        }
+
+        .hero h2 span {
+            color: var(--primary-gold);
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 2rem auto;
+        }
+
+        /* Vitrine de Produtos */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--primary-gold);
+            padding-left: 12px;
+            font-weight: 700;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-gold);
+        }
+
+        .product-img {
+            background-color: #262626;
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-weight: 600;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-category {
+            font-size: 0.85rem;
+            color: var(--primary-gold);
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .product-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .product-sizes {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .size-badge {
+            background-color: #2a2a2a;
+            border: 1px solid var(--border-color);
+            padding: 4px 10px;
+            font-size: 0.8rem;
+            border-radius: 4px;
+            color: var(--text-muted);
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1rem;
+        }
+
+        .product-price {
+            font-size: 1.25rem;
+            font-weight: 900;
+            color: var(--text-main);
+        }
+
+        .btn-buy {
+            background-color: var(--primary-gold);
+            color: #121212;
+            border: none;
+            padding: 8px 16px;
+            font-weight: 700;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-buy:hover {
+            background-color: var(--primary-gold-hover);
+        }
+
+        /* Rodapé */
+        footer {
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <h1>BECO FITNESS <span>ESPORTE CLUBE</span></h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#produtos">Catálogo</a></li>
+            <li><a href="#sobre">O Clube</a></li>
+            <li><a href="#contato">Contato & WhatsApp</a></li>
+        </ul>
+    </header>
+
+    <!-- Banner -->
+    <section class="hero">
+        <h2>Vestindo a Paixão pelo <span>Esporte e Performance</span></h2>
+        <p>Conheça nossa linha oficial de uniformes, camisas de jogador, torcedor e acessórios desenvolvidos para alta performance.</p>
+    </section>
+
+    <!-- Vitrine -->
+    <main class="container" id="produtos">
+        <h3 class="section-title">Lançamentos em Destaque</h3>
+        
+        <div class="product-grid">
+            <!-- Produto 1 -->
+            <div class="product-card">
+                <div class="product-img">[ Foto Camisa Jogador ]</div>
+                <div class="product-info">
+                    <span class="product-category">Camisas</span>
+                    <h4 class="product-title">Camisa Jogador Oficial</h4>
+                    <div class="product-sizes">
+                        <span class="size-badge">P</span>
+                        <span class="size-badge">M</span>
+                        <span class="size-badge">G</span>
+                        <span class="size-badge">GG</span>
+                    </div>
+                    <div class="product-footer">
+                        <span class="product-price">R$ 140,00</span>
+                        <button class="btn-buy">Comprar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Produto 2 -->
+            <div class="product-card">
+                <div class="product-img">[ Foto Camisa Torcedor ]</div>
+                <div class="product-info">
+                    <span class="product-category">Camisas</span>
+                    <h4 class="product-title">Camisa Torcedor Oficial</h4>
+                    <div class="product-sizes">
+                        <span class="size-badge">P</span>
+                        <span class="size-badge">M</span>
+                        <span class="size-badge">G</span>
+                    </div>
+                    <div class="product-footer">
+                        <span class="product-price">R$ 70,00</span>
+                        <button class="btn-buy">Comprar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Produto 3 -->
+            <div class="product-card">
+                <div class="product-img">[ Foto Calção Oficial ]</div>
+                <div class="product-info">
+                    <span class="product-category">Calções</span>
+                    <h4 class="product-title">Calção Jogador Oficial</h4>
+                    <div class="product-sizes">
+                        <span class="size-badge">M</span>
+                        <span class="size-badge">G</span>
+                    </div>
+                    <div class="product-footer">
+                        <span class="product-price">R$ 90,00</span>
+                        <button class="btn-buy">Comprar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Beco Fitness Esporte Clube. Todos os direitos reservados. Integrado ao ecossistema Devyra.</p>
+    </footer>
+
+</body>
+</html>
