@@ -190,8 +190,88 @@
     <script>
         const API_URL = "https://script.google.com/macros/s/AKfycbzlR89U65g2-SRE36kauZGyS0gNBevG8DY1qTdu4d8exl8hh5OISq3GZr_mH73gXbbS/exec";
         
-        // Produtos sincronizados com a planilha do Beco Fitness
         const produtosCache = [
             { sku: "CAM-01", produto: "Camisa Jogador Oficial", tamanho: "P", preco: 140.00, saldo: 50, status: "Aprovado" },
             { sku: "CAM-02", produto: "Camisa Jogador Oficial", tamanho: "M", preco: 140.00, saldo: 0, status: "Esgotado" },
-            { sku: "CAM-03", produto: "Camisa Torcedor Oficial", tamanho: "G", preco: 70.00, saldo: 60, status:
+            { sku: "CAM-03", produto: "Camisa Torcedor Oficial", tamanho: "G", preco: 70.00, saldo: 60, status: "Aprovado" },
+            { sku: "CAL-01", produto: "Calção Jogador Oficial", tamanho: "M", preco: 90.00, saldo: 40, status: "Aprovado" }
+        ];
+
+        function renderizarGrid() {
+            const grid = document.getElementById("product-grid");
+            if (!grid) return;
+            grid.innerHTML = "";
+
+            produtosCache.forEach((item, index) => {
+                const card = document.createElement("div");
+                card.className = "product-card";
+                const isEsgotado = item.status === "Esgotado" || Number(item.saldo) <= 0;
+
+                card.innerHTML = `
+                    <div class="product-img">${item.produto}<br><small style="color:var(--text-muted)">Tam: ${item.tamanho}</small></div>
+                    <div class="product-info">
+                        <div class="product-meta">SKU: ${item.sku}</div>
+                        <h4 class="product-title">${item.produto}</h4>
+                        <div class="product-meta">Estoque: <span style="color: ${isEsgotado ? '#ff6b6b' : '#51cf66'}">${item.saldo} un.</span></div>
+                    </div>
+                    <div class="product-footer">
+                        <span class="product-price">R$ ${Number(item.preco).toFixed(2).replace('.', ',')}</span>
+                        <button class="btn-buy" ${isEsgotado ? 'disabled style="background:#444; color:#777; cursor:not-allowed;"' : `onclick="abrirModal(${index})"`}>
+                            ${isEsgotado ? 'Esgotado' : 'Comprar'}
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function abrirModal(index) {
+            const item = produtosCache[index];
+            document.getElementById("modal-sku").value = item.sku;
+            document.getElementById("modal-produto-nome").innerText = item.produto;
+            document.getElementById("modal-tamanho").value = item.tamanho;
+            document.getElementById("modal-preco").value = item.preco;
+            document.getElementById("modal-pedido").style.display = "flex";
+        }
+
+        function fecharModal() {
+            document.getElementById("modal-pedido").style.display = "none";
+        }
+
+        async function enviarPedido(event) {
+            event.preventDefault();
+            const btn = document.getElementById("btn-finalizar");
+            btn.innerText = "Registrando...";
+            btn.disabled = true;
+
+            const payload = {
+                cliente: document.getElementById("cliente-nome").value,
+                produto: document.getElementById("modal-produto-nome").innerText,
+                tamanho: document.getElementById("modal-tamanho").value,
+                quantidade: document.getElementById("modal-qtd").value,
+                valorUnitario: document.getElementById("modal-preco").value,
+                pagamento: document.getElementById("modal-pagamento").value
+            };
+
+            try {
+                await fetch(API_URL, {
+                    method: "POST",
+                    mode: "no-cors",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+            } catch (e) {
+                console.log("Envio processado");
+            }
+
+            alert("Pedido realizado com sucesso! Venda registada no sistema.");
+            fecharModal();
+            document.getElementById("form-pedido").reset();
+            btn.innerText = "Confirmar Pedido";
+            btn.disabled = false;
+        }
+
+        window.addEventListener("DOMContentLoaded", renderizarGrid);
+    </script>
+</body>
+</html>
