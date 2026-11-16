@@ -35,9 +35,9 @@
     .section-title { border-left:4px solid var(--gold); padding-left:13px; margin-bottom:25px; font-size:1.65rem; }
     .product-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:24px; }
     .product-card { background:var(--card); border:1px solid var(--border); border-radius:13px; overflow:hidden; display:flex; flex-direction:column; }
-    .product-art { min-height:190px; display:grid; place-items:center; text-align:center; padding:22px;
-      background:linear-gradient(140deg,#292929,#171717); border-bottom:1px solid var(--border); }
-    .shirt-mark { width:100px; height:112px; display:grid; place-items:center; color:var(--gold); font-size:2.6rem; border:2px solid #777; border-radius:18px 18px 28px 28px; }
+    .product-art { height:300px; display:grid; place-items:center; padding:12px;
+      background:linear-gradient(140deg,#292929,#171717); border-bottom:1px solid var(--border); overflow:hidden; }
+    .product-art img { width:100%; height:100%; object-fit:contain; border-radius:8px; display:block; }
     .product-info { padding:20px; flex:1; }
     .product-info h3 { font-size:1.15rem; margin-bottom:7px; }
     .product-info p { color:var(--muted); font-size:.9rem; }
@@ -80,7 +80,7 @@
 
   <section class="hero">
     <h1>Vista a paixão pelo <span>esporte.</span></h1>
-    <p>Conheça as camisetas da Beco Fitness Esporte Clube e escolha seu tamanho.</p>
+    <p>Conheça as camisetas disponiveis  na Beco Fitness Esporte Clube e escolha seu tamanho.</p>
   </section>
 
   <main id="produtos">
@@ -156,8 +156,8 @@
     const API_URL = "https://script.google.com/macros/s/AKfycbzlR89U65g2-SRE36kauZGyS0gNBevG8DY1qTdu4d8exl8hh5OISq3GZr_mH73gXbbS/exec";
 
     const produtos = [
-      { sku: "CAM-Torcedor", id: "torcedor", nome: "Camiseta Torcedor", preco: 70.00, descricao: "Modelo torcedor Beco Fitness." },
-      { sku: "CAM-Jogador", id: "jogador", nome: "Camiseta Jogador", preco: 140.00, descricao: "Modelo jogador Beco Fitness." }
+      { sku: "CAM-Torcedor", id: "torcedor", nome: "Camiseta Torcedor", preco: 70.00, descricao: "Escudo bordado acabamento tradicional em linhas.", imagem: "assets/torcedor.png", alt: "Camiseta Torcedor Beco Fitness com escudo bordado" },
+      { sku: "CAM-Jogador", id: "jogador", nome: "Camiseta Jogador", preco: 140.00, descricao: "Escudo emborrachado acabamento moderno em relevo.", imagem: "assets/jogador.png", alt: "Camiseta Jogador Beco Fitness com escudo emborrachado" }
     ];
     let produtoSelecionado = null;
 
@@ -170,7 +170,7 @@
         const card = document.createElement("article");
         card.className = "product-card";
         card.innerHTML = `
-          <div class="product-art"><div class="shirt-mark" aria-hidden="true">BF</div></div>
+          <div class="product-art"><img src="${p.imagem}" alt="${p.alt}" loading="lazy"></div>
           <div class="product-info">
             <h3>${p.nome}</h3>
             <p>${p.descricao}</p>
