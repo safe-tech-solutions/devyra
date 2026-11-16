@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#121212">
+  <title>Loja Oficial — Beco Fitness Esporte Clube</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #121212; --card: #1e1e1e; --gold: #d4af37; --gold-hover: #e5be3b;
+      --text: #fff; --muted: #aaa; --border: #343434; --success: #62c985;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: Inter, sans-serif; }
+    body { background: var(--bg); color: var(--text); line-height: 1.55; }
+    header {
+      position: sticky; top: 0; z-index: 20; display: flex; align-items: center;
+      justify-content: space-between; gap: 18px; padding: 12px max(5vw, 18px);
+      background: rgba(25,25,25,.97); border-bottom: 1px solid var(--border);
+    }
+    .brand { display:flex; align-items:center; gap:12px; min-width:0; }
+    .brand img { width:64px; height:64px; object-fit:contain; border-radius:50%; }
+    .brand strong { display:block; font-size:1.05rem; letter-spacing:.7px; }
+    .brand span { display:block; color:var(--gold); font-size:.78rem; font-weight:800; letter-spacing:1.5px; }
+    nav a { color:var(--muted); text-decoration:none; font-weight:700; }
+    nav a:hover { color:var(--gold); }
+    .hero { text-align:center; padding:76px 20px 66px; border-bottom:1px solid var(--border);
+      background: radial-gradient(ellipse at top, #343020 0%, #171717 48%, #121212 100%); }
+    .hero h1 { font-size:clamp(2rem,5vw,3.4rem); line-height:1.1; font-weight:900; max-width:850px; margin:0 auto 16px; }
+    .hero h1 span { color:var(--gold); }
+    .hero p { color:var(--muted); max-width:620px; margin:auto; }
+    main { max-width:1160px; margin:auto; padding:54px 22px 70px; }
+    .section-title { border-left:4px solid var(--gold); padding-left:13px; margin-bottom:25px; font-size:1.65rem; }
+    .product-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:24px; }
+    .product-card { background:var(--card); border:1px solid var(--border); border-radius:13px; overflow:hidden; display:flex; flex-direction:column; }
+    .product-art { min-height:190px; display:grid; place-items:center; text-align:center; padding:22px;
+      background:linear-gradient(140deg,#292929,#171717); border-bottom:1px solid var(--border); }
+    .shirt-mark { width:100px; height:112px; display:grid; place-items:center; color:var(--gold); font-size:2.6rem; border:2px solid #777; border-radius:18px 18px 28px 28px; }
+    .product-info { padding:20px; flex:1; }
+    .product-info h3 { font-size:1.15rem; margin-bottom:7px; }
+    .product-info p { color:var(--muted); font-size:.9rem; }
+    .price { font-size:1.45rem; font-weight:900; color:var(--gold); margin-top:15px; }
+    .product-footer { padding:0 20px 20px; }
+    button { border:0; cursor:pointer; font-weight:800; border-radius:7px; }
+    .buy { width:100%; padding:13px 16px; background:var(--gold); color:#171717; }
+    .buy:hover { background:var(--gold-hover); }
+    .modal { display:none; position:fixed; inset:0; z-index:50; padding:18px; background:rgba(0,0,0,.82); align-items:center; justify-content:center; overflow:auto; }
+    .modal.open { display:flex; }
+    .modal-content { width:100%; max-width:470px; max-height:94vh; overflow:auto; padding:25px; background:var(--card); border:1px solid var(--border); border-radius:13px; }
+    .modal-content h2 { color:var(--gold); font-size:1.35rem; margin-bottom:5px; }
+    .sub { color:var(--muted); margin-bottom:20px; font-size:.9rem; }
+    .field { margin:14px 0; }
+    label { display:block; color:#ddd; font-size:.9rem; font-weight:600; margin-bottom:7px; }
+    input, select { width:100%; padding:12px; border:1px solid #484848; border-radius:7px; color:white; background:#121212; font-size:1rem; }
+    input:focus, select:focus { outline:2px solid var(--gold); border-color:var(--gold); }
+    .actions { display:flex; gap:10px; margin-top:22px; }
+    .actions button { flex:1; padding:12px; }
+    .cancel { background:#383838; color:white; }
+    .notice { display:none; padding:12px; margin-top:14px; border-radius:7px; background:#292719; color:#f0df9a; font-size:.88rem; }
+    .payment-note { color:var(--muted); font-size:.82rem; margin-top:8px; }
+    footer { text-align:center; color:var(--muted); border-top:1px solid var(--border); padding:28px 18px; font-size:.88rem; }
+    @media(max-width:560px) {
+      header { padding:10px 14px; } .brand img { width:52px; height:52px; }
+      .brand strong { font-size:.88rem; } .brand span { font-size:.65rem; }
+      nav a { font-size:.82rem; } .hero { padding:58px 18px; } main { padding:38px 16px 55px; }
+      .actions { flex-direction:column-reverse; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="brand" href="#" aria-label="Beco Fitness - início" style="text-decoration:none;color:inherit">
+      <img src="assets/logo-beco-fitness.png" alt="Logo Beco Fitness Esporte Clube">
+      <div><strong>BECO FITNESS</strong><span>ESPORTE CLUBE</span></div>
+    </a>
+    <nav><a href="#produtos">Catálogo</a></nav>
+  </header>
+
+  <section class="hero">
+    <h1>Vista a paixão pelo <span>esporte.</span></h1>
+    <p>Conheça as camisetas da Beco Fitness Esporte Clube e escolha seu tamanho.</p>
+  </section>
+
+  <main id="produtos">
+    <h2 class="section-title">Nossas camisetas</h2>
+    <div class="product-grid" id="product-grid"></div>
+  </main>
+
+  <div class="modal" id="modal-pedido" role="dialog" aria-modal="true" aria-labelledby="modal-produto-nome">
+    <div class="modal-content">
+      <h2 id="modal-produto-nome">Finalizar pedido</h2>
+      <p class="sub" id="modal-preco-label"></p>
+      <form id="form-pedido">
+        <input type="hidden" id="modal-sku">
+        <div class="field">
+          <label for="cliente-nome">Seu nome</label>
+          <input type="text" id="cliente-nome" autocomplete="name" required placeholder="Ex.: Carlos Silva">
+        </div>
+        <div class="field">
+          <label for="modal-tamanho">Tamanho da camiseta</label>
+          <select id="modal-tamanho" required>
+            <option value="">Selecione o tamanho</option>
+            <option>P</option><option>M</option><option>G</option><option>GG</option><option>XGG</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="modal-qtd">Quantidade</label>
+          <input type="number" id="modal-qtd" value="1" min="1" max="10" required>
+        </div>
+        <div class="field">
+          <label for="modal-entrega">Como deseja receber?</label>
+          <select id="modal-entrega" required>
+            <option value="">Selecione a entrega</option>
+            <option value="Moto Boy">Moto Boy - São Paulo (valor conforme CEP)</option>
+            <option value="Correios">Correios - consultar preço e prazo</option>
+            <option value="Loja">Loja - grátis</option>
+          </select>
+        </div>
+        <div class="field" id="campo-cep-entrega" style="display:none">
+          <label for="cep-entrega">CEP de destino</label>
+          <input type="text" id="cep-entrega" inputmode="numeric" autocomplete="postal-code" maxlength="9" placeholder="00000-000">
+          <p class="payment-note">Informe o CEP para solicitar a cotação. O valor e o prazo serão confirmados pela loja antes do pagamento.</p>
+        </div>
+        <div class="field" id="aviso-retirada" style="display:none">
+          <p class="payment-note">Retirada gratuita no endereço da Beco Fitness. A loja combinará a disponibilidade e o horário com você.</p>
+        </div>
+        <div class="field">
+          <label for="modal-pagamento">Forma de pagamento preferida</label>
+          <select id="modal-pagamento" required>
+            <option value="Pix">Pix</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
+          </select>
+          <p class="payment-note">Sua preferência será registrada junto ao pedido. No checkout seguro do Mercado Pago, você verá as formas de pagamento disponíveis e confirmará a modalidade final.</p>
+        </div>
+        <div class="notice" id="checkout-notice"></div>
+        <div class="actions">
+          <button type="button" class="cancel" id="btn-cancelar">Voltar</button>
+          <button type="submit" class="buy" id="btn-finalizar">Registrar pedido e ir ao pagamento</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer>© 2026 Beco Fitness Esporte Clube</footer>
+
+  <script>
+    // Links públicos de checkout do Mercado Pago.
+    const CHECKOUT_URLS = {
+      torcedor: "https://mpago.li/1ppd6yX",
+      jogador: "https://mpago.li/27VbnKC"
+    };
+
+    const API_URL = "https://script.google.com/macros/s/AKfycbzlR89U65g2-SRE36kauZGyS0gNBevG8DY1qTdu4d8exl8hh5OISq3GZr_mH73gXbbS/exec";
+
+    const produtos = [
+      { sku: "CAM-Torcedor", id: "torcedor", nome: "Camiseta Torcedor", preco: 70.00, descricao: "Modelo torcedor Beco Fitness." },
+      { sku: "CAM-Jogador", id: "jogador", nome: "Camiseta Jogador", preco: 140.00, descricao: "Modelo jogador Beco Fitness." }
+    ];
+    let produtoSelecionado = null;
+
+    const moeda = valor => Number(valor).toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
+
+    function renderizarGrid() {
+      const grid = document.getElementById("product-grid");
+      grid.innerHTML = "";
+      produtos.forEach((p, i) => {
+        const card = document.createElement("article");
+        card.className = "product-card";
+        card.innerHTML = `
+          <div class="product-art"><div class="shirt-mark" aria-hidden="true">BF</div></div>
+          <div class="product-info">
+            <h3>${p.nome}</h3>
+            <p>${p.descricao}</p>
+            <div class="price">${moeda(p.preco)}</div>
+          </div>
+          <div class="product-footer"><button class="buy" type="button" data-index="${i}">Escolher tamanho</button></div>`;
+        card.querySelector("button").addEventListener("click", () => abrirModal(i));
+        grid.appendChild(card);
+      });
+    }
+
+    function abrirModal(index) {
+      produtoSelecionado = produtos[index];
+      document.getElementById("modal-produto-nome").textContent = produtoSelecionado.nome;
+      document.getElementById("modal-preco-label").textContent = moeda(produtoSelecionado.preco) + " por unidade";
+      document.getElementById("modal-sku").value = produtoSelecionado.sku;
+      document.getElementById("modal-qtd").value = 1;
+      document.getElementById("checkout-notice").style.display = "none";
+      document.getElementById("modal-pedido").classList.add("open");
+      document.getElementById("cliente-nome").focus();
+    }
+
+    function fecharModal() {
+      document.getElementById("modal-pedido").classList.remove("open");
+      document.getElementById("form-pedido").reset();
+      produtoSelecionado = null;
+    }
+
+    const entregaSelect = document.getElementById("modal-entrega");
+    const cepEntrega = document.getElementById("cep-entrega");
+    entregaSelect.addEventListener("change", () => {
+      const exigeCep = ["Moto Boy", "Correios"].includes(entregaSelect.value);
+      document.getElementById("campo-cep-entrega").style.display = exigeCep ? "block" : "none";
+      document.getElementById("aviso-retirada").style.display = entregaSelect.value === "Loja" ? "block" : "none";
+      cepEntrega.required = exigeCep;
+    });
+    cepEntrega.addEventListener("input", () => {
+      const digits = cepEntrega.value.replace(/\D/g, "").slice(0, 8);
+      cepEntrega.value = digits.length > 5 ? digits.slice(0, 5) + "-" + digits.slice(5) : digits;
+    });
+
+    document.getElementById("btn-cancelar").addEventListener("click", fecharModal);
+    document.getElementById("modal-pedido").addEventListener("click", e => {
+      if (e.target.id === "modal-pedido") fecharModal();
+    });
+
+    document.getElementById("form-pedido").addEventListener("submit", async event => {
+      event.preventDefault();
+      if (!produtoSelecionado) return;
+
+      const btn = document.getElementById("btn-finalizar");
+      const nome = document.getElementById("cliente-nome").value.trim();
+      const tamanho = document.getElementById("modal-tamanho").value;
+      const quantidade = Number(document.getElementById("modal-qtd").value);
+      const pagamento = document.getElementById("modal-pagamento").value;
+      const entrega = entregaSelect.value;
+      const cepDestino = cepEntrega.value.replace(/\D/g, "");
+      if (!nome || !tamanho || !entrega || !Number.isInteger(quantidade) || quantidade < 1 || quantidade > 10) {
+        alert("Confira nome, tamanho, quantidade e tipo de entrega.");
+        return;
+      }
+      if (["Moto Boy", "Correios"].includes(entrega) && !/^\d{8}$/.test(cepDestino)) {
+        alert("Informe um CEP de destino válido com 8 números.");
+        return;
+      }
+
+      // Os links públicos atuais foram criados com preço fixo por produto.
+      // Evita registrar um pedido com várias unidades e abrir um checkout de apenas uma.
+      if (quantidade !== 1) {
+        const avisoQuantidade = document.getElementById("checkout-notice");
+        avisoQuantidade.textContent = "Por enquanto, cada link do Mercado Pago cobra uma unidade. Faça um pedido por camiseta para que o valor do checkout corresponda ao total.";
+        avisoQuantidade.style.display = "block";
+        return;
+      }
+
+      const total = produtoSelecionado.preco * quantidade;
+      const payload = {
+        cliente: nome,
+        produto: produtoSelecionado.nome,
+        sku: produtoSelecionado.sku,
+        tamanho,
+        quantidade,
+        valorUnitario: produtoSelecionado.preco,
+        valorTotal: total,
+        pagamento,
+        entrega,
+        cepDestino: entrega === "Loja" ? "" : cepDestino,
+        cepOrigem: "02878080",
+        pesoGramas: 160,
+        embalagemCm: { comprimento: 42, largura: 32, altura: 0.4 },
+        freteStatus: entrega === "Retirada" ? "Gratuito" : "Aguardando cotação/confirmacao da loja"
+      };
+
+      btn.disabled = true;
+      btn.textContent = "Enviando pedido...";
+      const aviso = document.getElementById("checkout-notice");
+      aviso.style.display = "none";
+
+      try {
+        // A preferência de pagamento é enviada no campo "pagamento" junto ao pedido.
+        // O endpoint usa no-cors; o navegador não consegue confirmar a gravação.
+        // O checkout do Mercado Pago é quem apresenta as modalidades disponíveis e confirma o pagamento.
+        await fetch(API_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload)
+        });
+
+        if (entrega !== "Loja") {
+          aviso.textContent = "Pedido enviado para a Beco Fitness. O frete de " + entrega + " será cotado e confirmado pela loja para o CEP " + cepEntrega.value + ". O pagamento será combinado após a confirmação do valor da entrega.";
+          aviso.style.display = "block";
+          btn.disabled = false;
+          btn.textContent = "Pedido enviado — aguarde o frete";
+          return;
+        }
+
+        const checkout = CHECKOUT_URLS[produtoSelecionado.id];
+        if (checkout) {
+          window.location.href = checkout;
+        } else {
+          aviso.textContent = "Pedido preparado: " + produtoSelecionado.nome + ", tamanho " + tamanho +
+            ", quantidade " + quantidade + ", total " + moeda(total) +
+            ". Não foi possível iniciar o checkout. Tente novamente ou entre em contato com a loja.";
+          aviso.style.display = "block";
+          btn.disabled = false;
+          btn.textContent = "Pedido registrado";
+        }
+      } catch (error) {
+        aviso.textContent = "Não foi possível enviar o pedido. Verifique sua conexão e tente novamente.";
+        aviso.style.display = "block";
+        btn.disabled = false;
+        btn.textContent = "Tentar novamente";
+      }
+    });
+
+    window.addEventListener("DOMContentLoaded", renderizarGrid);
+  </script>
+</body>
+</html>
