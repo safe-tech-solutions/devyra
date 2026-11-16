@@ -117,7 +117,7 @@
             <option value="Cartão de débito">Cartão de débito</option>
             <option value="Combinar pelo WhatsApp">Combinar pelo WhatsApp</option>
           </select>
-          <p class="payment-note">A confirmação e a cobrança serão feitas pelo checkout oficial assim que os links públicos forem configurados.</p>
+          <p class="payment-note">Você será direcionado ao checkout seguro do Mercado Pago para concluir o pagamento. A forma disponível será definida no checkout.</p>
         </div>
         <div class="notice" id="checkout-notice"></div>
         <div class="actions">
@@ -131,11 +131,10 @@
   <footer>© 2026 Beco Fitness Esporte Clube</footer>
 
   <script>
-    // ATENÇÃO: substitua os valores vazios pelos links PÚBLICOS de pagamento.
-    // Os links terminados em /edit são administrativos e não devem ser usados pelos clientes.
+    // Links públicos de checkout do Mercado Pago.
     const CHECKOUT_URLS = {
-      torcedor: "",
-      jogador: ""
+      torcedor: "https://mpago.li/1ppd6yX",
+      jogador: "https://mpago.li/27VbnKC"
     };
 
     const API_URL = "https://script.google.com/macros/s/AKfycbzlR89U65g2-SRE36kauZGyS0gNBevG8DY1qTdu4d8exl8hh5OISq3GZr_mH73gXbbS/exec";
@@ -244,7 +243,7 @@
         } else {
           aviso.textContent = "Pedido preparado: " + produtoSelecionado.nome + ", tamanho " + tamanho +
             ", quantidade " + quantidade + ", total " + moeda(total) +
-            ". O link público de pagamento deste produto ainda precisa ser configurado pelo administrador.";
+            ". Não foi possível iniciar o checkout. Tente novamente ou entre em contato com a loja.";
           aviso.style.display = "block";
           btn.disabled = false;
           btn.textContent = "Pedido registrado";
