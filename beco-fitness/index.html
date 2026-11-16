@@ -110,19 +110,35 @@
           <input type="number" id="modal-qtd" value="1" min="1" max="10" required>
         </div>
         <div class="field">
+          <label for="modal-entrega">Como deseja receber?</label>
+          <select id="modal-entrega" required>
+            <option value="">Selecione a entrega</option>
+            <option value="Moto Boy">Moto Boy - São Paulo (valor conforme CEP)</option>
+            <option value="Correios">Correios - consultar preço e prazo</option>
+            <option value="Loja">Loja - grátis</option>
+          </select>
+        </div>
+        <div class="field" id="campo-cep-entrega" style="display:none">
+          <label for="cep-entrega">CEP de destino</label>
+          <input type="text" id="cep-entrega" inputmode="numeric" autocomplete="postal-code" maxlength="9" placeholder="00000-000">
+          <p class="payment-note">Informe o CEP para solicitar a cotação. O valor e o prazo serão confirmados pela loja antes do pagamento.</p>
+        </div>
+        <div class="field" id="aviso-retirada" style="display:none">
+          <p class="payment-note">Retirada gratuita no endereço da Beco Fitness. A loja combinará a disponibilidade e o horário com você.</p>
+        </div>
+        <div class="field">
           <label for="modal-pagamento">Forma de pagamento preferida</label>
           <select id="modal-pagamento" required>
             <option value="Pix">Pix</option>
             <option value="Cartão de crédito">Cartão de crédito</option>
             <option value="Cartão de débito">Cartão de débito</option>
-            <option value="Combinar pelo WhatsApp">Combinar pelo WhatsApp</option>
           </select>
-          <p class="payment-note">Você será direcionado ao checkout seguro do Mercado Pago para concluir o pagamento. A forma disponível será definida no checkout.</p>
+          <p class="payment-note">Sua preferência será registrada junto ao pedido. No checkout seguro do Mercado Pago, você verá as formas de pagamento disponíveis e confirmará a modalidade final.</p>
         </div>
         <div class="notice" id="checkout-notice"></div>
         <div class="actions">
           <button type="button" class="cancel" id="btn-cancelar">Voltar</button>
-          <button type="submit" class="buy" id="btn-finalizar">Registrar pedido</button>
+          <button type="submit" class="buy" id="btn-finalizar">Registrar pedido e ir ao pagamento</button>
         </div>
       </form>
     </div>
@@ -183,6 +199,19 @@
       produtoSelecionado = null;
     }
 
+    const entregaSelect = document.getElementById("modal-entrega");
+    const cepEntrega = document.getElementById("cep-entrega");
+    entregaSelect.addEventListener("change", () => {
+      const exigeCep = ["Moto Boy", "Correios"].includes(entregaSelect.value);
+      document.getElementById("campo-cep-entrega").style.display = exigeCep ? "block" : "none";
+      document.getElementById("aviso-retirada").style.display = entregaSelect.value === "Loja" ? "block" : "none";
+      cepEntrega.required = exigeCep;
+    });
+    cepEntrega.addEventListener("input", () => {
+      const digits = cepEntrega.value.replace(/\D/g, "").slice(0, 8);
+      cepEntrega.value = digits.length > 5 ? digits.slice(0, 5) + "-" + digits.slice(5) : digits;
+    });
+
     document.getElementById("btn-cancelar").addEventListener("click", fecharModal);
     document.getElementById("modal-pedido").addEventListener("click", e => {
       if (e.target.id === "modal-pedido") fecharModal();
@@ -197,8 +226,23 @@
       const tamanho = document.getElementById("modal-tamanho").value;
       const quantidade = Number(document.getElementById("modal-qtd").value);
       const pagamento = document.getElementById("modal-pagamento").value;
-      if (!nome || !tamanho || !Number.isInteger(quantidade) || quantidade < 1 || quantidade > 10) {
-        alert("Confira nome, tamanho e quantidade.");
+      const entrega = entregaSelect.value;
+      const cepDestino = cepEntrega.value.replace(/\D/g, "");
+      if (!nome || !tamanho || !entrega || !Number.isInteger(quantidade) || quantidade < 1 || quantidade > 10) {
+        alert("Confira nome, tamanho, quantidade e tipo de entrega.");
+        return;
+      }
+      if (["Moto Boy", "Correios"].includes(entrega) && !/^\d{8}$/.test(cepDestino)) {
+        alert("Informe um CEP de destino válido com 8 números.");
+        return;
+      }
+
+      // Os links públicos atuais foram criados com preço fixo por produto.
+      // Evita registrar um pedido com várias unidades e abrir um checkout de apenas uma.
+      if (quantidade !== 1) {
+        const avisoQuantidade = document.getElementById("checkout-notice");
+        avisoQuantidade.textContent = "Por enquanto, cada link do Mercado Pago cobra uma unidade. Faça um pedido por camiseta para que o valor do checkout corresponda ao total.";
+        avisoQuantidade.style.display = "block";
         return;
       }
 
@@ -211,7 +255,13 @@
         quantidade,
         valorUnitario: produtoSelecionado.preco,
         valorTotal: total,
-        pagamento
+        pagamento,
+        entrega,
+        cepDestino: entrega === "Loja" ? "" : cepDestino,
+        cepOrigem: "02878080",
+        pesoGramas: 160,
+        embalagemCm: { comprimento: 42, largura: 32, altura: 0.4 },
+        freteStatus: entrega === "Retirada" ? "Gratuito" : "Aguardando cotação/confirmacao da loja"
       };
 
       btn.disabled = true;
@@ -220,8 +270,9 @@
       aviso.style.display = "none";
 
       try {
-        // O endpoint atual usa no-cors: o navegador não consegue confirmar a gravação.
-        // Por isso, não exibimos mensagem de pedido confirmado como se houvesse retorno validado.
+        // A preferência de pagamento é enviada no campo "pagamento" junto ao pedido.
+        // O endpoint usa no-cors; o navegador não consegue confirmar a gravação.
+        // O checkout do Mercado Pago é quem apresenta as modalidades disponíveis e confirma o pagamento.
         await fetch(API_URL, {
           method: "POST",
           mode: "no-cors",
@@ -229,16 +280,16 @@
           body: JSON.stringify(payload)
         });
 
+        if (entrega !== "Loja") {
+          aviso.textContent = "Pedido enviado para a Beco Fitness. O frete de " + entrega + " será cotado e confirmado pela loja para o CEP " + cepEntrega.value + ". O pagamento será combinado após a confirmação do valor da entrega.";
+          aviso.style.display = "block";
+          btn.disabled = false;
+          btn.textContent = "Pedido enviado — aguarde o frete";
+          return;
+        }
+
         const checkout = CHECKOUT_URLS[produtoSelecionado.id];
         if (checkout) {
-          if (quantidade > 1) {
-            aviso.textContent = "Atenção: confirme no checkout se o link permite cobrar " + quantidade +
-              " unidades. O link pode estar configurado para apenas uma unidade.";
-            aviso.style.display = "block";
-            btn.disabled = false;
-            btn.textContent = "Continuar para pagamento";
-            return;
-          }
           window.location.href = checkout;
         } else {
           aviso.textContent = "Pedido preparado: " + produtoSelecionado.nome + ", tamanho " + tamanho +
