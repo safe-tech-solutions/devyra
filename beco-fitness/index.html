@@ -1,41 +1,407 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#121212">
-<title>Loja Oficial — Beco Fitness Esporte Clube</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#121212;--card:#1e1e1e;--gold:#d4af37;--text:#fff;--muted:#aaa;--border:#343434}*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,sans-serif}body{background:var(--bg);color:var(--text);line-height:1.55}header{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:12px max(5vw,18px);background:rgba(25,25,25,.97);border-bottom:1px solid var(--border)}.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}.brand img{width:64px;height:64px;object-fit:contain;border-radius:50%}.brand strong,.brand span{display:block}.brand strong{font-size:1.05rem;letter-spacing:.7px}.brand span{color:var(--gold);font-size:.78rem;font-weight:800;letter-spacing:1.5px}nav a{color:var(--muted);text-decoration:none;font-weight:700}.hero{text-align:center;padding:76px 20px 66px;border-bottom:1px solid var(--border);background:radial-gradient(ellipse at top,#343020 0%,#171717 48%,#121212 100%)}.hero h1{font-size:clamp(2rem,5vw,3.4rem);line-height:1.1;font-weight:900;max-width:850px;margin:0 auto 16px}.hero h1 span{color:var(--gold)}.hero p{color:var(--muted);max-width:620px;margin:auto}main{max-width:1160px;margin:auto;padding:54px 22px 70px}.section-title{border-left:4px solid var(--gold);padding-left:13px;margin-bottom:12px;font-size:1.65rem}.section-note{color:var(--muted);margin-bottom:25px;font-size:.9rem}.product-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px}.product-card{background:var(--card);border:1px solid var(--border);border-radius:13px;overflow:hidden;display:flex;flex-direction:column}.product-art{height:300px;display:grid;place-items:center;padding:12px;background:linear-gradient(140deg,#292929,#171717);border-bottom:1px solid var(--border)}.product-art img{width:100%;height:100%;object-fit:contain;border-radius:8px}.product-info{padding:20px;flex:1}.product-info h3{font-size:1.08rem;margin-bottom:7px}.product-info p{color:var(--muted);font-size:.88rem}.price{font-size:1.4rem;font-weight:900;color:var(--gold);margin-top:13px}.product-footer{padding:0 20px 20px}button{border:0;cursor:pointer;font-weight:800;border-radius:7px}.buy{width:100%;padding:13px 16px;background:var(--gold);color:#171717}.buy:disabled{opacity:.55;cursor:not-allowed}.modal{display:none;position:fixed;inset:0;z-index:50;padding:18px;background:rgba(0,0,0,.82);align-items:center;justify-content:center;overflow:auto}.modal.open{display:flex}.modal-content{width:100%;max-width:470px;max-height:94vh;overflow:auto;padding:25px;background:var(--card);border:1px solid var(--border);border-radius:13px}.modal-content h2{color:var(--gold);font-size:1.35rem;margin-bottom:5px}.sub{color:var(--muted);margin-bottom:20px;font-size:.9rem}.field{margin:14px 0}label{display:block;color:#ddd;font-size:.9rem;font-weight:600;margin-bottom:7px}input,select{width:100%;padding:12px;border:1px solid #484848;border-radius:7px;color:white;background:#121212;font-size:1rem}.actions{display:flex;gap:10px;margin-top:22px}.actions button{flex:1;padding:12px}.cancel{background:#383838;color:white}.notice{display:none;padding:12px;margin-top:14px;border-radius:7px;background:#292719;color:#f0df9a;font-size:.88rem}.payment-note{color:var(--muted);font-size:.82rem;margin-top:8px}.trap{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}footer{text-align:center;color:var(--muted);border-top:1px solid var(--border);padding:28px 18px;font-size:.88rem}@media(max-width:560px){header{padding:10px 14px}.brand img{width:52px;height:52px}.brand strong{font-size:.88rem}.brand span{font-size:.65rem}.hero{padding:58px 18px}main{padding:38px 16px 55px}.actions{flex-direction:column-reverse}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#121212">
+  <meta name="description" content="Camisetas da linha Jogador Beco Fitness Esporte Clube.">
+  <title>Loja Oficial — Beco Fitness Esporte Clube</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #121212; --card: #1e1e1e; --gold: #d4af37; --gold-hover: #e5be3b;
+      --text: #fff; --muted: #aaa; --border: #343434; --success: #62c985; --danger: #e47b7b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: Inter, sans-serif; }
+    body { background: var(--bg); color: var(--text); line-height: 1.55; }
+    header {
+      position: sticky; top: 0; z-index: 20; display: flex; align-items: center;
+      justify-content: space-between; gap: 18px; padding: 12px max(5vw, 18px);
+      background: rgba(25,25,25,.97); border-bottom: 1px solid var(--border);
+    }
+    .brand { display:flex; align-items:center; gap:12px; min-width:0; text-decoration:none; color:inherit; }
+    .brand img { width:64px; height:64px; object-fit:contain; border-radius:50%; }
+    .brand strong { display:block; font-size:1.05rem; letter-spacing:.7px; }
+    .brand span { display:block; color:var(--gold); font-size:.78rem; font-weight:800; letter-spacing:1.5px; }
+    nav a { color:var(--muted); text-decoration:none; font-weight:700; }
+    nav a:hover { color:var(--gold); }
+    .hero { text-align:center; padding:76px 20px 66px; border-bottom:1px solid var(--border);
+      background: radial-gradient(ellipse at top, #343020 0%, #171717 48%, #121212 100%); }
+    .hero h1 { font-size:clamp(2rem,5vw,3.4rem); line-height:1.1; font-weight:900; max-width:850px; margin:0 auto 16px; }
+    .hero h1 span { color:var(--gold); }
+    .hero p { color:var(--muted); max-width:620px; margin:auto; }
+    main { max-width:1160px; margin:auto; padding:54px 22px 70px; }
+    .section-title { border-left:4px solid var(--gold); padding-left:13px; margin-bottom:12px; font-size:1.65rem; }
+    .section-subtitle { color:var(--muted); font-size:.92rem; margin:0 0 25px 17px; }
+    .catalog-status { margin:0 0 22px; padding:11px 14px; border:1px solid var(--border); border-radius:8px; color:var(--muted); font-size:.84rem; }
+    .catalog-status.ok { color:var(--success); border-color:#315c40; }
+    .catalog-status.warn { color:#f0df9a; border-color:#6c5a27; }
+    .product-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:24px; }
+    .product-card { background:var(--card); border:1px solid var(--border); border-radius:13px; overflow:hidden; display:flex; flex-direction:column; }
+    .product-art { height:300px; display:grid; place-items:center; padding:12px;
+      background:linear-gradient(140deg,#292929,#171717); border-bottom:1px solid var(--border); overflow:hidden; }
+    .product-art img { width:100%; height:100%; object-fit:contain; border-radius:8px; display:block; }
+    .product-info { padding:20px; flex:1; }
+    .product-info h3 { font-size:1.08rem; margin-bottom:7px; }
+    .product-info p { color:var(--muted); font-size:.88rem; }
+    .price { font-size:1.4rem; font-weight:900; color:var(--gold); margin-top:15px; }
+    .product-footer { padding:0 20px 20px; }
+    button { border:0; cursor:pointer; font-weight:800; border-radius:7px; }
+    button:disabled { opacity:.55; cursor:not-allowed; }
+    .buy { width:100%; padding:13px 16px; background:var(--gold); color:#171717; }
+    .buy:hover:not(:disabled) { background:var(--gold-hover); }
+    .modal { display:none; position:fixed; inset:0; z-index:50; padding:18px; background:rgba(0,0,0,.82); align-items:center; justify-content:center; overflow:auto; }
+    .modal.open { display:flex; }
+    .modal-content { width:100%; max-width:470px; max-height:94vh; overflow:auto; padding:25px; background:var(--card); border:1px solid var(--border); border-radius:13px; }
+    .modal-content h2 { color:var(--gold); font-size:1.35rem; margin-bottom:5px; }
+    .sub { color:var(--muted); margin-bottom:20px; font-size:.9rem; }
+    .field { margin:14px 0; }
+    label { display:block; color:#ddd; font-size:.9rem; font-weight:600; margin-bottom:7px; }
+    input, select { width:100%; padding:12px; border:1px solid #484848; border-radius:7px; color:white; background:#121212; font-size:1rem; }
+    input:focus, select:focus { outline:2px solid var(--gold); border-color:var(--gold); }
+    input[readonly] { color:var(--muted); }
+    .actions { display:flex; gap:10px; margin-top:22px; }
+    .actions button { flex:1; padding:12px; }
+    .cancel { background:#383838; color:white; }
+    .notice { display:none; padding:12px; margin-top:14px; border-radius:7px; background:#292719; color:#f0df9a; font-size:.88rem; }
+    .notice.error { background:#321f1f; color:#ffc0c0; }
+    .payment-note { color:var(--muted); font-size:.82rem; margin-top:8px; }
+    .stock-note { color:var(--muted); font-size:.78rem; margin-top:8px; }
+    .honeypot { position:absolute; left:-10000px; width:1px; height:1px; overflow:hidden; }
+    footer { text-align:center; color:var(--muted); border-top:1px solid var(--border); padding:28px 18px; font-size:.88rem; }
+    @media(max-width:560px) {
+      header { padding:10px 14px; } .brand img { width:52px; height:52px; }
+      .brand strong { font-size:.88rem; } .brand span { font-size:.65rem; }
+      nav a { font-size:.82rem; } .hero { padding:58px 18px; } main { padding:38px 16px 55px; }
+      .actions { flex-direction:column-reverse; }
+    }
+  </style>
 </head>
 <body>
-<header><a class="brand" href="#" aria-label="Beco Fitness - início"><img src="assets/logo-beco-fitness.png" alt="Logo Beco Fitness Esporte Clube"><div><strong>BECO FITNESS</strong><span>ESPORTE CLUBE</span></div></a><nav><a href="#produtos">Catálogo</a></nav></header>
-<section class="hero"><h1>Vista a paixão pelo <span>esporte.</span></h1><p>Conheça a linha Jogador da Beco Fitness Esporte Clube e escolha seu modelo e tamanho.</p></section>
-<main id="produtos"><h2 class="section-title">Camisetas — Linha Jogador</h2><p class="section-note">Escudo emborrachado • R$ 140,00 por unidade • Disponibilidade confirmada no envio do pedido.</p><div class="product-grid" id="product-grid"></div></main>
-<div class="modal" id="modal-pedido" role="dialog" aria-modal="true" aria-labelledby="modal-produto-nome"><div class="modal-content"><h2 id="modal-produto-nome">Finalizar pedido</h2><p class="sub" id="modal-preco-label"></p><form id="form-pedido"><div class="field"><label for="cliente-nome">Seu nome</label><input id="cliente-nome" type="text" autocomplete="name" required maxlength="100" placeholder="Ex.: Carlos Silva"></div><div class="field"><label for="modal-tamanho">Tamanho da camiseta</label><select id="modal-tamanho" required><option value="">Selecione o tamanho</option><option>P</option><option>M</option><option>G</option><option>GG</option><option>XGG</option></select></div><div class="field"><label for="modal-entrega">Como deseja receber?</label><select id="modal-entrega" required><option value="">Selecione a entrega</option><option value="Moto Boy">Motoboy — São Paulo (valor conforme CEP)</option><option value="Correios">Correios — consultar preço e prazo</option><option value="Loja">Retirada na loja — grátis</option></select></div><div class="field" id="campo-cep-entrega" style="display:none"><label for="cep-entrega">CEP de destino</label><input id="cep-entrega" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="9" placeholder="00000-000"><p class="payment-note">O frete será cotado e confirmado pela loja antes do pagamento.</p></div><div class="field"><label for="modal-pagamento">Forma de pagamento preferida</label><select id="modal-pagamento" required><option value="Pix">Pix</option><option value="Cartão de crédito">Cartão de crédito</option><option value="Cartão de débito">Cartão de débito</option></select><p class="payment-note">A preferência será registrada. A confirmação do pagamento acontece separadamente.</p></div><div class="trap" aria-hidden="true"><label for="website">Não preencher</label><input id="website" type="text" tabindex="-1" autocomplete="off"></div><div class="notice" id="checkout-notice" role="status" aria-live="polite"></div><div class="actions"><button type="button" class="cancel" id="btn-cancelar">Voltar</button><button type="submit" class="buy" id="btn-finalizar">Registrar pedido</button></div></form></div></div>
-<footer>© 2026 Beco Fitness Esporte Clube</footer>
-<script>
-// Endpoint da API Beco Fitness V2 publicado como Aplicativo da Web.
-const API_URL="https://script.google.com/macros/s/AKfycbwxkqSDYJoNO2BDOy2XlQrX4cUNDBAT4gHnROAp2jdrkGUk8B4uhkThymBJ1f8PUTbf/exec";
-const produtos=[
-{codigo:"SPFC",nome:"São Paulo FC",imagem:"assets/sao-paulo-fc.png"},
-{codigo:"COR-BR",nome:"Corinthians Branca",imagem:"assets/corinthians-branca.png"},
-{codigo:"COR-LIS",nome:"Corinthians Listrada",imagem:"assets/corinthians-listrada.png"},
-{codigo:"FLA-BR",nome:"Flamengo Branca",imagem:"assets/flamengo-branca.png"},
-{codigo:"LIV-VER",nome:"Liverpool Vermelha",imagem:"assets/liverpool-vermelha.png"},
-{codigo:"MCI-AZ",nome:"Manchester City Azul",imagem:"assets/manchester-city-azul.png"},
-{codigo:"PAL-VER",nome:"Palmeiras Verde",imagem:"assets/palmeiras-verde.png"},
-{codigo:"RUB-ADI",nome:"Rubro-Negra Adidas",imagem:"assets/rubro-negra-adidas.png"},
-{codigo:"SAN",nome:"Santos FC",imagem:"assets/santos-fc.png"},
-{codigo:"SP-TRI",nome:"São Paulo Tricolor",imagem:"assets/sao-paulo-tricolor.png"}
-];
-let selecionado=null;let chaveAtual=null;const moeda=v=>Number(v).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
-function renderizar(){const grid=document.getElementById("product-grid");produtos.forEach((p,i)=>{const card=document.createElement("article");card.className="product-card";const arte=document.createElement("div");arte.className="product-art";const img=document.createElement("img");img.src=p.imagem;img.alt="Camiseta Jogador "+p.nome;img.loading="lazy";arte.appendChild(img);const info=document.createElement("div");info.className="product-info";const h=document.createElement("h3");h.textContent=p.nome;const d=document.createElement("p");d.textContent="Linha Jogador • Escudo emborrachado";const price=document.createElement("div");price.className="price";price.textContent=moeda(140);info.append(h,d,price);const foot=document.createElement("div");foot.className="product-footer";const b=document.createElement("button");b.className="buy";b.type="button";b.textContent="Escolher tamanho";b.addEventListener("click",()=>abrirModal(i));foot.appendChild(b);card.append(arte,info,foot);grid.appendChild(card);});}
-function abrirModal(i){selecionado=produtos[i];chaveAtual=null;document.getElementById("modal-produto-nome").textContent=selecionado.nome;document.getElementById("modal-preco-label").textContent=moeda(140)+" por unidade";document.getElementById("form-pedido").reset();document.getElementById("campo-cep-entrega").style.display="none";document.getElementById("cep-entrega").required=false;document.getElementById("checkout-notice").style.display="none";const btn=document.getElementById("btn-finalizar");btn.disabled=false;btn.textContent="Registrar pedido";document.getElementById("modal-pedido").classList.add("open");document.getElementById("cliente-nome").focus();}
-function fecharModal(){document.getElementById("modal-pedido").classList.remove("open");document.getElementById("form-pedido").reset();selecionado=null;chaveAtual=null;}
-const entrega=document.getElementById("modal-entrega"),cep=document.getElementById("cep-entrega");entrega.addEventListener("change",()=>{const precisa=["Moto Boy","Correios"].includes(entrega.value);document.getElementById("campo-cep-entrega").style.display=precisa?"block":"none";cep.required=precisa;});cep.addEventListener("input",()=>{const n=cep.value.replace(/\D/g,"").slice(0,8);cep.value=n.length>5?n.slice(0,5)+"-"+n.slice(5):n;});document.getElementById("btn-cancelar").addEventListener("click",fecharModal);document.getElementById("modal-pedido").addEventListener("click",e=>{if(e.target.id==="modal-pedido")fecharModal();});
-function novaChave(){return window.crypto&&crypto.randomUUID?crypto.randomUUID():"bf-"+Date.now()+"-"+Math.random().toString(36).slice(2,14);}
-document.getElementById("form-pedido").addEventListener("submit",async e=>{e.preventDefault();if(!selecionado)return;const btn=document.getElementById("btn-finalizar"),aviso=document.getElementById("checkout-notice"),nome=document.getElementById("cliente-nome").value.trim(),tamanho=document.getElementById("modal-tamanho").value,modalidade=entrega.value,pagamento=document.getElementById("modal-pagamento").value,cepDestino=cep.value.replace(/\D/g,"");if(nome.length<2||!["P","M","G","GG","XGG"].includes(tamanho)||!modalidade){aviso.textContent="Confira seu nome, tamanho e modalidade de entrega.";aviso.style.display="block";return;}if(["Moto Boy","Correios"].includes(modalidade)&&!/^\d{8}$/.test(cepDestino)){aviso.textContent="Informe um CEP válido com 8 números.";aviso.style.display="block";return;}if(document.getElementById("website").value.trim())return;if(!chaveAtual)chaveAtual=novaChave();const payload={cliente:nome,sku:"BF-JOG-"+selecionado.codigo+"-"+tamanho,tamanho,quantidade:1,pagamento,entrega:modalidade,cepDestino:modalidade==="Loja"?"":cepDestino,chaveIdempotencia:chaveAtual,website:""};btn.disabled=true;btn.textContent="Enviando pedido...";aviso.style.display="none";try{await fetch(API_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});aviso.textContent=modalidade==="Loja"?"Solicitação enviada. O pedido ainda precisa ser confirmado pela loja na planilha. Aguarde a confirmação antes de efetuar o pagamento.":"Solicitação enviada. A loja precisa confirmar o registro e cotar o frete antes de enviar o link de pagamento.";aviso.style.display="block";btn.textContent="Aguardando confirmação da loja";}catch(err){aviso.textContent="Não foi possível enviar. Confirme com a loja antes de tentar novamente para evitar duplicidade.";aviso.style.display="block";btn.disabled=false;btn.textContent="Tentar novamente";}});
-window.addEventListener("DOMContentLoaded",renderizar);
-</script>
-</body></html>
+  <header>
+    <a class="brand" href="#" aria-label="Beco Fitness - início">
+      <img src="assets/logo-beco-fitness.png" alt="Logo Beco Fitness Esporte Clube">
+      <div><strong>BECO FITNESS</strong><span>ESPORTE CLUBE</span></div>
+    </a>
+    <nav><a href="#produtos">Catálogo</a></nav>
+  </header>
+
+  <section class="hero">
+    <h1>Vista a paixão pelo <span>esporte.</span></h1>
+    <p>Conheça a linha Jogador da Beco Fitness Esporte Clube e escolha seu modelo e tamanho.</p>
+  </section>
+
+  <main id="produtos">
+    <h2 class="section-title">Linha Jogador</h2>
+    <p class="section-subtitle">Escudo emborrachado • R$ 140,00 por unidade</p>
+    <div class="catalog-status warn" id="catalog-status">Catálogo visual carregado. A disponibilidade será confirmada quando a integração com o estoque de teste estiver configurada.</div>
+    <div class="product-grid" id="product-grid"></div>
+  </main>
+
+  <div class="modal" id="modal-pedido" role="dialog" aria-modal="true" aria-labelledby="modal-produto-nome">
+    <div class="modal-content">
+      <h2 id="modal-produto-nome">Finalizar pedido</h2>
+      <p class="sub" id="modal-preco-label">R$ 140,00 por unidade</p>
+      <form id="form-pedido">
+        <input type="hidden" id="modal-sku">
+        <div class="field">
+          <label for="cliente-nome">Seu nome</label>
+          <input type="text" id="cliente-nome" autocomplete="name" required maxlength="100" placeholder="Ex.: Carlos Silva">
+        </div>
+        <div class="field">
+          <label for="modal-tamanho">Tamanho da camiseta</label>
+          <select id="modal-tamanho" required>
+            <option value="">Selecione o tamanho</option>
+          </select>
+          <p class="stock-note" id="stock-note">Uma unidade cadastrada por modelo e tamanho.</p>
+        </div>
+        <div class="field">
+          <label for="modal-qtd">Quantidade</label>
+          <input type="number" id="modal-qtd" value="1" min="1" max="1" readonly required>
+          <p class="payment-note">Limite inicial: 1 unidade por tamanho.</p>
+        </div>
+        <div class="field">
+          <label for="modal-entrega">Como deseja receber?</label>
+          <select id="modal-entrega" required>
+            <option value="">Selecione a entrega</option>
+            <option value="Moto Boy">Motoboy - São Paulo (valor conforme CEP)</option>
+            <option value="Correios">Correios - consultar preço e prazo</option>
+            <option value="Loja">Retirada na loja - grátis</option>
+          </select>
+        </div>
+        <div class="field" id="campo-cep-entrega" style="display:none">
+          <label for="cep-entrega">CEP de destino</label>
+          <input type="text" id="cep-entrega" inputmode="numeric" autocomplete="postal-code" maxlength="9" placeholder="00000-000">
+          <p class="payment-note">O valor e o prazo serão confirmados pela loja antes do pagamento.</p>
+        </div>
+        <div class="field" id="aviso-retirada" style="display:none">
+          <p class="payment-note">Retirada gratuita no endereço da Beco Fitness. A loja combinará a disponibilidade e o horário com você.</p>
+        </div>
+        <div class="field">
+          <label for="modal-pagamento">Forma de pagamento preferida</label>
+          <select id="modal-pagamento" required>
+            <option value="Pix">Pix</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
+          </select>
+          <p class="payment-note">A forma disponível será confirmada no checkout do Mercado Pago.</p>
+        </div>
+        <div class="honeypot" aria-hidden="true">
+          <label for="website">Não preencher</label>
+          <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+        </div>
+        <div class="notice" id="checkout-notice" role="status" aria-live="polite"></div>
+        <div class="actions">
+          <button type="button" class="cancel" id="btn-cancelar">Voltar</button>
+          <button type="submit" class="buy" id="btn-finalizar">Registrar pedido</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer>© 2026 Beco Fitness Esporte Clube</footer>
+
+  <script>
+    // ATENÇÃO: use somente a URL da implantação de TESTE ligada à planilha de backup.
+    // Não cole aqui o endereço da implantação antiga de produção.
+    const API_URL = "COLE_A_URL_DO_APPS_SCRIPT_DE_TESTE_AQUI";
+
+    // Link público de checkout fixo para uma camiseta Jogador de R$ 140,00.
+    const CHECKOUT_URL_JOGADOR = "https://mpago.li/27VbnKC";
+    const TAMANHOS = ["P", "M", "G", "GG", "XGG"];
+
+    const produtos = [
+      { codigo: "SPFC", nome: "Camisa Jogador São Paulo FC", imagem: "assets/sao-paulo-fc.png", alt: "Camisa Jogador São Paulo FC" },
+      { codigo: "COR-BR", nome: "Camisa Jogador Corinthians Branca", imagem: "assets/corinthians-branca.png", alt: "Camisa Jogador Corinthians Branca" },
+      { codigo: "COR-LIS", nome: "Camisa Jogador Corinthians Listrada", imagem: "assets/corinthians-listrada.png", alt: "Camisa Jogador Corinthians Listrada" },
+      { codigo: "FLA-BR", nome: "Camisa Jogador Flamengo Branca", imagem: "assets/flamengo-branca.png", alt: "Camisa Jogador Flamengo Branca" },
+      { codigo: "LIV-VER", nome: "Camisa Jogador Liverpool Vermelha", imagem: "assets/liverpool-vermelha.png", alt: "Camisa Jogador Liverpool Vermelha" },
+      { codigo: "MCI-AZ", nome: "Camisa Jogador Manchester City Azul", imagem: "assets/manchester-city-azul.png", alt: "Camisa Jogador Manchester City Azul" },
+      { codigo: "PAL-VER", nome: "Camisa Jogador Palmeiras Verde", imagem: "assets/palmeiras-verde.png", alt: "Camisa Jogador Palmeiras Verde" },
+      { codigo: "RUB-ADI", nome: "Camisa Jogador Rubro-Negra Adidas", imagem: "assets/rubro-negra-adidas.png", alt: "Camisa Jogador Rubro-Negra Adidas" },
+      { codigo: "SAN", nome: "Camisa Jogador Santos FC", imagem: "assets/santos-fc.png", alt: "Camisa Jogador Santos FC" },
+      { codigo: "SP-TRI", nome: "Camisa Jogador São Paulo Tricolor", imagem: "assets/sao-paulo-tricolor.png", alt: "Camisa Jogador São Paulo Tricolor" }
+    ].map(p => ({ ...p, preco: 140, skuPrefixo: "BF-JOG-" + p.codigo + "-" }));
+
+    let produtoSelecionado = null;
+    let disponibilidade = null; // null significa que o estoque ainda não foi consultado pelo endpoint de teste.
+
+    const moeda = valor => Number(valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+    const apiConfigurada = () => API_URL.startsWith("https://script.google.com/macros/s/") && API_URL.endsWith("/exec");
+    const skuDoTamanho = (produto, tamanho) => produto.skuPrefixo + tamanho;
+
+    function exibirAviso(mensagem, erro = false) {
+      const aviso = document.getElementById("checkout-notice");
+      aviso.textContent = mensagem;
+      aviso.classList.toggle("error", erro);
+      aviso.style.display = "block";
+    }
+
+    async function carregarDisponibilidade() {
+      const status = document.getElementById("catalog-status");
+      if (!apiConfigurada()) {
+        status.textContent = "Catálogo visual carregado. Falta conectar a URL do Apps Script de TESTE para consultar o estoque e receber pedidos. O checkout está bloqueado nesta versão de preparação.";
+        status.className = "catalog-status warn";
+        return;
+      }
+
+      try {
+        const resposta = await fetch(API_URL, { method: "GET", mode: "cors", cache: "no-store" });
+        if (!resposta.ok) throw new Error("Falha ao consultar o estoque.");
+        const dados = await resposta.json();
+        if (dados.status !== "sucesso" || !Array.isArray(dados.itens)) throw new Error("Resposta de catálogo inválida.");
+
+        disponibilidade = {};
+        dados.itens.forEach(item => {
+          if (item && typeof item.sku === "string") disponibilidade[item.sku] = item.disponivel === true;
+        });
+
+        const totalDisponiveis = Object.values(disponibilidade).filter(Boolean).length;
+        status.textContent = "Estoque de teste consultado: " + totalDisponiveis + " tamanhos disponíveis.";
+        status.className = "catalog-status ok";
+      } catch (erro) {
+        disponibilidade = null;
+        status.textContent = "Não foi possível consultar o estoque de teste. A visualização dos modelos está disponível, mas não faça pedidos até validar a conexão.";
+        status.className = "catalog-status warn";
+      }
+    }
+
+    function renderizarGrid() {
+      const grid = document.getElementById("product-grid");
+      grid.innerHTML = "";
+      produtos.forEach((produto, indice) => {
+        const card = document.createElement("article");
+        card.className = "product-card";
+        card.innerHTML = `
+          <div class="product-art"><img src="${produto.imagem}" alt="${produto.alt}" loading="lazy"></div>
+          <div class="product-info">
+            <h3>${produto.nome}</h3>
+            <p>Escudo emborrachado • Linha Jogador</p>
+            <div class="price">${moeda(produto.preco)}</div>
+          </div>
+          <div class="product-footer"><button class="buy" type="button">Escolher tamanho</button></div>`;
+        card.querySelector("button").addEventListener("click", () => abrirModal(indice));
+        grid.appendChild(card);
+      });
+    }
+
+    function atualizarOpcoesTamanho() {
+      const seletor = document.getElementById("modal-tamanho");
+      const nota = document.getElementById("stock-note");
+      const botao = document.getElementById("btn-finalizar");
+      seletor.innerHTML = '<option value="">Selecione o tamanho</option>';
+      let quantidadeDisponivel = 0;
+
+      TAMANHOS.forEach(tamanho => {
+        const sku = skuDoTamanho(produtoSelecionado, tamanho);
+        const conhecido = disponibilidade !== null && Object.prototype.hasOwnProperty.call(disponibilidade, sku);
+        const disponivel = !conhecido || disponibilidade[sku] === true;
+        const option = document.createElement("option");
+        option.value = tamanho;
+        option.textContent = conhecido && !disponivel ? tamanho + " — esgotado" : tamanho;
+        option.disabled = !disponivel;
+        seletor.appendChild(option);
+        if (disponivel && conhecido) quantidadeDisponivel++;
+      });
+
+      if (disponibilidade === null) {
+        nota.textContent = "O estoque ainda não foi consultado. A disponibilidade será validada pelo sistema quando a integração estiver pronta.";
+      } else {
+        nota.textContent = quantidadeDisponivel + " tamanho(s) disponível(is) neste modelo.";
+      }
+      botao.disabled = disponibilidade === null || quantidadeDisponivel === 0;
+    }
+
+    function abrirModal(indice) {
+      produtoSelecionado = produtos[indice];
+      document.getElementById("modal-produto-nome").textContent = produtoSelecionado.nome;
+      document.getElementById("modal-preco-label").textContent = moeda(produtoSelecionado.preco) + " por unidade";
+      document.getElementById("modal-sku").value = "";
+      document.getElementById("modal-qtd").value = "1";
+      document.getElementById("checkout-notice").style.display = "none";
+      atualizarOpcoesTamanho();
+      document.getElementById("modal-pedido").classList.add("open");
+      document.getElementById("cliente-nome").focus();
+    }
+
+    function fecharModal() {
+      document.getElementById("modal-pedido").classList.remove("open");
+      document.getElementById("form-pedido").reset();
+      document.getElementById("campo-cep-entrega").style.display = "none";
+      document.getElementById("aviso-retirada").style.display = "none";
+      cepEntrega.required = false;
+      produtoSelecionado = null;
+    }
+
+    const entregaSelect = document.getElementById("modal-entrega");
+    const cepEntrega = document.getElementById("cep-entrega");
+    const tamanhoSelect = document.getElementById("modal-tamanho");
+
+    tamanhoSelect.addEventListener("change", () => {
+      document.getElementById("modal-sku").value = produtoSelecionado && tamanhoSelect.value
+        ? skuDoTamanho(produtoSelecionado, tamanhoSelect.value)
+        : "";
+    });
+
+    entregaSelect.addEventListener("change", () => {
+      const exigeCep = ["Moto Boy", "Correios"].includes(entregaSelect.value);
+      document.getElementById("campo-cep-entrega").style.display = exigeCep ? "block" : "none";
+      document.getElementById("aviso-retirada").style.display = entregaSelect.value === "Loja" ? "block" : "none";
+      cepEntrega.required = exigeCep;
+      if (!exigeCep) cepEntrega.value = "";
+    });
+
+    cepEntrega.addEventListener("input", () => {
+      const digitos = cepEntrega.value.replace(/\D/g, "").slice(0, 8);
+      cepEntrega.value = digitos.length > 5 ? digitos.slice(0, 5) + "-" + digitos.slice(5) : digitos;
+    });
+
+    document.getElementById("btn-cancelar").addEventListener("click", fecharModal);
+    document.getElementById("modal-pedido").addEventListener("click", evento => {
+      if (evento.target.id === "modal-pedido") fecharModal();
+    });
+
+    document.getElementById("form-pedido").addEventListener("submit", async evento => {
+      evento.preventDefault();
+      if (!produtoSelecionado) return;
+
+      const botao = document.getElementById("btn-finalizar");
+      const nome = document.getElementById("cliente-nome").value.trim();
+      const tamanho = tamanhoSelect.value;
+      const sku = skuDoTamanho(produtoSelecionado, tamanho);
+      const pagamento = document.getElementById("modal-pagamento").value;
+      const entrega = entregaSelect.value;
+      const cepDestino = cepEntrega.value.replace(/\D/g, "");
+      const honeypot = document.getElementById("website").value;
+
+      if (!nome || !tamanho || !entrega) {
+        exibirAviso("Confira seu nome, o tamanho e a modalidade de entrega.", true);
+        return;
+      }
+      if (disponibilidade === null || !apiConfigurada()) {
+        exibirAviso("O site ainda não está conectado à API de teste. Nenhum pedido foi enviado. Aguarde a configuração da integração.", true);
+        return;
+      }
+      if (disponibilidade[sku] !== true) {
+        exibirAviso("Este tamanho não está mais disponível. Escolha outro tamanho ou modelo.", true);
+        return;
+      }
+      if (["Moto Boy", "Correios"].includes(entrega) && !/^\d{8}$/.test(cepDestino)) {
+        exibirAviso("Informe um CEP de destino válido com 8 números.", true);
+        return;
+      }
+
+      const payload = {
+        cliente: nome,
+        sku: sku,
+        tamanho: tamanho,
+        quantidade: 1,
+        pagamento: pagamento,
+        entrega: entrega,
+        cepDestino: entrega === "Loja" ? "" : cepDestino,
+        website: honeypot
+      };
+
+      botao.disabled = true;
+      botao.textContent = "Enviando pedido...";
+      document.getElementById("checkout-notice").style.display = "none";
+
+      try {
+        const resposta = await fetch(API_URL, {
+          method: "POST",
+          mode: "cors",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload)
+        });
+        if (!resposta.ok) throw new Error("Falha ao enviar o pedido.");
+        const resultado = await resposta.json();
+        if (resultado.status !== "sucesso") {
+          throw new Error(resultado.mensagem || "Não foi possível registrar o pedido.");
+        }
+
+        if (entrega !== "Loja") {
+          exibirAviso("Pedido " + resultado.id_venda + " registrado. A Beco Fitness confirmará o frete para o CEP " + cepEntrega.value + " antes do pagamento.");
+          botao.textContent = "Pedido registrado";
+          return;
+        }
+
+        exibirAviso("Pedido " + resultado.id_venda + " registrado. Você será direcionado ao checkout do Mercado Pago.");
+        botao.textContent = "Pedido registrado";
+        window.location.href = CHECKOUT_URL_JOGADOR;
+      } catch (erro) {
+        exibirAviso(erro.message || "Não foi possível confirmar o pedido. Não tente novamente sem verificar a planilha de teste.", true);
+        botao.disabled = false;
+        botao.textContent = "Tentar novamente";
+      }
+    });
+
+    window.addEventListener("DOMContentLoaded", async () => {
+      renderizarGrid();
+      await carregarDisponibilidade();
+    });
+  </script>
+</body>
+</html>
+
