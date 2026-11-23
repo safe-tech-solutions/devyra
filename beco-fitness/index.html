@@ -164,12 +164,12 @@
   <footer>© 2026 Beco Fitness Esporte Clube</footer>
 
   <script>
-    // ATENÇÃO: use somente a URL da implantação de TESTE ligada à planilha de backup.
-    // Não cole aqui o endereço da implantação antiga de produção.
-    const API_URL = "COLE_A_URL_DO_APPS_SCRIPT_DE_TESTE_AQUI";
+    // API da Beco Fitness publicada no Cloudflare Worker.
+    const API_URL = "https://beco-fitness-api.becofitnessesporteclube.workers.dev/";
 
-    // Link público de checkout fixo para uma camiseta Jogador de R$ 140,00.
-    const CHECKOUT_URL_JOGADOR = "https://mpago.li/27VbnKC";
+    // A chave permanece igual nas tentativas do mesmo pedido e muda
+    // quando o cliente altera os dados do formulário.
+    let chaveIdempotenciaAtual = null;
     const TAMANHOS = ["P", "M", "G", "GG", "XGG"];
 
     const produtos = [
@@ -189,8 +189,28 @@
     let disponibilidade = null; // null significa que o estoque ainda não foi consultado pelo endpoint de teste.
 
     const moeda = valor => Number(valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
-    const apiConfigurada = () => API_URL.startsWith("https://script.google.com/macros/s/") && API_URL.endsWith("/exec");
+    const apiConfigurada = () => API_URL === "https://beco-fitness-api.becofitnessesporteclube.workers.dev/";
     const skuDoTamanho = (produto, tamanho) => produto.skuPrefixo + tamanho;
+    const criarChaveIdempotencia = () => {
+      if (window.crypto && typeof window.crypto.randomUUID === "function") {
+        return window.crypto.randomUUID();
+      }
+      return "BF" + Date.now().toString(36) + Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2);
+    };
+
+    function obterCheckoutSeguro(link) {
+      if (typeof link !== "string" || !link.trim()) return null;
+      try {
+        const url = new URL(link);
+        const host = url.hostname.toLowerCase();
+        const mercadoPago = host === "mpago.li" ||
+          host === "mercadopago.com.br" ||
+          host.endsWith(".mercadopago.com.br");
+        return url.protocol === "https:" && mercadoPago ? url.href : null;
+      } catch (_) {
+        return null;
+      }
+    }
 
     function exibirAviso(mensagem, erro = false) {
       const aviso = document.getElementById("checkout-notice");
@@ -202,7 +222,7 @@
     async function carregarDisponibilidade() {
       const status = document.getElementById("catalog-status");
       if (!apiConfigurada()) {
-        status.textContent = "Catálogo visual carregado. Falta conectar a URL do Apps Script de TESTE para consultar o estoque e receber pedidos. O checkout está bloqueado nesta versão de preparação.";
+        status.textContent = "Catálogo visual carregado. A conexão com a API ainda não foi validada. Não faça pedidos até confirmar o estoque. O checkout está bloqueado nesta versão de preparação.";
         status.className = "catalog-status warn";
         return;
       }
@@ -289,6 +309,7 @@
     function fecharModal() {
       document.getElementById("modal-pedido").classList.remove("open");
       document.getElementById("form-pedido").reset();
+      chaveIdempotenciaAtual = null;
       document.getElementById("campo-cep-entrega").style.display = "none";
       document.getElementById("aviso-retirada").style.display = "none";
       cepEntrega.required = false;
@@ -318,6 +339,13 @@
       cepEntrega.value = digitos.length > 5 ? digitos.slice(0, 5) + "-" + digitos.slice(5) : digitos;
     });
 
+    document.getElementById("form-pedido").addEventListener("input", () => {
+      chaveIdempotenciaAtual = null;
+    });
+    document.getElementById("form-pedido").addEventListener("change", () => {
+      chaveIdempotenciaAtual = null;
+    });
+
     document.getElementById("btn-cancelar").addEventListener("click", fecharModal);
     document.getElementById("modal-pedido").addEventListener("click", evento => {
       if (evento.target.id === "modal-pedido") fecharModal();
@@ -341,7 +369,7 @@
         return;
       }
       if (disponibilidade === null || !apiConfigurada()) {
-        exibirAviso("O site ainda não está conectado à API de teste. Nenhum pedido foi enviado. Aguarde a configuração da integração.", true);
+        exibirAviso("A conexão com o estoque não está disponível. Nenhum pedido foi enviado. Tente novamente mais tarde.", true);
         return;
       }
       if (disponibilidade[sku] !== true) {
@@ -353,6 +381,10 @@
         return;
       }
 
+      if (!chaveIdempotenciaAtual) {
+        chaveIdempotenciaAtual = criarChaveIdempotencia();
+      }
+
       const payload = {
         cliente: nome,
         sku: sku,
@@ -361,6 +393,7 @@
         pagamento: pagamento,
         entrega: entrega,
         cepDestino: entrega === "Loja" ? "" : cepDestino,
+        chaveIdempotencia: chaveIdempotenciaAtual,
         website: honeypot
       };
 
@@ -384,12 +417,19 @@
         if (entrega !== "Loja") {
           exibirAviso("Pedido " + resultado.id_venda + " registrado. A Beco Fitness confirmará o frete para o CEP " + cepEntrega.value + " antes do pagamento.");
           botao.textContent = "Pedido registrado";
+          chaveIdempotenciaAtual = null;
           return;
         }
 
-        exibirAviso("Pedido " + resultado.id_venda + " registrado. Você será direcionado ao checkout do Mercado Pago.");
+        const checkout = obterCheckoutSeguro(resultado.linkPagamento);
+        if (!checkout) {
+          throw new Error("O pedido foi registrado, mas a API não retornou um link de pagamento válido. Entre em contato com a Beco Fitness antes de tentar novamente.");
+        }
+
+        exibirAviso("Pedido " + resultado.id_venda + " registrado. Você será direcionado ao checkout seguro do Mercado Pago.");
         botao.textContent = "Pedido registrado";
-        window.location.href = CHECKOUT_URL_JOGADOR;
+        chaveIdempotenciaAtual = null;
+        window.location.href = checkout;
       } catch (erro) {
         exibirAviso(erro.message || "Não foi possível confirmar o pedido. Não tente novamente sem verificar a planilha de teste.", true);
         botao.disabled = false;
