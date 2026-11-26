@@ -339,7 +339,7 @@
         });
 
         const totalDisponiveis = Object.values(disponibilidade).filter(Boolean).length;
-        status.textContent = "Estoque de teste consultado: " + totalDisponiveis + " tamanhos disponíveis.";
+        status.textContent = "Escolha seu modelo e tamanho para verificar a disponibilidade em estoque.";
         status.className = "catalog-status ok";
       } catch (erro) {
         disponibilidade = null;
@@ -621,4 +621,3 @@
   </script>
 </body>
 </html>
-
