@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#121212">
-  <meta name="description" content="Camisetas da linha Jogador Beco Fitness Esporte Clube.">
+  <meta name="description" content="Conheça as linhas Jogador, Torcedor e Fitness da Beco Fitness Esporte Clube.">
   <meta name="google-site-verification" content="_VDZNtEdzhLSoiQrZYtjeMfi5GmbrvAtDwFM9iV1fC4" />
   <title>Loja Oficial — Beco Fitness Esporte Clube</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,10 +40,57 @@
     .catalog-status.ok { color:var(--success); border-color:#315c40; }
     .catalog-status.warn { color:#f0df9a; border-color:#6c5a27; }
     .product-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:24px; }
+    .catalog-section { margin-bottom:58px; scroll-margin-top:100px; }
+    .coming-soon { padding:28px 22px; border:1px dashed #6c5a27; border-radius:12px; color:var(--muted); text-align:center; background:#191919; }
+    .coming-soon strong { display:block; color:var(--gold); margin-bottom:6px; font-size:1.05rem; }
+    .catalog-action { display:inline-block; margin-top:12px; color:var(--gold); font-weight:800; text-decoration:none; }
+    .catalog-action:hover { text-decoration:underline; }
+    .product-card .product-info { min-height:112px; }
+
+    .request-model {
+      margin-top:42px; padding:30px 24px; text-align:center;
+      background:linear-gradient(135deg,#242116,#191919);
+      border:1px solid #6c5a27; border-radius:13px;
+    }
+    .request-model h2 { color:var(--gold); font-size:clamp(1.35rem,3vw,1.8rem); margin-bottom:10px; }
+    .request-model p { color:var(--muted); max-width:650px; margin:0 auto 20px; }
+    .instagram-cta {
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:13px 22px; border-radius:8px; background:var(--gold);
+      color:#171717; text-decoration:none; font-weight:900;
+      transition:background .2s, transform .2s;
+    }
+    .instagram-cta:hover { background:var(--gold-hover); transform:translateY(-1px); }
+    .instagram-handle { display:block; margin-top:12px; color:var(--muted); font-size:.85rem; }
     .product-card { background:var(--card); border:1px solid var(--border); border-radius:13px; overflow:hidden; display:flex; flex-direction:column; }
     .product-art { height:300px; display:grid; place-items:center; padding:12px;
       background:linear-gradient(140deg,#292929,#171717); border-bottom:1px solid var(--border); overflow:hidden; }
+    .product-image-button {
+      width:100%; height:100%; padding:0; border:0; border-radius:8px;
+      background:transparent; cursor:zoom-in; display:grid; place-items:center;
+    }
+    .product-image-button:focus-visible { outline:2px solid var(--gold); outline-offset:4px; }
     .product-art img { width:100%; height:100%; object-fit:contain; border-radius:8px; display:block; }
+    .zoom-modal {
+      display:none; position:fixed; inset:0; z-index:100; padding:24px;
+      background:rgba(0,0,0,.94); align-items:center; justify-content:center;
+    }
+    .zoom-modal.open { display:flex; }
+    .zoom-image {
+      display:block; max-width:min(92vw,1100px); max-height:88vh;
+      width:auto; height:auto; object-fit:contain; border-radius:8px;
+      box-shadow:0 12px 50px rgba(0,0,0,.6);
+    }
+    .zoom-close {
+      position:absolute; top:16px; right:20px; width:44px; height:44px;
+      border:1px solid #666; border-radius:50%; background:#222;
+      color:#fff; font-size:1.8rem; line-height:1; cursor:pointer;
+    }
+    .zoom-caption {
+      position:absolute; left:20px; right:20px; bottom:16px;
+      color:#ddd; text-align:center; font-size:.9rem;
+    }
+    body.zoom-open { overflow:hidden; }
     .product-info { padding:20px; flex:1; }
     .product-info h3 { font-size:1.08rem; margin-bottom:7px; }
     .product-info p { color:var(--muted); font-size:.88rem; }
@@ -83,22 +130,52 @@
 <body>
   <header>
     <a class="brand" href="#" aria-label="Beco Fitness - início">
-      <img src="assets/logo-beco-fitness.png" alt="Logo Beco Fitness Esporte Clube">
+      <img src="assets/jogador/logo-beco-fitness.png" alt="Logo Beco Fitness Esporte Clube">
       <div><strong>BECO FITNESS</strong><span>ESPORTE CLUBE</span></div>
     </a>
-    <nav><a href="#produtos">Catálogo</a></nav>
+    <nav><a href="#jogador">Jogador</a> &nbsp; <a href="#torcedor">Torcedor</a> &nbsp; <a href="#fitness">Fitness</a></nav>
   </header>
 
   <section class="hero">
     <h1>Vista a paixão pelo <span>esporte.</span></h1>
-    <p>Conheça a linha Jogador da Beco Fitness Esporte Clube e escolha seu modelo e tamanho.</p>
+    <p>Explore nossas linhas esportivas. Escolha seu modelo ou fale com a Beco Fitness para solicitar uma peça.</p>
   </section>
 
   <main id="produtos">
-    <h2 class="section-title">Linha Jogador</h2>
-    <p class="section-subtitle">Escudo emborrachado • R$ 140,00 por unidade</p>
-    <div class="catalog-status warn" id="catalog-status">Catálogo visual carregado. A disponibilidade será confirmada quando a integração com o estoque de teste estiver configurada.</div>
-    <div class="product-grid" id="product-grid"></div>
+    <section class="catalog-section" id="jogador">
+      <h2 class="section-title">Linha Jogador</h2>
+      <p class="section-subtitle">Modelos com consulta de disponibilidade e pedido pelo site.</p>
+      <div class="catalog-status warn" id="catalog-status">Consultando disponibilidade do estoque...</div>
+      <div class="product-grid" id="product-grid"></div>
+    </section>
+
+    <section class="catalog-section" id="torcedor">
+      <h2 class="section-title">Linha Torcedor</h2>
+      <p class="section-subtitle">Conheça os modelos da linha Torcedor. Clique na imagem para ampliar e consulte a disponibilidade pelo Direct.</p>
+      <div class="product-grid" id="torcedor-grid"></div>
+    </section>
+
+    <section class="catalog-section" id="fitness">
+      <h2 class="section-title">Linha Fitness</h2>
+      <div class="coming-soon">
+        <strong>Novidades em breve</strong>
+        Estamos preparando esta seção. Em breve, novos produtos fitness estarão disponíveis.
+      </div>
+    </section>
+
+    <section class="request-model" aria-labelledby="request-model-title">
+      <h2 id="request-model-title">NÃO ENCONTROU SEU MODELO?</h2>
+      <p>Procurando uma camisa de outro time ou um modelo diferente?
+        Chame a Beco Fitness pelo Direct. Envie o time e o modelo que procura.
+        Vamos verificar a disponibilidade para você!</p>
+      <a class="instagram-cta"
+         href="https://ig.me/m/becofit.store"
+         target="_blank" rel="noopener noreferrer"
+         aria-label="Pedir outro modelo pelo Direct da Beco Fitness no Instagram">
+        PEDIR MEU MODELO PELO DIRECT
+      </a>
+      <span class="instagram-handle">Instagram: @becofit.store</span>
+    </section>
   </main>
 
   <div class="modal" id="modal-pedido" role="dialog" aria-modal="true" aria-labelledby="modal-produto-nome">
@@ -162,6 +239,14 @@
     </div>
   </div>
 
+  <!-- Visualizador de imagens: abre ao clicar na foto do produto. -->
+  <div class="zoom-modal" id="zoom-modal" role="dialog" aria-modal="true"
+       aria-label="Imagem ampliada do produto" aria-hidden="true">
+    <button class="zoom-close" id="zoom-close" type="button" aria-label="Fechar imagem ampliada">×</button>
+    <img class="zoom-image" id="zoom-image" src="" alt="">
+    <p class="zoom-caption" id="zoom-caption"></p>
+  </div>
+
   <footer>© 2026 Beco Fitness Esporte Clube</footer>
 
   <script>
@@ -174,17 +259,27 @@
     const TAMANHOS = ["P", "M", "G", "GG", "XGG"];
 
     const produtos = [
-      { codigo: "SPFC", nome: "Camisa Jogador São Paulo FC", imagem: "assets/sao-paulo-fc.png", alt: "Camisa Jogador São Paulo FC" },
-      { codigo: "COR-BR", nome: "Camisa Jogador Corinthians Branca", imagem: "assets/corinthians-branca.png", alt: "Camisa Jogador Corinthians Branca" },
-      { codigo: "COR-LIS", nome: "Camisa Jogador Corinthians Listrada", imagem: "assets/corinthians-listrada.png", alt: "Camisa Jogador Corinthians Listrada" },
-      { codigo: "FLA-BR", nome: "Camisa Jogador Flamengo Branca", imagem: "assets/flamengo-branca.png", alt: "Camisa Jogador Flamengo Branca" },
-      { codigo: "LIV-VER", nome: "Camisa Jogador Liverpool Vermelha", imagem: "assets/liverpool-vermelha.png", alt: "Camisa Jogador Liverpool Vermelha" },
-      { codigo: "MCI-AZ", nome: "Camisa Jogador Manchester City Azul", imagem: "assets/manchester-city-azul.png", alt: "Camisa Jogador Manchester City Azul" },
-      { codigo: "PAL-VER", nome: "Camisa Jogador Palmeiras Verde", imagem: "assets/palmeiras-verde.png", alt: "Camisa Jogador Palmeiras Verde" },
-      { codigo: "RUB-ADI", nome: "Camisa Jogador Rubro-Negra Adidas", imagem: "assets/rubro-negra-adidas.png", alt: "Camisa Jogador Rubro-Negra Adidas" },
-      { codigo: "SAN", nome: "Camisa Jogador Santos FC", imagem: "assets/santos-fc.png", alt: "Camisa Jogador Santos FC" },
-      { codigo: "SP-TRI", nome: "Camisa Jogador São Paulo Tricolor", imagem: "assets/sao-paulo-tricolor.png", alt: "Camisa Jogador São Paulo Tricolor" }
+      { codigo: "COR-BR", nome: "Camisa Jogador Corinthians Branca", imagem: "assets/jogador/corinthians-branca.png", alt: "Camisa Jogador Corinthians Branca" },
+      { codigo: "COR-LIS", nome: "Camisa Jogador Corinthians Listrada", imagem: "assets/jogador/corinthians-listrada.png", alt: "Camisa Jogador Corinthians Listrada" },
+      { codigo: "FLA-BR", nome: "Camisa Jogador Flamengo Branca", imagem: "assets/jogador/flamengo-branca.png", alt: "Camisa Jogador Flamengo Branca" },
+      { codigo: "RUB-ADI", nome: "Camisa Jogador Rubro-Negra Adidas", imagem: "assets/jogador/rubro-negra-adidas.png", alt: "Camisa Jogador Rubro-Negra Adidas" },
+      { codigo: "PAL-VER", nome: "Camisa Jogador Palmeiras Verde", imagem: "assets/jogador/palmeiras-verde.png", alt: "Camisa Jogador Palmeiras Verde" },
+      { codigo: "SAN", nome: "Camisa Jogador Santos FC", imagem: "assets/jogador/santos-fc.png", alt: "Camisa Jogador Santos FC" },
+      { codigo: "SPFC", nome: "Camisa Jogador São Paulo FC", imagem: "assets/jogador/sao-paulo-fc.png", alt: "Camisa Jogador São Paulo FC" },
+      { codigo: "SP-TRI", nome: "Camisa Jogador São Paulo Tricolor", imagem: "assets/jogador/sao-paulo-tricolor.png", alt: "Camisa Jogador São Paulo Tricolor" },
+      { codigo: "LIV-VER", nome: "Camisa Jogador Liverpool Vermelha", imagem: "assets/jogador/liverpool-vermelha.png", alt: "Camisa Jogador Liverpool Vermelha" },
+      { codigo: "MCI-AZ", nome: "Camisa Jogador Manchester City Azul", imagem: "assets/jogador/manchester-city-azul.png", alt: "Camisa Jogador Manchester City Azul" }
+
     ].map(p => ({ ...p, preco: 140, skuPrefixo: "BF-JOG-" + p.codigo + "-" }));
+
+    // Linha Torcedor: vitrine visual. O checkout só será ativado quando
+    // os SKUs desta linha forem cadastrados e integrados ao estoque.
+    const produtosTorcedor = [
+      { nome: "Camisa do Barcelona com Detalhes Nike", imagem: "assets/torcedor/Camisa do Barcelona com Detalhes Nike.png", alt: "Camisa do Barcelona com Detalhes Nike" },
+      { nome: "Camisa branca listrada do Flamengo Adidas", imagem: "assets/torcedor/Camisa branca listrada do Flamengo-Adidas.png", alt: "Camisa branca listrada do Flamengo Adidas" },
+      { nome: "Camisa do Real Madrid em destaque", imagem: "assets/torcedor/Camisa do Real Madrid em destaque.png", alt: "Camisa do Real Madrid" },
+      { nome: "Camisa Palmeiras Verde em Estúdio", imagem: "assets/torcedor/Camisa Palmeiras Verde em Estúdio.png", alt: "Camisa Palmeiras Verde" }
+    ];
 
     let produtoSelecionado = null;
     let disponibilidade = null; // null significa que o estoque ainda não foi consultado pelo endpoint de teste.
@@ -222,6 +317,10 @@
 
     async function carregarDisponibilidade() {
       const status = document.getElementById("catalog-status");
+      if (!status) {
+        console.error("Elemento de status do catálogo não encontrado.");
+        return;
+      }
       if (!apiConfigurada()) {
         status.textContent = "Catálogo visual carregado. A conexão com a API ainda não foi validada. Não faça pedidos até confirmar o estoque. O checkout está bloqueado nesta versão de preparação.";
         status.className = "catalog-status warn";
@@ -244,26 +343,102 @@
         status.className = "catalog-status ok";
       } catch (erro) {
         disponibilidade = null;
-        status.textContent = "Não foi possível consultar o estoque de teste. A visualização dos modelos está disponível, mas não faça pedidos até validar a conexão.";
+        status.textContent = "Estamos atualizando nosso estoque. Os modelos estão disponíveis para visualização, mas os pedidos estão temporariamente indisponíveis. Tente novamente em instantes.";
         status.className = "catalog-status warn";
       }
     }
 
+    // ------------------------------
+    // Visualização ampliada das fotos
+    // ------------------------------
+    const zoomModal = document.getElementById("zoom-modal");
+    const zoomImage = document.getElementById("zoom-image");
+    const zoomCaption = document.getElementById("zoom-caption");
+    const zoomClose = document.getElementById("zoom-close");
+
+    function abrirZoom(produto) {
+      zoomImage.src = produto.imagem;
+      zoomImage.alt = produto.alt;
+      zoomCaption.textContent = produto.nome;
+      zoomModal.classList.add("open");
+      zoomModal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("zoom-open");
+      zoomClose.focus();
+    }
+
+    function fecharZoom() {
+      zoomModal.classList.remove("open");
+      zoomModal.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("zoom-open");
+      zoomImage.src = "";
+    }
+
+    zoomClose.addEventListener("click", fecharZoom);
+    zoomModal.addEventListener("click", evento => {
+      if (evento.target === zoomModal) fecharZoom();
+    });
+    document.addEventListener("keydown", evento => {
+      if (evento.key === "Escape" && zoomModal.classList.contains("open")) {
+        fecharZoom();
+      }
+    });
+
+    // ------------------------------
+    // Montagem dos cards do catálogo
+    // ------------------------------
     function renderizarGrid() {
       const grid = document.getElementById("product-grid");
       grid.innerHTML = "";
+
       produtos.forEach((produto, indice) => {
         const card = document.createElement("article");
         card.className = "product-card";
         card.innerHTML = `
-          <div class="product-art"><img src="${produto.imagem}" alt="${produto.alt}" loading="lazy"></div>
+          <div class="product-art">
+            <button class="product-image-button" type="button"
+                    aria-label="Ampliar imagem: ${produto.nome}">
+              <img src="${produto.imagem}" alt="${produto.alt}" loading="lazy">
+            </button>
+          </div>
           <div class="product-info">
             <h3>${produto.nome}</h3>
             <p>Escudo emborrachado • Linha Jogador</p>
             <div class="price">${moeda(produto.preco)}</div>
           </div>
-          <div class="product-footer"><button class="buy" type="button">Escolher tamanho</button></div>`;
-        card.querySelector("button").addEventListener("click", () => abrirModal(indice));
+          <div class="product-footer">
+            <button class="buy" type="button">Escolher tamanho</button>
+          </div>`;
+
+        card.querySelector(".product-image-button")
+          .addEventListener("click", () => abrirZoom(produto));
+        card.querySelector(".product-footer .buy")
+          .addEventListener("click", () => abrirModal(indice));
+
+        grid.appendChild(card);
+      });
+    }
+
+    function renderizarGridTorcedor() {
+      const grid = document.getElementById("torcedor-grid");
+      grid.innerHTML = "";
+
+      produtosTorcedor.forEach(produto => {
+        const card = document.createElement("article");
+        card.className = "product-card";
+        card.innerHTML = `
+          <div class="product-art">
+            <button class="product-image-button" type="button" aria-label="Ampliar imagem: ${produto.alt}">
+              <img src="${produto.imagem}" alt="${produto.alt}" loading="lazy">
+            </button>
+          </div>
+          <div class="product-info">
+            <h3>${produto.nome}</h3>
+            <p>Linha Torcedor</p>
+          </div>
+          <div class="product-footer">
+            <a class="instagram-cta" style="width:100%;" href="https://ig.me/m/becofit.store" target="_blank" rel="noopener noreferrer">Consultar pelo Direct</a>
+          </div>`;
+        card.querySelector(".product-image-button").addEventListener("click", () => abrirZoom(produto));
         grid.appendChild(card);
       });
     }
@@ -440,8 +615,10 @@
 
     window.addEventListener("DOMContentLoaded", async () => {
       renderizarGrid();
+      renderizarGridTorcedor();
       await carregarDisponibilidade();
     });
   </script>
 </body>
 </html>
+
