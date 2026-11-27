@@ -337,30 +337,37 @@ body {
   object-fit: contain;
 }
 
-.badge-flag {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  background: var(--beco-black);
-  color: var(--beco-gold);
+
+.product-badges {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 32px;
+  padding: 6px 8px 0;
+  background: var(--beco-card);
+}
+
+.badge-flag,
+.badge-discount {
+  position: static;
+  display: inline-block;
   font-size: 0.68rem;
   font-weight: 800;
-  padding: 3px 7px;
+  padding: 4px 7px;
   border-radius: 4px;
   text-transform: uppercase;
 }
 
+.badge-flag {
+  background: var(--beco-black);
+  color: var(--beco-gold);
+}
+
 .badge-discount {
-  position: absolute;
-  top: 8px;
-  right: 8px;
   background: var(--beco-red);
   color: var(--beco-white);
-  font-size: 0.68rem;
-  font-weight: 800;
-  padding: 3px 7px;
-  border-radius: 4px;
 }
+
 
 .product-body {
   padding: 14px;

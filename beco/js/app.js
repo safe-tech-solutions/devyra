@@ -42,9 +42,11 @@ function cardHTML(item) {
 
   return `
     <article class="product-card">
-      <div class="product-media">
+      <div class="product-badges">
         <span class="badge-flag">${item.flag}</span>
         <span class="badge-discount">-${off}%</span>
+      </div>
+      <div class="product-media">
         <button class="product-zoom-button" type="button"
                 onclick="openImageZoom('${encodeURI(item.img)}', '${item.name.replace(/'/g, "\\'")}')"
                 aria-label="Ampliar imagem de ${item.name}">
@@ -169,14 +171,29 @@ document.getElementById("searchInput").addEventListener("input", (e) => {
   renderAll();
 });
 
-let secs = 6 * 3600;
-setInterval(() => {
-  if (secs > 0) secs--;
-  const h = String(Math.floor(secs / 3600)).padStart(2, "0");
-  const m = String(Math.floor((secs % 3600) / 60)).padStart(2, "0");
-  const s = String(secs % 60).padStart(2, "0");
-  document.getElementById("offerTimer").textContent = `${h}h : ${m}m : ${s}s`;
-}, 1000);
+const offerDeadline = new Date(2026, 11, 3, 23, 59, 0);
+
+function updateOfferTimer() {
+  const timer = document.getElementById("offerTimer");
+  if (!timer) return;
+
+  const remaining = Math.max(0, offerDeadline.getTime() - Date.now());
+
+  if (remaining === 0) {
+    timer.textContent = "OFERTA ENCERRADA";
+    return;
+  }
+
+  const totalSeconds = Math.floor(remaining / 1000);
+  const h = String(Math.floor(totalSeconds / 3600)).padStart(2, "0");
+  const m = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, "0");
+  const s = String(totalSeconds % 60).padStart(2, "0");
+
+  timer.textContent = `${h}h : ${m}m : ${s}s`;
+}
+
+updateOfferTimer();
+setInterval(updateOfferTimer, 1000);
 
 fetch("js/catalog-generated.json")
   .then(r => r.json())
