@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beco Fitness Esporte Clube | Mantos &amp; Moda Fitness</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <div class="announcement-bar">
+    ⚡ Beco Fitness Esporte Clube — Condições especiais no Pix &amp; <span>@becofit.store</span>
+  </div>
+
+  <header class="site-header">
+    <div class="header-main">
+      <a href="#" class="brand">
+        <img src="assets/logo-original.jpeg" alt="Beco Fitness Esporte Clube" onerror="this.onerror=null; this.src='logo.jpeg';">
+        <div>
+          <div class="brand-name">Beco Fitness</div>
+          <div class="brand-sub">Esporte Clube • @becofit.store</div>
+        </div>
+      </a>
+
+      <div class="search-wrap">
+        <input type="text" id="searchInput" placeholder="Buscar time, modelo jogador, conjunto fitness..." />
+      </div>
+
+      <div class="header-actions">
+        <a href="https://wa.me/5511969784382" target="_blank" rel="noopener noreferrer" class="btn-wpp-top">Atendimento</a>
+        <button class="cart-btn" type="button" onclick="toggleDrawer()">
+          Carrinho <span class="cart-count" id="cartCount">0</span>
+        </button>
+      </div>
+    </div>
+
+    <nav class="nav-strip" aria-label="Categorias">
+      <div class="nav-strip-inner">
+        <button class="nav-pill active" type="button" data-filter="todos">Todos</button>
+        <button class="nav-pill" type="button" data-filter="ofertas">Ofertas do Dia</button>
+        <button class="nav-pill" type="button" data-filter="jogador">Camisas Jogador</button>
+        <button class="nav-pill" type="button" data-filter="fitness">Moda Fitness</button>
+        <button class="nav-pill" type="button" data-filter="lancamentos">Lançamentos</button>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero-offer">
+    <div class="hero-offer-inner">
+      <div class="hero-copy">
+        <h1>Mantos &amp; <span>Moda Fitness</span> no estilo Beco</h1>
+        <p>Vitrine organizada para você escolher tamanhos rápido, somar no Pix e fechar direto no WhatsApp sem burocracia.</p>
+      </div>
+      <div class="timer-box">
+        <div class="timer-label">Oferta relâmpago encerra em</div>
+        <div class="timer-clock" id="offerTimer">06h : 00m : 00s</div>
+      </div>
+    </div>
+  </section>
+
+  <main class="main-content">
+    <section id="offersSection">
+      <div class="section-header">
+        <h2 class="section-title">Destaques &amp; Ofertas <span class="gold-tag">Pronta Resposta</span></h2>
+      </div>
+      <div class="products-grid" id="offersGrid"></div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <h2 class="section-title" id="catalogTitleText">Catálogo Completo</h2>
+      </div>
+      <div class="products-grid" id="catalogGrid"></div>
+
+    <section class="model-request" aria-labelledby="modelRequestTitle">
+      <h2 id="modelRequestTitle">NÃO ENCONTROU SEU MODELO?</h2>
+      <p>
+        Procurando uma camisa de outro time ou um modelo diferente?
+        Chame a Beco Fitness pelo Direct. Envie o time e o modelo que
+        procura. Vamos verificar a disponibilidade para você!
+      </p>
+      <a class="btn-instagram"
+         href="https://ig.me/m/becofit.store"
+         target="_blank"
+         rel="noopener noreferrer">
+        PEDIR MEU MODELO PELO DIRECT
+      </a>
+      <div class="instagram-handle">Instagram: @becofit.store</div>
+    </section>
+
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p><strong>Beco Fitness Esporte Clube</strong> — @becofit.store</p>
+    <p style="margin-top:6px;">Identidade Black &amp; Gold • Pedidos rápidos via WhatsApp</p>
+  </footer>
+
+  <div class="cart-backdrop" id="cartBackdrop" onclick="toggleDrawer()"></div>
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Carrinho de compras">
+    <div class="cart-head">
+      <h3>Seu Carrinho</h3>
+      <button class="cart-close" type="button" onclick="toggleDrawer()" aria-label="Fechar carrinho">&times;</button>
+    </div>
+    <div class="cart-list" id="cartList"></div>
+    <div class="cart-foot">
+      <div class="cart-total">
+        <span>Total no Pix:</span>
+        <strong id="cartTotal">R$ 0,00</strong>
+      </div>
+      <button class="btn-checkout" type="button" onclick="sendWhatsApp()">Finalizar no WhatsApp</button>
+    </div>
+  </aside>
+
+
+  <div class="image-zoom" id="imageZoom"
+       onclick="closeImageZoom(event)" aria-hidden="true">
+    <button class="image-zoom-close" type="button"
+            onclick="closeImageZoom(event)" aria-label="Fechar">&times;</button>
+    <img id="zoomedImage" src="" alt="Imagem ampliada do produto">
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

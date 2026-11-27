@@ -1,0 +1,232 @@
+[
+  {
+    "id": 101,
+    "section": "ofertas",
+    "flag": "Oferta do Dia",
+    "name": "Manto Beco 26/27 #01",
+    "oldPrice": 89.9,
+    "pixPrice": 59.9,
+    "img": "assets/produtos/hf_20260218_164613_43ee5acb-a2ea-4f67-bf7f-4b98173fce61.jpg"
+  },
+  {
+    "id": 102,
+    "section": "ofertas",
+    "flag": "Oferta do Dia",
+    "name": "Manto Beco 26/27 #02",
+    "oldPrice": 89.9,
+    "pixPrice": 59.9,
+    "img": "assets/produtos/hf_20260218_192408_7ef4e618-ab69-4b12-b9ab-8e2e229893fd.jpg"
+  },
+  {
+    "id": 103,
+    "section": "ofertas",
+    "flag": "Oferta do Dia",
+    "name": "Manto Beco 26/27 #03",
+    "oldPrice": 89.9,
+    "pixPrice": 59.9,
+    "img": "assets/produtos/hf_20260218_201256_7cbc5816-88e8-4cf7-8e98-129819966d20.png"
+  },
+  {
+    "id": 104,
+    "section": "ofertas",
+    "flag": "Oferta do Dia",
+    "name": "Manto Beco 26/27 #04",
+    "oldPrice": 89.9,
+    "pixPrice": 59.9,
+    "img": "assets/produtos/hf_20260218_202926_19db8296-532d-4861-9cc3-89cff10c3260.png"
+  },
+  {
+    "id": 105,
+    "section": "lancamentos",
+    "flag": "Torcedor",
+    "name": "Manto Beco 26/27 #05",
+    "oldPrice": 129.9,
+    "pixPrice": 84.9,
+    "img": "assets/produtos/hf_20260709_125921_cc4f3c85-9a56-4407-96b0-63727f1f20ad.png"
+  },
+  {
+    "id": 106,
+    "section": "lancamentos",
+    "flag": "Jogador 1.1",
+    "name": "Manto Beco 26/27 #06",
+    "oldPrice": 129.9,
+    "pixPrice": 84.9,
+    "img": "assets/produtos/hf_20260709_163244_44fd82b2-e154-4191-b389-bbd99975bea3.png"
+  },
+  {
+    "id": 107,
+    "section": "lancamentos",
+    "flag": "Torcedor",
+    "name": "Manto Beco 26/27 #07",
+    "oldPrice": 129.9,
+    "pixPrice": 84.9,
+    "img": "assets/produtos/hf_20260709_163538_57a04aba-12be-49b6-bec6-21659e9a5db1.png"
+  },
+  {
+    "id": 108,
+    "section": "lancamentos",
+    "flag": "Jogador 1.1",
+    "name": "Manto Beco 26/27 #08",
+    "oldPrice": 129.9,
+    "pixPrice": 84.9,
+    "img": "assets/produtos/hf_20260709_163833_fa147b49-46a1-442a-8a6b-091afa5aec84.png"
+  },
+  {
+    "id": 109,
+    "section": "lancamentos",
+    "flag": "Torcedor",
+    "name": "Manto Beco 26/27 #09",
+    "oldPrice": 129.9,
+    "pixPrice": 84.9,
+    "img": "assets/produtos/hf_20260709_164439_0fff590c-f7bc-4ae6-8260-1a826bd5931c.png"
+  },
+  {
+    "id": 110,
+    "section": "lancamentos",
+    "flag": "Jogador 1.1",
+    "name": "Manto Beco 26/27 #10",
+    "oldPrice": 129.9,
+    "pixPrice": 84.9,
+    "img": "assets/produtos/hf_20260709_165715_d168e687-c693-4ce1-a4e6-79ecb8e82420.png"
+  },
+  {
+    "id": 111,
+    "section": "lancamentos",
+    "flag": "Torcedor",
+    "name": "Manto Beco 26/27 #11",
+    "oldPrice": 129.9,
+    "pixPrice": 84.9,
+    "img": "assets/produtos/hf_20260709_170240_eeda0305-bb34-4b57-ace1-ca15c6ab995b.png"
+  },
+  {
+    "id": 112,
+    "section": "lancamentos",
+    "flag": "Jogador 1.1",
+    "name": "Manto Beco 26/27 #12",
+    "oldPrice": 129.9,
+    "pixPrice": 84.9,
+    "img": "assets/produtos/hf_20260709_171236_9cc05e05-1fb7-48f7-8286-86b35a98f970.png"
+  },
+  {
+    "id": 113,
+    "section": "lancamentos",
+    "flag": "Torcedor",
+    "name": "Manto Beco 26/27 #13",
+    "oldPrice": 129.9,
+    "pixPrice": 84.9,
+    "img": "assets/produtos/hf_20260709_171412_7aabb928-bd8a-41c4-b772-3662b68572a8.png"
+  },
+  {
+    "id": 114,
+    "section": "lancamentos",
+    "flag": "Jogador 1.1",
+    "name": "Manto Beco 26/27 #14",
+    "oldPrice": 129.9,
+    "pixPrice": 84.9,
+    "img": "assets/produtos/hf_20260709_171516_cda07a57-7a99-4a64-8272-37bc0cde8faf.png"
+  },
+  {
+    "id": 115,
+    "section": "lancamentos",
+    "flag": "Moda Fitness",
+    "name": "Calça Jogger Preta com Zíper",
+    "oldPrice": 90.0,
+    "pixPrice": 90.0,
+    "img": "assets/fitness/Calça Jogger Preta com Zíper.png",
+    "sizes": [
+      "P",
+      "M",
+      "G",
+      "GG",
+      "XGG"
+    ]
+  },
+  {
+    "id": 116,
+    "section": "lancamentos",
+    "flag": "Moda Fitness",
+    "name": "Calça Jogger Verde Militar",
+    "oldPrice": 90.0,
+    "pixPrice": 90.0,
+    "img": "assets/fitness/Calça jogger verde militar com etiqueta.png",
+    "sizes": [
+      "P",
+      "M",
+      "G",
+      "GG",
+      "XGG"
+    ]
+  },
+  {
+    "id": 117,
+    "section": "lancamentos",
+    "flag": "Moda Fitness",
+    "name": "Camiseta Fitness Rosa",
+    "oldPrice": 60.0,
+    "pixPrice": 60.0,
+    "img": "assets/fitness/Camiseta Rosa em Estúdio Neon.png",
+    "sizes": [
+      "M"
+    ]
+  },
+  {
+    "id": 118,
+    "section": "lancamentos",
+    "flag": "Moda Fitness",
+    "name": "Conjunto Feminino Calça Azul-Marinho",
+    "oldPrice": 140.0,
+    "pixPrice": 140.0,
+    "img": "assets/fitness/Conjunto Esportivo Marinho em Neon Verde.png",
+    "sizes": [
+      "G"
+    ]
+  },
+  {
+    "id": 119,
+    "section": "lancamentos",
+    "flag": "Moda Fitness",
+    "name": "Conjunto Feminino Calça Vinho",
+    "oldPrice": 140.0,
+    "pixPrice": 140.0,
+    "img": "assets/fitness/Conjunto Fitness Bordô em Estúdio.png",
+    "sizes": [
+      "M"
+    ]
+  },
+  {
+    "id": 120,
+    "section": "lancamentos",
+    "flag": "Moda Fitness",
+    "name": "Conjunto Feminino Short Rosa",
+    "oldPrice": 99.0,
+    "pixPrice": 99.0,
+    "img": "assets/fitness/Conjunto esportivo rosa pastel em estúdio.png",
+    "sizes": [
+      "M"
+    ]
+  },
+  {
+    "id": 121,
+    "section": "lancamentos",
+    "flag": "Moda Fitness",
+    "name": "Conjunto Feminino Short Azul",
+    "oldPrice": 99.0,
+    "pixPrice": 99.0,
+    "img": "assets/fitness/Conjunto Esportivo Azul em Neon Verde.png",
+    "sizes": [
+      "M"
+    ]
+  },
+  {
+    "id": 122,
+    "section": "lancamentos",
+    "flag": "Moda Fitness",
+    "name": "Conjunto Feminino Short Verde",
+    "oldPrice": 99.0,
+    "pixPrice": 99.0,
+    "img": "assets/fitness/Conjunto Fitness Verde-Água em Destaque.png",
+    "sizes": [
+      "P"
+    ]
+  }
+]

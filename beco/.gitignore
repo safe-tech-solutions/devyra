@@ -1,0 +1,14 @@
+# Backups
+*.bak
+*.bak-*
+
+# Cartelas e arquivos de conferência
+cartela-*.jpg
+cartela-*.png
+fitness_contact_sheet.jpg
+mapa-imagens.txt
+
+# Arquivos temporários
+.DS_Store
+Thumbs.db
+*.backup
